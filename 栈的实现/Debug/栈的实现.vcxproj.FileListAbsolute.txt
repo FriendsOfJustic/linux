@@ -1,0 +1,2 @@
+C:\Users\石海涛\source\repos\栈的实现\Debug\栈的实现.exe
+C:\Users\石海涛\source\repos\栈的实现\Debug\栈的实现.pdb

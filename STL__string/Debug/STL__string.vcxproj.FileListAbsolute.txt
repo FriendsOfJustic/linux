@@ -1,0 +1,2 @@
+D:\学习资料\比特教育\源代码\STL__string\Debug\STL__string.exe
+D:\学习资料\比特教育\源代码\STL__string\Debug\STL__string.pdb

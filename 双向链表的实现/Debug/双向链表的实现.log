@@ -1,0 +1,40 @@
+﻿  DoubleList.c
+C:\Users\石海涛\source\repos\双向链表的实现\DoubleList.c(10,25): warning C4133: “=”: 从“Dlist *”到“Dlist *”的类型不兼容
+C:\Users\石海涛\source\repos\双向链表的实现\DoubleList.c(11,25): warning C4133: “=”: 从“Dlist *”到“Dlist *”的类型不兼容
+C:\Users\石海涛\source\repos\双向链表的实现\DoubleList.c(24,20): warning C4133: “=”: 从“Dlist *”到“Dlist *”的类型不兼容
+C:\Users\石海涛\source\repos\双向链表的实现\DoubleList.c(17,1): warning C4133: “初始化”: 从“Dlist *”到“Dlist *”的类型不兼容
+C:\Users\石海涛\source\repos\双向链表的实现\DoubleList.c(18,1): warning C4133: “初始化”: 从“Dlist *”到“Dlist *”的类型不兼容
+C:\Users\石海涛\source\repos\双向链表的实现\DoubleList.c(35,18): warning C4133: “=”: 从“Dlist *”到“Dlist *”的类型不兼容
+C:\Users\石海涛\source\repos\双向链表的实现\DoubleList.c(31,1): warning C4133: “初始化”: 从“Dlist *”到“Dlist *”的类型不兼容
+C:\Users\石海涛\source\repos\双向链表的实现\DoubleList.c(45,22): warning C4133: “=”: 从“Dlist *”到“Dlist *”的类型不兼容
+C:\Users\石海涛\source\repos\双向链表的实现\DoubleList.c(46,22): warning C4133: “=”: 从“Dlist *”到“Dlist *”的类型不兼容
+C:\Users\石海涛\source\repos\双向链表的实现\DoubleList.c(47,23): warning C4133: “=”: 从“Dlist *”到“Dlist *”的类型不兼容
+C:\Users\石海涛\source\repos\双向链表的实现\DoubleList.c(48,23): warning C4133: “=”: 从“Dlist *”到“Dlist *”的类型不兼容
+C:\Users\石海涛\source\repos\双向链表的实现\DoubleList.c(42,1): warning C4133: “初始化”: 从“Dlist *”到“Dlist *”的类型不兼容
+C:\Users\石海涛\source\repos\双向链表的实现\DoubleList.c(56,23): warning C4133: “=”: 从“Dlist *”到“Dlist *”的类型不兼容
+C:\Users\石海涛\source\repos\双向链表的实现\DoubleList.c(57,23): warning C4133: “=”: 从“Dlist *”到“Dlist *”的类型不兼容
+C:\Users\石海涛\source\repos\双向链表的实现\DoubleList.c(58,22): warning C4133: “=”: 从“Dlist *”到“Dlist *”的类型不兼容
+C:\Users\石海涛\source\repos\双向链表的实现\DoubleList.c(59,22): warning C4133: “=”: 从“Dlist *”到“Dlist *”的类型不兼容
+C:\Users\石海涛\source\repos\双向链表的实现\DoubleList.c(54,1): warning C4133: “初始化”: 从“Dlist *”到“Dlist *”的类型不兼容
+C:\Users\石海涛\source\repos\双向链表的实现\DoubleList.c(66,23): warning C4133: “=”: 从“Dlist *”到“Dlist *”的类型不兼容
+C:\Users\石海涛\source\repos\双向链表的实现\DoubleList.c(67,23): warning C4133: “=”: 从“Dlist *”到“Dlist *”的类型不兼容
+C:\Users\石海涛\source\repos\双向链表的实现\DoubleList.c(64,1): warning C4133: “初始化”: 从“Dlist *”到“Dlist *”的类型不兼容
+C:\Users\石海涛\source\repos\双向链表的实现\DoubleList.c(65,1): warning C4133: “初始化”: 从“Dlist *”到“Dlist *”的类型不兼容
+C:\Users\石海涛\source\repos\双向链表的实现\DoubleList.c(75,23): warning C4133: “=”: 从“Dlist *”到“Dlist *”的类型不兼容
+C:\Users\石海涛\source\repos\双向链表的实现\DoubleList.c(76,23): warning C4133: “=”: 从“Dlist *”到“Dlist *”的类型不兼容
+C:\Users\石海涛\source\repos\双向链表的实现\DoubleList.c(73,1): warning C4133: “初始化”: 从“Dlist *”到“Dlist *”的类型不兼容
+C:\Users\石海涛\source\repos\双向链表的实现\DoubleList.c(74,1): warning C4133: “初始化”: 从“Dlist *”到“Dlist *”的类型不兼容
+C:\Users\石海涛\source\repos\双向链表的实现\DoubleList.c(91,18): warning C4133: “=”: 从“Dlist *”到“Dlist *”的类型不兼容
+C:\Users\石海涛\source\repos\双向链表的实现\DoubleList.c(84,1): warning C4133: “初始化”: 从“Dlist *”到“Dlist *”的类型不兼容
+C:\Users\石海涛\source\repos\双向链表的实现\DoubleList.c(102,22): warning C4133: “=”: 从“Dlist *”到“Dlist *”的类型不兼容
+C:\Users\石海涛\source\repos\双向链表的实现\DoubleList.c(103,22): warning C4133: “=”: 从“Dlist *”到“Dlist *”的类型不兼容
+C:\Users\石海涛\source\repos\双向链表的实现\DoubleList.c(104,21): warning C4133: “=”: 从“Dlist *”到“Dlist *”的类型不兼容
+C:\Users\石海涛\source\repos\双向链表的实现\DoubleList.c(105,21): warning C4133: “=”: 从“Dlist *”到“Dlist *”的类型不兼容
+C:\Users\石海涛\source\repos\双向链表的实现\DoubleList.c(99,1): warning C4133: “初始化”: 从“Dlist *”到“Dlist *”的类型不兼容
+C:\Users\石海涛\source\repos\双向链表的实现\DoubleList.c(114,19): warning C4133: “=”: 从“Dlist *”到“Dlist *”的类型不兼容
+C:\Users\石海涛\source\repos\双向链表的实现\DoubleList.c(115,19): warning C4133: “=”: 从“Dlist *”到“Dlist *”的类型不兼容
+C:\Users\石海涛\source\repos\双向链表的实现\DoubleList.c(111,1): warning C4133: “初始化”: 从“Dlist *”到“Dlist *”的类型不兼容
+C:\Users\石海涛\source\repos\双向链表的实现\DoubleList.c(112,1): warning C4133: “初始化”: 从“Dlist *”到“Dlist *”的类型不兼容
+  test.c
+  正在生成代码...
+  双向链表的实现.vcxproj -> C:\Users\石海涛\source\repos\双向链表的实现\Debug\双向链表的实现.exe

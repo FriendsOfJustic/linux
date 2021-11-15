@@ -1,0 +1,14 @@
+﻿  string.cpp
+D:\学习资料\比特教育\源代码\STL__string\string.cpp(54,4): warning C4018: “<”: 有符号/无符号不匹配
+D:\学习资料\比特教育\源代码\STL__string\string.cpp(60,4): warning C4018: “<”: 有符号/无符号不匹配
+D:\学习资料\比特教育\源代码\STL__string\string.cpp(73,17): warning C4018: “>”: 有符号/无符号不匹配
+D:\学习资料\比特教育\源代码\STL__string\string.cpp(86,13): warning C4018: “<=”: 有符号/无符号不匹配
+D:\学习资料\比特教育\源代码\STL__string\string.cpp(92,14): warning C4018: “>”: 有符号/无符号不匹配
+D:\学习资料\比特教育\源代码\STL__string\string.cpp(97,18): warning C4018: “<=”: 有符号/无符号不匹配
+D:\学习资料\比特教育\源代码\STL__string\string.cpp(150,14): warning C4018: “<”: 有符号/无符号不匹配
+D:\学习资料\比特教育\源代码\STL__string\string.cpp(150,28): warning C4018: “<”: 有符号/无符号不匹配
+D:\学习资料\比特教育\源代码\STL__string\string.cpp(216,14): warning C4018: “<”: 有符号/无符号不匹配
+D:\学习资料\比特教育\源代码\STL__string\string.cpp(216,28): warning C4018: “<”: 有符号/无符号不匹配
+D:\学习资料\比特教育\源代码\STL__string\string.cpp(335,25): warning C4018: “<=”: 有符号/无符号不匹配
+D:\学习资料\比特教育\源代码\STL__string\string.cpp(367,17): warning C4018: “<”: 有符号/无符号不匹配
+  STL__string.vcxproj -> D:\学习资料\比特教育\源代码\STL__string\Debug\STL__string.exe

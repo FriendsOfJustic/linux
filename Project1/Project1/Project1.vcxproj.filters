@@ -15,8 +15,25 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="源.cpp">
+    <ClCompile Include="add.c">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\链表的实现\SLisit.c">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="源1.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="源.c">
+      <Filter>源文件</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="kksk.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\链表的实现\SList.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

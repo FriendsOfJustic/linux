@@ -1,0 +1,2 @@
+D:\学习资料\比特教育\源代码\stl__vector\Debug\stl__vector.exe
+D:\学习资料\比特教育\源代码\stl__vector\Debug\stl__vector.pdb

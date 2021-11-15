@@ -1,0 +1,8 @@
+﻿  contact.c
+  test.c
+D:\学习资料\比特教育\源代码\通讯录\通讯录\通讯录\test.c(32,20): warning C4101: “data”: 未引用的局部变量
+  正在生成代码
+  Previous IPDB not found, fall back to full compilation.
+  All 19 functions were compiled because no usable IPDB/IOBJ from previous compilation was found.
+  已完成代码的生成
+  通讯录.vcxproj -> D:\学习资料\比特教育\源代码\通讯录\通讯录\Release\通讯录.exe

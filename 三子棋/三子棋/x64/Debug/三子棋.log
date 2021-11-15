@@ -1,0 +1,5 @@
+﻿  game.cpp
+  text.cpp
+  正在生成代码...
+D:\学习资料\比特教育\源代码\三子棋\三子棋\game.cpp(121): warning C4715: “isfull”: 不是所有的控件路径都返回值
+  三子棋.vcxproj -> D:\学习资料\比特教育\源代码\三子棋\x64\Debug\三子棋.exe
