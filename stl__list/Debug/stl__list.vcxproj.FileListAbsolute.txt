@@ -1,2 +1,0 @@
-D:\学习资料\比特教育\源代码\stl__list\Debug\stl__list.exe
-D:\学习资料\比特教育\源代码\stl__list\Debug\stl__list.pdb

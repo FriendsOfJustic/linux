@@ -1,162 +1,298 @@
 #pragma once
-
-
-
 #include<iostream>
+
 
 namespace sht
 {
-	template<class T>
-	struct _list__Node 
-	{
-		_list__Node* next;
-		_list__Node* prev;
-		T _val;
 
-		_list__Node(const T& x = T() )
+	template<class T>
+	struct DlistNode
+	{
+		DlistNode* next;
+		DlistNode* prev;
+		T data;
+
+
+		DlistNode(T x=T() ) // 数据类型的构造函数
 			:next(nullptr)
 			,prev(nullptr)
+			,data(x)
 		{
-			_val = x;
+
 		}
 	};
 
 
-	template<class T>
-	struct list__iterator
+	template<class T,class Ref,class Ptr>
+	class list_iterator
 	{
+		typedef DlistNode<T> Node;
+		typedef list_iterator<T, Ref, Ptr> Self;
 
-		_list__Node<T>* p;
-
-
-		list__iterator(_list__Node<T>* temp)
-			:p(temp)
-		{}
-
-		T& operator *()
+	public:
+		list_iterator(Node* x =nullptr)
+			:p(x)
 		{
-			return this->p->_val;
 		}
 
-		list__iterator& operator ++()
+		list_iterator(const Self& l)
 		{
-			p = (p->next);
+			p = l.p;
+		}
+
+
+
+		Node* GetNode()
+		{
+			return p;
+		}
+
+
+
+		T& operator*()
+		{
+			return p->data;
+		}
+
+		Node* operator->()
+		{
+			return p;
+		}
+
+		Self& operator++()
+		{
+			p = p->next;
 			return *this;
 		}
 
-		list__iterator operator ++(T)
+		Self operator++(int)
 		{
-			list__iterator tmp(p);
-			p = (p->next);
-			return tmp;
+			Self temp(p);
+			p = p->next;
+			return temp;
+
 		}
 
-		list__iterator& operator --()
+		Self& operator--()
 		{
-			p = (p->prev);
+			p = p->prev;
 			return *this;
 		}
 
-		bool operator != (const list__iterator& x)
+		Self& operator--(int)
 		{
-			return (this->p != x.p);
+			T temp = p->data;
+			p = p->prev;
+			return temp;
 		}
 
+		bool operator!=(const Self& l)
+		{
 
+			return p != l.p;
+
+		}
+
+		bool operator==(const Self& l)
+		{
+			return p == l.p;
+		}
+
+		
+
+	private:
+		Node* p;
 	};
+
+
 
 	template<class T>
 	class list
 	{
+		typedef DlistNode<T> Node;
+		typedef list_iterator<T, T&, T*> iterator;
+		typedef list_iterator<T,const T&,const T*> const_iterator;
+
 	public:
-		typedef _list__Node<T> Node;
-		typedef list__iterator<T> iterator;
 
 		list()
-			:head(nullptr)
+			:head(new Node)
 		{
-			head = new Node;
 			head->next = head;
 			head->prev = head;
-		}
-
-		void resize(const size_t& x,const T& n=T())
-		{
-			size_t num = size();
-
-			if (num < x)
-			{
-				while (x != num)
-				{
-					push_back(n);
-					x--;
-				}
-			}
-			else
-			{
-
-			}
 
 		}
 
 
-
-
-		size_t size()
+		/*void push_back(T x=T() )
 		{
-			auto be = p.begin();
-			auto en = p.end();
-			size_t num = 0;
 
-			while (be != en)
-			{
-				num++;
-				++be;
-			}
-			return num;
-		}
-
-
-		void push_back(const T& x )
-		{
-			Node* newone = new Node(x);
+			Node* newNode = new Node(x);
 			Node* tail = head->prev;
+			tail->next = newNode;
+			newNode->prev = tail;
+			newNode->next = head;
+			head->prev = newNode;
+		}*/
 
-			tail->next = newone;
-			newone->prev = tail;
-			newone->next = head;
-			head->prev = newone;
-
-
-		}
-
-
-		void pop_back()
+		iterator begin()
 		{
-
+			return head->next;
 		}
 
 		iterator end()
 		{
-			return iterator(head);
+			return head;
 		}
-		
-		iterator begin()
+
+
+		const_iterator begin()const
 		{
-			return iterator(head->next);
-			
+			return head->next;
 		}
+
+		const_iterator end() const 
+		{
+			return head;
+		}
+
+
+
+		// List Capacity
+
+		size_t size()const
+		{
+			size_t sum = 0;
+			auto it = begin();
+			while (it != end())
+			{
+				sum++;
+				it++;
+			}
+			return sum;
+		}
+
+		bool empty()const
+		{
+			return begin() == end();
+		}
+
+
+
+		////////////////////////////////////////////////////////////
+
+		// List Access
+
+		T& front()
+		{
+			return head->next->data;
+		}
+
+		const T& front()const
+		{
+			return head->next->data;
+
+		}
+
+
+		T& back()
+		{
+			return head->prev->data;
+		}
+
+
+		const T& back()const
+		{
+			return head->prev->data;
+		}
+
+
+
+		////////////////////////////////////////////////////////////
+
+		// List Modify
+
+
+
+		// 在pos位置前插入值为val的节点
+		iterator insert(iterator pos, const T& val)
+		{
+			Node* before = pos->prev;
+			Node* cur = pos->next->prev;
+
+			Node* temp = new Node(val);
+
+			before->next = temp;
+			temp->prev = before;
+
+			cur->prev = temp;
+			temp->next = cur;
+
+			return temp;
+		}
+
+		void push_back(const T& val)
+		{ 
+			insert(--begin(), val);
+		}
+
+		void pop_back() { erase(--end()); }
+
+		void push_front(const T& val) { insert(begin(), val); }
+
+		void pop_front() { erase(begin()); }
+
+		
+
+		
+
+		// 删除pos位置的节点，返回该节点的下一个位置
+
+		iterator erase(iterator pos)
+		{
+			Node* before = pos->prev;
+			Node* after = pos->next;
+			Node* cur = pos->next->prev;
+
+			before->next = after;
+			after->prev = before;
+			delete cur;
+
+			return after;
+
+
+		}
+
+		void clear()
+		{
+			auto it = begin();
+			while (it != end())
+			{
+				Node* tmp = it.GetNode();
+				it++;
+				delete tmp;
+			}
+
+			Node* tmp = it.GetNode();
+			tmp->next = tmp;
+			tmp->prev = tmp;
+
+		}
+
+		void swap(list<T>& l)
+		{
+			::swap(head, l.head);
+		}
+
 
 
 
 
 
 	private:
-		Node* head;
+		Node* head;  //为什么是头结点？因为抓住了头结点就相当于抓住了一串项链的“头”
+
 	};
+
+
 }
-
-
-
-
-
