@@ -2,7 +2,7 @@
 #include<string>
 
 using namespace std;
-int main()
+int main()        //验证g++增容倍数
 {
   string s;
   size_t sz=s.capacity();
