@@ -32,10 +32,23 @@ private:
         Inorder(cur->right);
     }
 
+    bool _Insert_R(Node *root, const T &key) // 递归写法
+    {
+    }
+
+    Node *_find_R(Node *root, const T &key)
+    {
+    }
+
 public:
     BinarySearchTree()
         : root(nullptr)
     {
+    }
+
+    Node *find_R(const T &x)
+    {
+        _find_R(root, x);
     }
 
     Node *find(const T &x)
@@ -175,6 +188,7 @@ public:
             {
                 cur->val = son->val;
                 cur->right = son->right;
+                delete son;
             }
             else
             {
@@ -206,11 +220,17 @@ int main()
         s.insert(e);
     }
 
-    s.InOrder();
+    /*  s.InOrder();
 
-    // s.Erase(2);
-    s.Erase(5);
-    s.InOrder();
+     // s.Erase(2);
+     s.Erase(5);
+     s.InOrder(); */
+
+    for (auto &e : a)
+    {
+        s.Erase(e);
+        s.InOrder();
+    }
 
     return 0;
 }
