@@ -1,5 +1,5 @@
-a.out:test.cpp
-	g++ test.cpp -o a.out -g
+a.out:test.cpp 
+	g++ -o $@ $^ -g
 	
 
 .PHONY:clean
