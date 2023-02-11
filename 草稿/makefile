@@ -3,5 +3,5 @@ a.out:test.cpp
 
 .PHONY:clean
 clean:
-	rn -rf a.out
+	rm -rf a.out
 	
