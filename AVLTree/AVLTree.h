@@ -109,18 +109,22 @@ namespace sht
                     if (parent->bf == 2 && parent->_right->bf == 1)
                     {
                         Left_Rotate(parent);
+                        break;
                     }
                     else if (parent->bf == -2 && parent->_left->bf == -1)
                     {
                         Right_Rotate(parent);
+                        break;
                     }
                     else if (parent->bf == 2 && parent->_right->bf == -1)
                     {
                         Right_Left_Rotate(parent);
+                        break;
                     }
                     else if (parent->bf == -2 && parent->_left->bf == 1)
                     {
                         Left_Right_Rotate(parent);
+                        break;
                     }
                 }
                 else
@@ -170,7 +174,7 @@ namespace sht
         {
             Node *pparent = parent->_parent;
             Node *subR = parent->_right;
-            Node *subRL = parent->_left;
+            Node *subRL = subR->_left;
 
             subR->_left = parent;
             parent->_parent = subR;
@@ -204,7 +208,7 @@ namespace sht
         {
             Node *pparent = parent->_parent;
             Node *subL = parent->_left;
-            Node *subLR = parent->_right;
+            Node *subLR = subL->_right;
 
             subL->_right = parent;
             parent->_parent = subL;
@@ -269,8 +273,8 @@ namespace sht
         //  parent->bf == 2 && parent->_right->bf == -1
         void Right_Left_Rotate(Node *parent) // 右左双旋
         {
-            Node *subR = parent->_left;
-            Node *subRL = subR->_right;
+            Node *subR = parent->_right;
+            Node *subRL = subR->_left;
             int _bf = subRL->bf; // 记录旋转前的subLR的bf
 
             Right_Rotate(subR);
