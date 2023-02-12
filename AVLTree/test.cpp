@@ -19,6 +19,6 @@ int main()
     s.BFS();
     s.insert(make_pair(2, 0));
     s.BFS();
-    s.insert(make_pair(1, 0));
+    s.insert(make_pair(3, 0));
     s.BFS();
 }

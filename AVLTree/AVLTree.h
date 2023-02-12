@@ -110,7 +110,7 @@ namespace sht
                     {
                         Left_Rotate(parent);
                     }
-                    else if (parent->bf = -2 && parent->_left->bf == -1)
+                    else if (parent->bf == -2 && parent->_left->bf == -1)
                     {
                         Right_Rotate(parent);
                     }
