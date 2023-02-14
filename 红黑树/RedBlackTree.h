@@ -1,5 +1,5 @@
 
-
+#include <vector>
 #include <iostream>
 #include <queue>
 namespace sht
@@ -128,7 +128,7 @@ namespace sht
                         // case 1
                         parent->_col = BLACK;
                         uncle->_col = BLACK;
-                        if (pparent) // pparent 为根节点时不用调整颜色，因为根节点一定为黑色
+                        if (pparent != _root) // pparent 为根节点时不用调整颜色，因为根节点一定为黑色
                             pparent->_col = RED;
 
                         cur = pparent;
@@ -154,6 +154,35 @@ namespace sht
                 }
             }
             return true;
+        }
+
+        void IsBalnace() // 检查红黑树是否平衡
+        {
+            bool is = parent_isRed(_root);
+
+            std::vector<int> num;
+
+            black_num_is_same(_root, num);
+
+            bool it = true;
+            int first = num[0];
+            for (const auto &e : num)
+            {
+                if (e != first)
+                {
+                    it = false;
+                    break;
+                }
+            }
+
+            if (it && is)
+            {
+                std::cout << "it is a redblackTree" << std::endl;
+            }
+            else
+            {
+                std::cout << "it is not a redblackTree" << std::endl;
+            }
         }
 
         void BFS()
@@ -256,6 +285,38 @@ namespace sht
                 subL->_parent = nullptr;
                 _root = subL;
             }
+        }
+
+        bool parent_isRed(Node *root) // 判断红色节点的父节点是不是黑色节点
+        {
+            if (root == nullptr)
+            {
+                return true;
+            }
+
+            if (root->_col == RED && root->_parent->_col == RED)
+            {
+                return false;
+            }
+
+            return parent_isRed(root->_left) && parent_isRed(root->_right);
+        }
+
+        void black_num_is_same(Node *root, std::vector<int> &num, int k = 0) // num存储了每条路径黑色节点的数量
+        {
+            if (root == nullptr)
+            {
+                num.push_back(k);
+                return;
+            }
+
+            if (root->_col == BLACK)
+            {
+                k++;
+            }
+
+            black_num_is_same(root->_left, num, k);
+            black_num_is_same(root->_right, num, k);
         }
 
         Node *_root;
