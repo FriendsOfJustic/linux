@@ -9,7 +9,7 @@ namespace sht
         BLACK,
         RED
     };
-    template <class K, class V>
+    template <class ValueType>
     struct TreeNode
     {
         TreeNode(const std::pair<K, V> &x, color col = RED)
@@ -17,17 +17,17 @@ namespace sht
         {
         }
 
-        TreeNode<K, V> *_parent;
-        TreeNode<K, V> *_left;
-        TreeNode<K, V> *_right; // 三叉链
-        color _col;             // 记录颜色
-        std::pair<K, V> val;    // 值
+        TreeNode<ValueType> *_parent;
+        TreeNode<ValueType> *_left;
+        TreeNode<ValueType> *_right; // 三叉链
+        color _col;                  // 记录颜色
+        ValueType val;               // 值
     };
 
-    template <class K, class V>
+    template <class K, class ValueType>
     class RBTree
     {
-        typedef TreeNode<K, V> Node;
+        typedef TreeNode<ValueType> Node;
 
     public:
         RBTree()

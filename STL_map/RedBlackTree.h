@@ -24,7 +24,7 @@ namespace sht
         std::pair<K, V> val;    // 值
     };
 
-    template <class K, class V>
+    template <class K, class V, class GetKey>
     class RBTree
     {
         typedef TreeNode<K, V> Node;
@@ -35,19 +35,19 @@ namespace sht
         {
         }
 
-        bool insert(const std::pair<K, V> &x)
+        bool insert(const V &x)
         {
             // 找节点
             Node *cur = _root;
             Node *parent = nullptr;
             while (cur)
             {
-                if (x.first > (cur->val).first)
+                if (get_key(x) > get_key(cur->val))
                 {
                     parent = cur;
                     cur = cur->_right;
                 }
-                else if (x.first < (cur->val).first)
+                else if (get_key(x) < get_key(cur->val))
                 {
                     parent = cur;
                     cur = cur->_left;
@@ -69,11 +69,11 @@ namespace sht
             }
 
             cur->_parent = parent;
-            if (x.first > (parent->val).first)
+            if (get_key(x) > get_key(parent->val))
             {
                 parent->_right = cur;
             }
-            else if (x.first < (parent->val).first)
+            else if (get_key(x) < get_key(parent->val))
             {
                 parent->_left = cur;
             }
@@ -201,11 +201,11 @@ namespace sht
                     {
                         if (tmp->_col == BLACK)
                         {
-                            std::cout << (tmp->val).first << "B"
+                            std::cout << get_key(tmp->val) << "B"
                                       << " ";
                         }
                         else
-                            std::cout << (tmp->val).first << "R ";
+                            std::cout << get_key(tmp->val) << "R ";
                     }
                     else
                         std::cout << "NULL"
@@ -319,6 +319,7 @@ namespace sht
             black_num_is_same(root->_right, num, k);
         }
 
+        GetKey get_key;
         Node *_root;
     };
 }

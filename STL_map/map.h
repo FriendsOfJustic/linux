@@ -15,6 +15,9 @@ namespace sht
             }
         };
 
-        sht::RBTree<Key, std::pair<Key, Value>> tree;
+        ty
+
+            sht::RBTree<Key, std::pair<Key, Value>, Get_Key_From_ValueType>
+                tree;
     };
 }
