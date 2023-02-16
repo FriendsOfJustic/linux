@@ -9,25 +9,90 @@ namespace sht
         BLACK,
         RED
     };
-    template <class K, class V>
+    template <class ValueType>
     struct TreeNode
     {
-        TreeNode(const std::pair<K, V> &x, color col = RED)
+        TreeNode(const ValueType &x, color col = RED)
             : _parent(nullptr), _left(nullptr), _right(nullptr), val(x), _col(col)
         {
         }
 
-        TreeNode<K, V> *_parent;
-        TreeNode<K, V> *_left;
-        TreeNode<K, V> *_right; // 三叉链
-        color _col;             // 记录颜色
-        std::pair<K, V> val;    // 值
+        TreeNode<ValueType> *_parent;
+        TreeNode<ValueType> *_left;
+        TreeNode<ValueType> *_right; // 三叉链
+        color _col;                  // 记录颜色
+        ValueType val;               // 值
     };
 
-    template <class K, class V, class GetKey>
+    template <class T, class ptr, class ref>
+    class RBTreeiterator
+    {
+        typedef TreeNode<T> Node;
+
+    public:
+        RBTreeiterator(Node *x)
+        {
+            p = x;
+        }
+
+        RBTreeiterator &operator++()
+        {
+            if (p->_right) // 该迭代器的右子树不为空
+            {
+                p = p->_right;
+                while (p->_left)
+                {
+                    p = p->_left;
+                }
+                return *this;
+            }
+            else
+            {
+                // 如果右子树为空我们要分成两种情况
+                if (p == (p->_parent->_left))
+                {
+                    p = p->_parent;
+                    return *this;
+                }
+                else
+                {
+                    while (p->_parent && p == (p->_parent->_right))
+                    {
+                        p = p->_parent;
+                    }
+                    p = p->_parent;
+                    return *this;
+                }
+            }
+        }
+
+        /*  RBTreeiterator &operator--()
+         {
+         } */
+        bool operator==(const RBTreeiterator &x)
+        {
+            return ((x.p) == p);
+        }
+
+        bool operator!=(const RBTreeiterator &x)
+        {
+            return !(*this == x);
+        }
+
+        ptr operator->()
+        {
+            return &(p->val);
+        }
+
+    private:
+        Node *p;
+    };
+
+    template <class K, class ValueType, class GetKey>
     class RBTree
     {
-        typedef TreeNode<K, V> Node;
+        typedef TreeNode<ValueType> Node;
+        typedef RBTreeiterator<ValueType, ValueType *, ValueType &> iterator;
 
     public:
         RBTree()
@@ -35,9 +100,26 @@ namespace sht
         {
         }
 
-        bool insert(const V &x)
+        iterator begin()
         {
-            // 找节点
+            Node *cur = _root;
+            while (cur->_left)
+            {
+                cur = cur->_left;
+            }
+
+            return cur;
+        }
+
+        iterator end()
+        {
+            return nullptr;
+        }
+
+        bool insert(const ValueType &x)
+        {
+            // GetKey get_key;
+            //  找节点
             Node *cur = _root;
             Node *parent = nullptr;
             while (cur)
@@ -319,7 +401,7 @@ namespace sht
             black_num_is_same(root->_right, num, k);
         }
 
-        GetKey get_key;
+        GetKey get_key; // 专门用来取出ValueType中的key
         Node *_root;
     };
 }

@@ -7,17 +7,39 @@ namespace sht
     template <class Key, class Value>
     class map
     {
+        typedef std::pair<Key, Value> ValueType;
+        typedef RBTreeiterator<ValueType, ValueType *, ValueType &> iterator;
+
         struct Get_Key_From_ValueType
         {
-            Key &operator()(std::pair<Key, Value> &v)
+            Key operator()(const std::pair<Key, Value> &v)
             {
                 return v.first;
             }
         };
 
-        ty
+    public:
+        bool insert(const std::pair<Key, Value> x)
+        {
+            return tree.insert(x);
+        }
 
-            sht::RBTree<Key, std::pair<Key, Value>, Get_Key_From_ValueType>
-                tree;
+        iterator begin()
+        {
+            return tree.begin();
+        }
+
+        iterator end()
+        {
+            return tree.end();
+        }
+
+        void BFS()
+        {
+            tree.BFS();
+        }
+
+    private:
+        sht::RBTree<Key, ValueType, Get_Key_From_ValueType> tree;
     };
 }

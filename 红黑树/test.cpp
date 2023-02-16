@@ -35,6 +35,6 @@ int main()
     {
         t.insert(make_pair(e, 0));
     }
-    t.BFS();
+    // t.BFS();
     t.IsBalnace();
 }

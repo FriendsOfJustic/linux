@@ -4,4 +4,18 @@ using namespace std;
 int main()
 {
     sht::map<int, int> m;
+    vector<int> v = {4, 2, 6, 1, 3, 5, 15, 7, 16, 14};
+    for (auto e : v)
+    {
+        m.insert(make_pair(e, 0));
+    }
+    // m.BFS();
+
+    auto it = m.begin();
+
+    while (it != m.end())
+    {
+        cout << it->first << endl;
+        ++it;
+    }
 }
