@@ -7,8 +7,6 @@ namespace sht
     template <class Key, class Value>
     class map
     {
-        typedef std::pair<Key, Value> ValueType;
-        typedef RBTreeiterator<ValueType, ValueType *, ValueType &> iterator;
 
         struct Get_Key_From_ValueType
         {
@@ -19,12 +17,25 @@ namespace sht
         };
 
     public:
+        typedef std::pair<const Key, Value> ValueType;
+        typedef sht::RBTreeiterator<ValueType, ValueType *, ValueType &> iterator;
+        typedef sht::RBTreeiterator<ValueType, ValueType *, ValueType &> const_iterator;
         bool insert(const std::pair<Key, Value> x)
         {
             return tree.insert(x);
         }
 
-        iterator begin()
+        const_iterator begin() const // 常量迭代器
+        {
+            return tree.begin();
+        }
+
+        const_iterator end() const
+        {
+            return tree.end();
+        }
+
+        iterator begin() // 普通迭代器 ： 注意普通迭代器的key也是无法修改的
         {
             return tree.begin();
         }

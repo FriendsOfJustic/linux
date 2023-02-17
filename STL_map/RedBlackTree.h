@@ -1,4 +1,4 @@
-
+#include <assert.h>
 #include <vector>
 #include <iostream>
 #include <queue>
@@ -66,9 +66,40 @@ namespace sht
             }
         }
 
-        /*  RBTreeiterator &operator--()
-         {
-         } */
+        RBTreeiterator &operator--()
+        {
+
+            if (p->_left) // 如果左不为空 找左子树的最右节点
+            {
+                p = p->_left;
+                while (p->_left)
+                {
+                    p = p->_left;
+                }
+            }
+            else
+            {
+                if (p == (p->_parent->_left))
+                {
+
+                    Node *tmp = p;
+                    while (tmp->_parent && tmp == (tmp->_parent->_left))
+                    {
+                        tmp = tmp->_parent;
+                    }
+                    if (tmp->_parent)
+                        p = tmp->_parent;
+                    else
+                        assert("指针越界");
+                }
+                else
+                {
+                    p = p->_parent;
+                }
+            }
+            return *this;
+        }
+
         bool operator==(const RBTreeiterator &x)
         {
             return ((x.p) == p);
@@ -91,13 +122,30 @@ namespace sht
     template <class K, class ValueType, class GetKey>
     class RBTree
     {
-        typedef TreeNode<ValueType> Node;
-        typedef RBTreeiterator<ValueType, ValueType *, ValueType &> iterator;
 
     public:
+        typedef TreeNode<ValueType> Node;
+        typedef RBTreeiterator<ValueType, ValueType *, ValueType &> iterator;
+        typedef RBTreeiterator<const ValueType, const ValueType *, const ValueType &> const_iterator;
         RBTree()
             : _root(nullptr)
         {
+        }
+
+        const_iterator begin() const
+        {
+            Node *cur = _root;
+            while (cur->_left)
+            {
+                cur = cur->_left;
+            }
+
+            return cur;
+        }
+
+        const_iterator end() const
+        {
+            return nullptr;
         }
 
         iterator begin()

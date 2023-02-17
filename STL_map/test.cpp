@@ -9,13 +9,24 @@ int main()
     {
         m.insert(make_pair(e, 0));
     }
-    // m.BFS();
+    m.BFS();
 
-    auto it = m.begin();
+    /* auto it = m.begin();
 
     while (it != m.end())
     {
         cout << it->first << endl;
         ++it;
-    }
+    } */
+
+    auto it = m.begin();
+    sht::map<int, int>::const_iterator is = m.begin();
+    // is->first++;
+
+    cout << it->first << endl;
+    // it->first++;
+    it->second++;
+    ++it;
+    --it;
+    cout << it->first << endl;
 }
