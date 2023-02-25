@@ -1,0 +1,4 @@
+﻿  test.cpp
+Z:\乱七八糟\test\unordered_map\闭散列\unordered_map\unordered_map.h(1,1): warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失
+Z:\乱七八糟\test\unordered_map\闭散列\unordered_map\unordered_map.h(98): warning C4715: “sht::unordered_map<std::basic_string<char,std::char_traits<char>,std::allocator<char> >,int,sht::HashFunc<std::basic_string<char,std::char_traits<char>,std::allocator<char> > > >::insert”: 不是所有的控件路径都返回值
+  unordered_map.vcxproj -> Z:\乱七八糟\test\unordered_map\闭散列\unordered_map\Debug\unordered_map.exe

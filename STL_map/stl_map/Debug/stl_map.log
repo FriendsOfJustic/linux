@@ -1,0 +1,4 @@
+﻿  test.cpp
+Z:\乱七八糟\test\STL_map\stl_map\map.h(1,1): warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失
+Z:\乱七八糟\test\STL_map\stl_map\RedBlackTree.h(1,1): warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失
+  stl_map.vcxproj -> Z:\乱七八糟\test\STL_map\stl_map\Debug\stl_map.exe
