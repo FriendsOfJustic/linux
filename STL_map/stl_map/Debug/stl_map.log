@@ -1,4 +1,14 @@
 ﻿  test.cpp
 Z:\乱七八糟\test\STL_map\stl_map\map.h(1,1): warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失
 Z:\乱七八糟\test\STL_map\stl_map\RedBlackTree.h(1,1): warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失
-  stl_map.vcxproj -> Z:\乱七八糟\test\STL_map\stl_map\Debug\stl_map.exe
+Z:\乱七八糟\test\STL_map\stl_map\test.cpp(15,53): error C2664: “sht::RBTreeiterator<ValueType,const ValueType *,const ValueType &>::RBTreeiterator(sht::RBTreeiterator<ValueType,const ValueType *,const ValueType &> &&)”: 无法将参数 1 从“sht::RBTreeiterator<ValueType,ValueType *,ValueType &>”转换为“sht::TreeNode<ValueType> *”
+          with
+          [
+              ValueType=std::pair<const int,int>
+          ]
+Z:\乱七八糟\test\STL_map\stl_map\test.cpp(15,50): message : 没有可用于执行该转换的用户定义的转换运算符，或者无法调用该运算符
+Z:\乱七八糟\test\STL_map\stl_map\RedBlackTree.h(34,9): message : 参见“sht::RBTreeiterator<ValueType,const ValueType *,const ValueType &>::RBTreeiterator”的声明
+          with
+          [
+              ValueType=std::pair<const int,int>
+          ]

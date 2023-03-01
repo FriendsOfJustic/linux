@@ -27,15 +27,21 @@ namespace sht
     template <class T, class ptr, class ref>
     class RBTreeiterator
     {
-        typedef TreeNode<T> Node;
-
     public:
+        typedef TreeNode<T> Node;
+        typedef RBTreeiterator<T, ptr, ref> Self;
+        typedef RBTreeiterator<T, T&, T*> iterator;  //iterator 不管是该RBiterator是什么类型迭代器 iterator始终是普通迭代器
         RBTreeiterator(Node *x)
         {
             p = x;
         }
 
-        RBTreeiterator &operator++()
+        RBTreeiterator(const iterator& x)
+        {
+            p = x.p;
+        }
+
+        Self &operator++()
         {
             if (p->_right) // 该迭代器的右子树不为空
             {
@@ -66,7 +72,7 @@ namespace sht
             }
         }
 
-        RBTreeiterator &operator--()
+       Self &operator--()
         {
 
             if (p->_left) // 如果左不为空 找左子树的最右节点
@@ -126,7 +132,9 @@ namespace sht
     public:
         typedef TreeNode<ValueType> Node;
         typedef RBTreeiterator<ValueType, ValueType *, ValueType &> iterator;
-        typedef RBTreeiterator<const ValueType, const ValueType *, const ValueType &> const_iterator;
+        typedef RBTreeiterator<ValueType, const ValueType *, const ValueType &> const_iterator;
+        
+        
         RBTree()
             : _root(nullptr)
         {
@@ -156,12 +164,12 @@ namespace sht
                 cur = cur->_left;
             }
 
-            return cur;
+            return iterator(cur);
         }
 
         iterator end()
         {
-            return nullptr;
+            return iterator(nullptr);
         }
 
         std::pair<iterator,bool > insert(const ValueType &x)

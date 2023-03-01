@@ -139,6 +139,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="HashTable.h" />
     <ClInclude Include="unordered_map.h" />
   </ItemGroup>
   <ItemGroup>
