@@ -30,8 +30,8 @@ namespace sht
     public:
         typedef TreeNode<T> Node;
         typedef RBTreeiterator<T, ptr, ref> Self;
-        typedef RBTreeiterator<T, T&, T*> iterator;  //iterator 不管是该RBiterator是什么类型迭代器 iterator始终是普通迭代器
-        RBTreeiterator(Node *x)
+        typedef RBTreeiterator<T, T*, T&> iterator;  //iterator 不管是该RBiterator是什么类型迭代器 iterator始终是普通迭代器
+        RBTreeiterator(Node *x=nullptr)
         {
             p = x;
         }
@@ -131,8 +131,8 @@ namespace sht
 
     public:
         typedef TreeNode<ValueType> Node;
-        typedef RBTreeiterator<ValueType, ValueType *, ValueType &> iterator;
-        typedef RBTreeiterator<ValueType, const ValueType *, const ValueType &> const_iterator;
+        typedef typename RBTreeiterator<ValueType, ValueType *, ValueType &> iterator;
+        typedef typename RBTreeiterator<ValueType, const ValueType *, const ValueType &> const_iterator;
         
         
         RBTree()
