@@ -1,4 +1,4 @@
-
+#include <assert.h>
 #include <vector>
 #include <iostream>
 #include <queue>
@@ -12,7 +12,7 @@ namespace sht
     template <class ValueType>
     struct TreeNode
     {
-        TreeNode(const std::pair<K, V> &x, color col = RED)
+        TreeNode(const ValueType &x, color col = RED)
             : _parent(nullptr), _left(nullptr), _right(nullptr), val(x), _col(col)
         {
         }
@@ -24,56 +24,201 @@ namespace sht
         ValueType val;               // 值
     };
 
-    template <class K, class ValueType>
+    template <class T, class ptr, class ref>
+    class RBTreeiterator
+    {
+    public:
+        typedef TreeNode<T> Node;
+        typedef RBTreeiterator<T, ptr, ref> Self;
+        typedef RBTreeiterator<T, T*, T&> iterator;  //iterator 不管是该RBiterator是什么类型迭代器 iterator始终是普通迭代器
+        RBTreeiterator(Node *x=nullptr)
+        {
+            p = x;
+        }
+
+        RBTreeiterator(const iterator& x)
+        {
+            p = x.p;
+        }
+
+        Self &operator++()
+        {
+            if (p->_right) // 该迭代器的右子树不为空
+            {
+                p = p->_right;
+                while (p->_left)
+                {
+                    p = p->_left;
+                }
+                return *this;
+            }
+            else
+            {
+                // 如果右子树为空我们要分成两种情况
+                if (p == (p->_parent->_left))
+                {
+                    p = p->_parent;
+                    return *this;
+                }
+                else
+                {
+                    while (p->_parent && p == (p->_parent->_right))
+                    {
+                        p = p->_parent;
+                    }
+                    p = p->_parent;
+                    return *this;
+                }
+            }
+        }
+
+       Self &operator--()
+        {
+
+            if (p->_left) // 如果左不为空 找左子树的最右节点
+            {
+                p = p->_left;
+                while (p->_left)
+                {
+                    p = p->_left;
+                }
+            }
+            else
+            {
+                if (p == (p->_parent->_left))
+                {
+
+                    Node *tmp = p;
+                    while (tmp->_parent && tmp == (tmp->_parent->_left))
+                    {
+                        tmp = tmp->_parent;
+                    }
+                    if (tmp->_parent)
+                        p = tmp->_parent;
+                    else
+                        assert("指针越界");
+                }
+                else
+                {
+                    p = p->_parent;
+                }
+            }
+            return *this;
+        }
+
+        bool operator==(const RBTreeiterator &x)
+        {
+            return ((x.p) == p);
+        }
+
+        bool operator!=(const RBTreeiterator &x)
+        {
+            return !(*this == x);
+        }
+
+
+        T operator*()
+        {
+
+        }
+
+        ptr operator->()     
+        {
+            return &(p->val);
+        }
+        Node *p;
+    };
+
+    template <class K, class ValueType, class GetKey>
     class RBTree
     {
-        typedef TreeNode<ValueType> Node;
 
     public:
+        typedef TreeNode<ValueType> Node;
+        typedef typename RBTreeiterator<ValueType, ValueType *, ValueType &> iterator;
+        typedef typename RBTreeiterator<ValueType, const ValueType *, const ValueType &> const_iterator;
+        
+        
         RBTree()
             : _root(nullptr)
         {
         }
 
-        bool insert(const std::pair<K, V> &x)
+        const_iterator begin() const
         {
-            // 找节点
+            Node *cur = _root;
+            while (cur->_left)
+            {
+                cur = cur->_left;
+            }
+
+            return cur;
+        }
+
+        const_iterator end() const
+        {
+            return nullptr;
+        }
+
+        iterator begin()
+        {
+            if (_root == nullptr)
+                return _root;
+            Node *cur = _root;
+            while (cur->_left)
+            {
+                cur = cur->_left;
+            }
+
+            return iterator(cur);
+        }
+
+        iterator end()
+        {
+            return iterator(nullptr);
+        }
+
+        std::pair<iterator,bool > insert(const ValueType &x)
+        {
+            // GetKey get_key;
+            //  找节点
             Node *cur = _root;
             Node *parent = nullptr;
             while (cur)
             {
-                if (x.first > (cur->val).first)
+                if (get_key(x) > get_key(cur->val))
                 {
                     parent = cur;
                     cur = cur->_right;
                 }
-                else if (x.first < (cur->val).first)
+                else if (get_key(x) < get_key(cur->val))
                 {
                     parent = cur;
                     cur = cur->_left;
                 }
                 else
                 {
-                    return false;
+                    return make_pair(iterator(cur),false);
                 }
             }
 
             // 插入
             cur = new Node(x);
+            Node* newNode = cur;   //记录新插入节点的地址，后面返回值的时候要用到
             if (parent == nullptr) // 如果是第一个插入直接结束
             {
                 cur->_col = BLACK; // 第一个根节点一定是黑
 
                 _root = cur;
-                return true;
+                return make_pair(iterator(cur), true);
             }
 
             cur->_parent = parent;
-            if (x.first > (parent->val).first)
+            if (get_key(x) > get_key(parent->val))
             {
                 parent->_right = cur;
             }
-            else if (x.first < (parent->val).first)
+            else if (get_key(x) < get_key(parent->val))
             {
                 parent->_left = cur;
             }
@@ -153,7 +298,7 @@ namespace sht
                     }
                 }
             }
-            return true;
+            return make_pair(iterator(newNode), true);
         }
 
         void IsBalnace() // 检查红黑树是否平衡
@@ -201,11 +346,11 @@ namespace sht
                     {
                         if (tmp->_col == BLACK)
                         {
-                            std::cout << (tmp->val).first << "B"
+                            std::cout << get_key(tmp->val) << "B"
                                       << " ";
                         }
                         else
-                            std::cout << (tmp->val).first << "R ";
+                            std::cout << get_key(tmp->val) << "R ";
                     }
                     else
                         std::cout << "NULL"
@@ -319,6 +464,7 @@ namespace sht
             black_num_is_same(root->_right, num, k);
         }
 
+        GetKey get_key; // 专门用来取出ValueType中的key
         Node *_root;
     };
 }

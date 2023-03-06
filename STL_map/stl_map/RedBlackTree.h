@@ -116,12 +116,16 @@ namespace sht
             return !(*this == x);
         }
 
-        ptr operator->()
+
+        T operator*()
+        {
+
+        }
+
+        ptr operator->()     
         {
             return &(p->val);
         }
-
-    private:
         Node *p;
     };
 
@@ -158,6 +162,8 @@ namespace sht
 
         iterator begin()
         {
+            if (_root == nullptr)
+                return _root;
             Node *cur = _root;
             while (cur->_left)
             {

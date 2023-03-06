@@ -27,15 +27,21 @@ namespace sht
     template <class T, class ptr, class ref>
     class RBTreeiterator
     {
-        typedef TreeNode<T> Node;
-
     public:
-        RBTreeiterator(Node *x)
+        typedef TreeNode<T> Node;
+        typedef RBTreeiterator<T, ptr, ref> Self;
+        typedef RBTreeiterator<T, T*, T&> iterator;  //iterator 不管是该RBiterator是什么类型迭代器 iterator始终是普通迭代器
+        RBTreeiterator(Node *x=nullptr)
         {
             p = x;
         }
 
-        RBTreeiterator &operator++()
+        RBTreeiterator(const iterator& x)
+        {
+            p = x.p;
+        }
+
+        Self &operator++()
         {
             if (p->_right) // 该迭代器的右子树不为空
             {
@@ -66,7 +72,7 @@ namespace sht
             }
         }
 
-        RBTreeiterator &operator--()
+       Self &operator--()
         {
 
             if (p->_left) // 如果左不为空 找左子树的最右节点
@@ -110,12 +116,16 @@ namespace sht
             return !(*this == x);
         }
 
-        ptr operator->()
+
+        T operator*()
+        {
+
+        }
+
+        ptr operator->()     
         {
             return &(p->val);
         }
-
-    private:
         Node *p;
     };
 
@@ -125,8 +135,10 @@ namespace sht
 
     public:
         typedef TreeNode<ValueType> Node;
-        typedef RBTreeiterator<ValueType, ValueType *, ValueType &> iterator;
-        typedef RBTreeiterator<const ValueType, const ValueType *, const ValueType &> const_iterator;
+        typedef typename RBTreeiterator<ValueType, ValueType *, ValueType &> iterator;
+        typedef typename RBTreeiterator<ValueType, const ValueType *, const ValueType &> const_iterator;
+        
+        
         RBTree()
             : _root(nullptr)
         {
@@ -150,21 +162,23 @@ namespace sht
 
         iterator begin()
         {
+            if (_root == nullptr)
+                return _root;
             Node *cur = _root;
             while (cur->_left)
             {
                 cur = cur->_left;
             }
 
-            return cur;
+            return iterator(cur);
         }
 
         iterator end()
         {
-            return nullptr;
+            return iterator(nullptr);
         }
 
-        bool insert(const ValueType &x)
+        std::pair<iterator,bool > insert(const ValueType &x)
         {
             // GetKey get_key;
             //  找节点
@@ -184,18 +198,19 @@ namespace sht
                 }
                 else
                 {
-                    return false;
+                    return make_pair(iterator(cur),false);
                 }
             }
 
             // 插入
             cur = new Node(x);
+            Node* newNode = cur;   //记录新插入节点的地址，后面返回值的时候要用到
             if (parent == nullptr) // 如果是第一个插入直接结束
             {
                 cur->_col = BLACK; // 第一个根节点一定是黑
 
                 _root = cur;
-                return true;
+                return make_pair(iterator(cur), true);
             }
 
             cur->_parent = parent;
@@ -283,7 +298,7 @@ namespace sht
                     }
                 }
             }
-            return true;
+            return make_pair(iterator(newNode), true);
         }
 
         void IsBalnace() // 检查红黑树是否平衡
