@@ -18,8 +18,8 @@ namespace sht
 
     public:
         typedef std::pair<const Key, Value> ValueType;    //注意这里定义的ValueType是实际树节点里面存的内容
-        typedef sht::RBTreeiterator<ValueType, ValueType *, ValueType &> iterator;
-        typedef sht::RBTreeiterator<ValueType, ValueType *, ValueType &> const_iterator;
+        typedef typename sht::RBTree<Key, ValueType, Get_Key_From_ValueType>::iterator iterator;
+        typedef typename sht::RBTree<Key, ValueType, Get_Key_From_ValueType>::const_iterator const_iterator;
         
         
         

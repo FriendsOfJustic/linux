@@ -5,11 +5,18 @@ int main()
 {
     sht::map<int, int> m;
     vector<int> v = {4, 2, 6, 1, 3, 5, 15, 7, 16, 14};
-    /*for (auto e : v)
+    for (auto e : v)
     {
         m.insert(make_pair(e, 0));
     }
-    m.BFS();*/
+
+    //sht::map<int, int>::const_iterator it = m.begin();
+    //sht::map<int, int>::iterator is = m.begin();
+    sht::map<int, int>::const_iterator it=m.begin();
+
+    m.BFS();
+    //+this	0x0075fc10 {p = 0x00000000 < NULL > }	sht::RBTreeiterator<std::pair<int const, int>, std::pair<int const, int> const*, std::pair<int const, int> const&>*
+    //+		*this	{p=0x00000000 <NULL> }	sht::RBTreeiterator<std::pair<int const ,int>,std::pair<int const ,int> const *,std::pair<int const ,int> const &>
 
     /* auto it = m.begin();
 
@@ -36,10 +43,13 @@ int main()
     auto it=m.insert(make_pair(1, 0));*/
 
 
-    m[1]++;
+    /*m[1]++;
     m[2]++;
     m[3]++;
-    m[4]++;
+    m[4]++;*/
+
+
+    //sht::map<int, int>::const_iterator it = m.begin();
 
     m.BFS();
     
