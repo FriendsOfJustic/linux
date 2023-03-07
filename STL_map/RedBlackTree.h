@@ -164,7 +164,7 @@ namespace sht
             return nullptr;
         }
 
-        bool insert(const ValueType &x)
+        std::pair<iterator, bool> insert(const ValueType &x)
         {
             // GetKey get_key;
             //  找节点
@@ -184,7 +184,8 @@ namespace sht
                 }
                 else
                 {
-                    return false;
+                    // 插入重复元素：返回 map中该元素的迭代器 和 false
+                    return make_pair(iterator(cur), false);
                 }
             }
 
@@ -195,7 +196,7 @@ namespace sht
                 cur->_col = BLACK; // 第一个根节点一定是黑
 
                 _root = cur;
-                return true;
+                make_pair(iterator(cur), true);
             }
 
             cur->_parent = parent;
@@ -283,7 +284,8 @@ namespace sht
                     }
                 }
             }
-            return true;
+            // 返回新插入节点的迭代器 和 true
+            return make_pair(iterator(cur), true);
         }
 
         void IsBalnace() // 检查红黑树是否平衡

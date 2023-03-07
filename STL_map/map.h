@@ -20,7 +20,7 @@ namespace sht
         typedef std::pair<const Key, Value> ValueType;
         typedef sht::RBTreeiterator<ValueType, ValueType *, ValueType &> iterator;
         typedef sht::RBTreeiterator<ValueType, ValueType *, ValueType &> const_iterator;
-        bool insert(const std::pair<Key, Value> x)
+        std::pair<iterator, bool> insert(const std::pair<Key, Value> x)
         {
             return tree.insert(x);
         }
