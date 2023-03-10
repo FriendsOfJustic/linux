@@ -11,27 +11,40 @@
 using namespace std;
 
 
-#define N 1000
+
 
 int main()
 {
-	srand(time(0));
-	string s = "i love you!";
-	sht::BloomFilter<string, N> BF;
-
-	for (int i = 0; i < N; i++)
+	string s = "i love you!ajkshdkajhduwhduiajsidhiouwhqouhdouhdoausfboasubcousbcouasdwuhoa";
+	const size_t n = s.size() * 70;
+	sht::BloomFilter<string, 76*70> BF;
+	int f=0;
+	int num = 0;
+	for (int j = 0; j < s.size(); j++)
 	{
-		s[rand() % s.size()]++;
-		if (BF.test(s))
+		for (int i = 1; i < 70; i++)
 		{
-			cout << "在" << endl;
-		}
-		else
-		{
-			cout << "不在" << endl;
-			BF.set(s);
-		}
-	}
+			s[j] += i;
+			BF.test(s);
 
+			if (BF.test(s) == false)
+			{
+				cout << "不在——判断正确" << endl;
+
+			}
+			else
+			{
+				cout << "在——误判" << endl;
+				f++;
+			}
+			num++;
+		}
+
+		
+
+
+	}
+	double x = (f * 1.0) / num;
+	cout << "误判率为：" << x << endl;
 }
 

@@ -72,16 +72,16 @@ namespace sht
 			return hash;
 		}
 	};
-	template<class k,size_t N=100>
+	template<class k,size_t N=100,class Hash1=BKDRHash,class Hash2=DJBHash,class Hash3=JSHash,class Hash4=APHash>
 	class BloomFilter
 	{
 	public:
 		void set(const k& x)
 		{
-			size_t H1 = BKDRHash()(x)%sz;
-			size_t H2 = DJBHash()(x) % sz;
-			size_t H3 = JSHash()(x) % sz;
-			size_t H4 = APHash()(x) % sz;
+			size_t H1 = Hash1()(x)%sz;
+			size_t H2 = Hash2()(x) % sz;
+			size_t H3 = Hash3()(x) % sz;
+			size_t H4 = Hash4()(x) % sz;
 
 
 			bitset.set(H1);
@@ -96,10 +96,11 @@ namespace sht
 
 		bool test(const k& x)
 		{
-			size_t H1 = BKDRHash()(x) % sz;
-			size_t H2 = DJBHash()(x) % sz;
-			size_t H3 = JSHash()(x) % sz;
-			size_t H4 = APHash()(x) % sz;
+			size_t H1 = Hash1()(x) % sz;
+			size_t H2 = Hash2()(x) % sz;
+			size_t H3 = Hash3()(x) % sz;
+			size_t H4 = Hash4()(x) % sz;
+
 			if (bitset.test(H1) == false)
 				return false;
 			if (bitset.test(H2) == false)

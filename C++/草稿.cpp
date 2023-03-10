@@ -9668,61 +9668,264 @@ using namespace std;
 //    }
 //};
 
+//
+//class Solution {
+//public:
+//    vector<vector<int>> threeSum(vector<int>& nums) {
+//
+//        vector<vector<int>> result;
+//        sort(nums.begin(), nums.end());
+//
+//
+//        int left;
+//        int right;
+//
+//
+//        for (int i = 0; i < nums.size() - 2; i++)
+//        {
+//            if (nums[i] > 0)
+//                break;
+//
+//            if (i > 0 && nums[i] == nums[i - 1])
+//                continue;
+//            left = i + 1;
+//            right = nums.size() - 1;
+//            while (left < right)
+//            {
+//                if (nums[i] + nums[left] + nums[right] > 0)
+//                    right--;
+//                else if (nums[i] + nums[left] + nums[right] < 0)
+//                    left++;
+//                else
+//                {
+//                    vector<int> tmp;
+//                    tmp.push_back(nums[i]);
+//                    tmp.push_back(nums[left]);
+//                    tmp.push_back(nums[right]);
+//                    result.push_back(tmp);
+//                }
+//
+//            }
+//
+//
+//        }
+//        return result;
+//    }
+//};
+//
+//int main()
+//{
+//    vector<int> s = { -1,0,1,2,-1,-4 };
+//
+//    int a[] = { 1,2,3 };
+//    int(*p)[3] = &a;
+//    
+//    cout << a << endl;
+//    cout << p << endl;
+//
+//    Solution t;
+//    t.threeSum(s);
+//}
+
+
+//
+//class Solution {
+//public:
+//    vector<vector<int>> threeSum(vector<int>& nums) {
+//
+//        vector<vector<int>> result;
+//        sort(nums.begin(), nums.end());
+//
+//
+//        int left;
+//        int right;
+//
+//
+//        for (int i = 0; i < nums.size() - 2; i++)
+//        {
+//            if (nums[i] > 0)
+//                break;
+//
+//            if (i > 0 && nums[i] == nums[i - 1])
+//                continue;
+//            left = i + 1;
+//            right = nums.size() - 1;
+//            while (left < right)
+//            {
+//                if (nums[i] + nums[left] + nums[right] > 0)
+//                    right--;
+//                else if (nums[i] + nums[left] + nums[right] < 0)
+//                    left++;
+//                else
+//                {
+//                    vector<int> tmp;
+//                    tmp.push_back(nums[i]);
+//                    tmp.push_back(nums[left]);
+//                    tmp.push_back(nums[right]);
+//                    result.push_back(tmp);
+//                    left++;
+//                    while (left < right)
+//                    {
+//                        if (nums[left] == nums[left - 1])
+//                            left++;
+//                    }
+//                }
+//
+//            }
+//
+//
+//        }
+//        return result;
+//    }
+//};
+//class Solution {
+//public:
+//    int threeSumClosest(vector<int>& nums, int target) {
+//        sort(nums.begin(), nums.end());
+//        int result;
+//        for (int i = 0; i < nums.size() - 2; i++)
+//        {
+//            if (target < 0 && nums[i]>0)
+//                break;
+//
+//
+//            int left = i + 1;
+//            int right = nums.size() - 1;
+//            if (i == 0)
+//                result = nums[i] + nums[left] + nums[right];
+//            while (left < right)
+//            {
+//                if (abs(nums[i] + nums[left] + nums[right] - target) < abs(result - target))
+//                    result = nums[i] + nums[left] + nums[right];
+//                if (nums[i] + nums[left] + nums[right] > target)
+//                    right--;
+//                else if (nums[i] + nums[left] + nums[right] < target)
+//                    left++;
+//                else
+//                {
+//                    return target;
+//                }
+//
+//                
+//            }
+//
+//        }
+//        return result;
+//    }
+//};
+//
+//int main()
+//{
+//    vector<int> s = { -1,2,1,-4 };
+//
+//    Solution t;
+//    t.threeSumClosest(s,1);
+//}
+
+
+//class Solution {
+//public:
+//    int minSubarray(vector<int>& nums, int p) {
+//
+//        vector<int> sum;
+//        sum.resize(nums.size());
+//        sum[0] = nums[0];
+//        for (int i = 1; i < nums.size(); i++)
+//        {
+//            sum[i] = nums[i] + sum[i - 1];
+//            if (sum[i] % p == 0)
+//                return nums.size() - 1 - i;
+//        }
+//
+//        int  m = -1;
+//        for (int i = 0; i < nums.size(); i++)
+//        {
+//            int j = i;
+//
+//            for (; j < nums.size(); j++)
+//            {
+//                int left, right;
+//
+//                if (i == 0)
+//                    left = 0;
+//                else
+//                    left = sum[i - 1];
+//
+//
+//                if (j == nums.size() - 1)
+//                    right = 0;
+//                else
+//                    right = sum[sum.size()-1] - sum[j];
+//
+//
+//         
+//                if (left + right != 0 && (left + right) % p == 0)
+//                {
+//                    if (m == -1)
+//                        m = j - i + 1;
+//                    else
+//                        m = min(m, j - i + 1);
+//                }
+//            }
+//        }
+//        return m;
+//
+//    }
+//};
+
 
 class Solution {
 public:
-    vector<vector<int>> threeSum(vector<int>& nums) {
+    vector<vector<int>> fourSum(vector<int>& nums, int target) {
 
-        vector<vector<int>> result;
         sort(nums.begin(), nums.end());
+        vector<vector<int>> result;
 
-
-        int left;
-        int right;
-
-
-        for (int i = 0; i < nums.size() - 2; i++)
+        if (nums.size() < 4)
+            return result;
+        for (int i = 0; i < nums.size() - 3; i++)
         {
-            if (nums[i] > 0)
-                break;
-
             if (i > 0 && nums[i] == nums[i - 1])
                 continue;
-            left = i + 1;
-            right = nums.size() - 1;
-            while (left < right)
+
+            for (int j = i + 1; j < nums.size() - 2; j++)
             {
-                if (nums[i] + nums[left] + nums[right] > 0)
-                    right--;
-                else if (nums[i] + nums[left] + nums[right] < 0)
-                    left++;
-                else
+                if (j > 1 && nums[j] == nums[j - 1])
+                    continue;
+
+                int left = j + 1;
+                int right = nums.size() - 1;
+
+                while (left < right)
                 {
-                    vector<int> tmp;
-                    tmp.push_back(nums[i]);
-                    tmp.push_back(nums[left]);
-                    tmp.push_back(nums[right]);
-                    result.push_back(tmp);
+                    if (nums[i] + nums[j] + nums[left] + nums[right] > target)
+                        right--;
+                    else if (nums[i] + nums[j] + nums[left] + nums[right] < target)
+                        left++;
+                    else
+                    {
+                        vector<int> tmp;
+                        tmp.push_back(nums[i]);
+                        tmp.push_back(nums[j]);
+                        tmp.push_back(nums[left]);
+                        tmp.push_back(nums[right]);
+
+                        result.push_back(tmp);
+                        left++;
+                        while (left < right && nums[left] == nums[left - 1])
+                        {
+                            left++;
+                        }
+                    }
                 }
-
             }
-
-
         }
         return result;
     }
 };
-
 int main()
 {
-    vector<int> s = { -1,0,1,2,-1,-4 };
-
-    int a[] = { 1,2,3 };
-    int(*p)[3] = &a;
-    
-    cout << a << endl;
-    cout << p << endl;
-
+    vector<int> s = { -2,-1,-1,1,1,2,2 };
     Solution t;
-    t.threeSum(s);
+    t.fourSum(s, 0);
 }
