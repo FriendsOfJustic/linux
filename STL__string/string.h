@@ -6,7 +6,7 @@
 #include<iostream>
 #include<assert.h>
 
-namespace my
+namespace sht
 {
 
 
@@ -38,7 +38,7 @@ namespace my
 			return this->_str + _size;
 		}
 
-
+		
 		string(const char* p = "")
 		{
 			_size = strlen(p);
@@ -56,15 +56,35 @@ namespace my
 			strcpy(_str, s._str);
 		}
 
-
-
-		string& operator=(string s) //现代写法
+		string(string&& s)  //右值引用
 		{
-			_size = s._size;
-			_capacity = s._capacity;
+			
 			std::swap(_str, s._str);
+			std::swap(_size,s._size);
+			std::swap(_capacity,s._capacity);
+		}
+
+		string& operator=(string && s)
+		{
+			swap(*this, s);
 			return *this;
 		}
+
+
+		string& operator=(const string& s)
+		{
+			string tmp(s);
+			swap(*this, tmp);
+			return *this;
+		}
+		//string& operator=(string s) //现代写法
+		//{
+		//	//由于s在传参的时候调用了拷贝构造，所以这里的s是一个临时变量，除了函数作用域自动销毁
+		//	_size = s._size;
+		//	_capacity = s._capacity;
+		//	std::swap(_str, s._str);
+		//	return *this;
+		//}
 
 
 
@@ -82,6 +102,7 @@ namespace my
 
 		~string()
 		{
+			if(_str!=nullptr)
 			delete[]_str;
 			_size = 0;
 			_capacity = 0;
@@ -401,7 +422,7 @@ namespace my
 
 
 
-	void swap(my::string& s1, my::string& s2)
+	void swap(sht::string& s1, sht::string& s2)
 	{
 		std::swap(s1._size, s2._size);
 		std::swap(s1._capacity, s2._capacity);
