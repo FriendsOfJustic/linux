@@ -9873,59 +9873,309 @@ using namespace std;
 //    }
 //};
 
+//
+//class Solution {
+//public:
+//    vector<vector<int>> fourSum(vector<int>& nums, int target) {
+//
+//        sort(nums.begin(), nums.end());
+//        vector<vector<int>> result;
+//
+//        if (nums.size() < 4)
+//            return result;
+//        for (int i = 0; i < nums.size() - 3; i++)
+//        {
+//            if (i > 0 && nums[i] == nums[i - 1])
+//                continue;
+//
+//            for (int j = i + 1; j < nums.size() - 2; j++)
+//            {
+//                if (j > i+1 && nums[j] == nums[j - 1])
+//                    continue;
+//
+//                int left = j + 1;
+//                int right = nums.size() - 1;
+//
+//                while (left < right)
+//                {
+//                    if (nums[i] + nums[j] + nums[left] + nums[right] > target)
+//                        right--;
+//                    else if (nums[i] + nums[j] + nums[left] + nums[right] < target)
+//                        left++;
+//                    else
+//                    {
+//                        vector<int> tmp;
+//                        tmp.push_back(nums[i]);
+//                        tmp.push_back(nums[j]);
+//                        tmp.push_back(nums[left]);
+//                        tmp.push_back(nums[right]);
+//
+//                        result.push_back(tmp);
+//                        left++;
+//                        while (left < right && nums[left] == nums[left - 1])
+//                        {
+//                            left++;
+//                        }
+//                    }
+//                }
+//            }
+//        }
+//        return result;
+//    }
+//};
+
+
+
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode() : val(0), next(nullptr) {}
+ *     ListNode(int x) : val(x), next(nullptr) {}
+ *     ListNode(int x, ListNode *next) : val(x), next(next) {}
+ * };
+ */
+//class Solution {
+//public:
+//    ListNode* removeZeroSumSublists(ListNode* head) {
+//        ListNode* cur = head;
+//        vector<int> sum;
+//
+//        sum.push_back(0);
+//        while (cur)
+//        {
+//            sum.push_back(cur->val + sum[sum.size() - 1]);
+//            cur = cur->next;
+//        }
+//
+//        for (auto e : sum)
+//        {
+//            cout << e << " ";
+//        }
+//        cout << endl;
+//        unordered_map<int, int> m;
+//        int begin = -1;
+//        int end = -1;
+//        int add = 0;
+//        ListNode* prehead = new ListNode(-1);
+//        prehead->next = head;
+//        for (int i = 0; i < sum.size(); i++)
+//        {
+//            auto it = m.find(sum[i]);
+//
+//            if (it == m.end())
+//                m[sum[i]] = i;
+//            else
+//            {
+//                begin =min(m[sum[i]],begin);
+//                end = max(i,end);
+//         
+//            }
+//        }
+//
+//        if (begin == -1)
+//            return head;
+//
+//        ListNode* slow = prehead;
+//        ListNode* fast = prehead;
+//
+//        int k = end - begin;
+//
+//        cout << begin << " " << end << endl;
+//        while (k)
+//        {
+//            fast = fast->next;
+//            k--;
+//        }
+//
+//       
+//        while (begin)
+//        {
+//            fast = fast->next;
+//            slow = slow->next;
+//            begin--;
+//        }
+//
+//
+//        slow->next = fast->next;
+//        return prehead->next;
+//        
+//    }
+//};
+//int main()
+//{
+//    vector<int> s = { -2,-1,-1,1,1,2,2 };
+//    Solution t;
+//    //t.fourSum(s, 0);
+//}
+
+//
+//class Solution {
+//public:
+//    bool canPartition(vector<int>& nums) {
+//        int sz = 0;
+//        for (int i = 0; i < nums.size(); i++)
+//        {
+//            sz += nums[i];
+//        }
+//        if (sz % 2 != 0)
+//            return false;
+//        sz /= 2;
+//
+//       
+//
+//        vector<int> cur;
+//        cur.resize(sz + 1);
+//        for (int i = 0; i < cur.size(); i++)
+//        {
+//            if (i >= nums[0])
+//                cur[i] = nums[0];
+//            else
+//                cur[i] = 0;
+//        }
+//
+//
+//        for (int i = 1; i < nums.size(); i++)
+//        {
+//            for (int j = cur.size() - 1; j >= 0; j--)
+//            {
+//                if (j - nums[i] >= 0)
+//                {
+//                    cur[j] = max(cur[j - nums[i]] + nums[i], cur[j]);
+//                }
+//
+//                if (cur[j] == sz)
+//                    return true;
+//            }
+//        }
+//        return false;
+//    }
+//};
+
+
+//
+//class Solution {
+//public:
+//    bool canPartitionKSubsets(vector<int>& nums, int k) {
+//
+//        int sz = 0;
+//        for (int i = 0; i < nums.size(); i++)
+//        {
+//            sz += nums[i];
+//        }
+//
+//        if (sz % k != 0)
+//            return false;
+//
+//
+//        sz /= k;
+//
+//        int count = 0;
+//        unordered_set<int> s;
+//        for (int i = 0; i < k; i++)
+//        {
+//            vector<int> cur;
+//            vector<vector<int>> used;
+//            used.resize(sz + 1);
+//            cur.resize(sz + 1, 0);
+//            
+//            for (int i = 0; i < nums.size(); i++)
+//            {
+//                if (s.find(i)==s.end())
+//                {
+//                    for (int j = sz ; j >= 0; j--)
+//                    {
+//                        if (j - nums[i] >= 0)
+//                        {
+//                            //cur[j]=max(cur[j-nums[i]]+nums[i]+nums[i],cur[j]);
+//                            if (cur[j - nums[i]] + nums[i] > cur[j])
+//                            {
+//                                cur[j] = cur[j - nums[i]] + nums[i] ;
+//                                used[j].clear();
+//                                for (int m = 0; m < used[j - nums[i]].size(); m++)
+//                                {
+//                                    used[j].push_back(used[j - nums[i]][m]);
+//                                }
+//                                used[j].push_back(i);
+//                            }
+//
+//                        }
+//
+//
+//                        if (cur[j] == sz)
+//                        {
+//                            for (int m = 0; m < used[j].size(); m++)
+//                            {
+//                                s.insert(used[j][m]);
+//                            }
+//                            count++;
+//                            i = nums.size();
+//                            break;
+//                        }
+//                    }
+//                }
+//            }
+//        }
+//
+//        if (count == k)
+//            return true;
+//
+//        return false;
+//
+//    }
+//};
+
+
+
 
 class Solution {
 public:
-    vector<vector<int>> fourSum(vector<int>& nums, int target) {
-
-        sort(nums.begin(), nums.end());
-        vector<vector<int>> result;
-
-        if (nums.size() < 4)
-            return result;
-        for (int i = 0; i < nums.size() - 3; i++)
+    int lastStoneWeightII(vector<int>& stones) {
+        int sum = 0;
+        int sz;
+        for (auto& e : stones)
         {
-            if (i > 0 && nums[i] == nums[i - 1])
-                continue;
+            sum += e;
+        }
 
-            for (int j = i + 1; j < nums.size() - 2; j++)
+        sz = sum / 2;
+
+
+        vector<int> cur;
+        cur.resize(sz + 1);
+
+        for (int i = 0; i < cur.size(); i++)
+        {
+            for (int j = cur.size() - 1; j >= 0; j--)
             {
-                if (j > 1 && nums[j] == nums[j - 1])
-                    continue;
-
-                int left = j + 1;
-                int right = nums.size() - 1;
-
-                while (left < right)
-                {
-                    if (nums[i] + nums[j] + nums[left] + nums[right] > target)
-                        right--;
-                    else if (nums[i] + nums[j] + nums[left] + nums[right] < target)
-                        left++;
-                    else
-                    {
-                        vector<int> tmp;
-                        tmp.push_back(nums[i]);
-                        tmp.push_back(nums[j]);
-                        tmp.push_back(nums[left]);
-                        tmp.push_back(nums[right]);
-
-                        result.push_back(tmp);
-                        left++;
-                        while (left < right && nums[left] == nums[left - 1])
-                        {
-                            left++;
-                        }
-                    }
-                }
+                if (j - stones[i] >= 0)
+                    cur[j] = max(cur[j - stones[i]] + stones[i], cur[j]);
             }
         }
-        return result;
+
+
+        int m = INT_MAX;
+        int result;
+        for (auto& e : cur)
+        {
+            if (sz - e < m)
+            {
+                m = sz - e;
+                result = e;
+            }
+        }
+
+        return sum - result - result;
+
+
     }
 };
+
 int main()
 {
-    vector<int> s = { -2,-1,-1,1,1,2,2 };
+    vector<int> n = { 2,7,4,1,8,1 };
     Solution t;
-    t.fourSum(s, 0);
+    t.lastStoneWeightII(n);
 }
+
