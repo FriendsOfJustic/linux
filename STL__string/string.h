@@ -71,7 +71,7 @@ namespace sht
 		}
 
 
-		string& operator=(const string& s)
+		string& operator=(string& s)
 		{
 			string tmp(s);
 			swap(*this, tmp);
@@ -102,7 +102,7 @@ namespace sht
 
 		~string()
 		{
-			if(_str!=nullptr)
+			if((int)_str != 0xcccccccc)
 			delete[]_str;
 			_size = 0;
 			_capacity = 0;

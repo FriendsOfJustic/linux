@@ -34,6 +34,14 @@ public:
 	}
 
 
+
+	vector(std::initializer_list<T> x)     //添加初始化列表初始化
+	{
+		for (auto& e : x)
+			push_back(e);
+	}
+
+
 	vector(input_iterrator first, input_iterrator last)
 	{
 		int s = last - first;

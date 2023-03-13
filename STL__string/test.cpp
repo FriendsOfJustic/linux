@@ -48,7 +48,7 @@ void test1()
 sht::string fun()
 {
 	sht::string s1 = "1223344556";
-
+	test1();
 	return s1;
 }
 
@@ -59,9 +59,14 @@ void test2()
 	sht::string s2(std::move(s1));
 	
 	sht::string s3("1") ;
-	s3 =fun();
+	//s3 =fun();
+	sht::string s4("12222222222");
+	s4 = fun();
+	sht::string s6("1444444444444");
 }
 int main()
 {
 	test2();
+	string s;
+	s.push_back("111111111");
 }

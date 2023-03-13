@@ -10126,56 +10126,239 @@ using namespace std;
 //    }
 //};
 
+//
+//
+//
+//class Solution {
+//public:
+//    int lastStoneWeightII(vector<int>& stones) {
+//        int sum = 0;
+//        int sz;
+//        for (auto& e : stones)
+//        {
+//            sum += e;
+//        }
+//
+//        sz = sum / 2;
+//
+//
+//        vector<int> cur;
+//        cur.resize(sz + 1);
+//
+//        for (int i = 0; i < cur.size(); i++)
+//        {
+//            for (int j = cur.size() - 1; j >= 0; j--)
+//            {
+//                if (j - stones[i] >= 0)
+//                    cur[j] = max(cur[j - stones[i]] + stones[i], cur[j]);
+//            }
+//        }
+//
+//
+//        int m = INT_MAX;
+//        int result;
+//        for (auto& e : cur)
+//        {
+//            if (sz - e < m)
+//            {
+//                m = sz - e;
+//                result = e;
+//            }
+//        }
+//
+//        return sum - result - result;
+//
+//
+//    }
+//};
+
+//
+//class Solution {
+//public:
+//    int result = 0;
+//    void fun(vector<int>& nums, int target, int sum = 0, int k = 0)
+//    {
+//        
+//
+//        if (sum > target)
+//            return;
+//
+//        if (sum == target)
+//        {
+//            result++;
+//            return;
+//        }
+//
+//
+//        for (int i = k; i < nums.size(); i++)
+//        {
+//            sum += nums[i];
+//            fun(nums, target, sum, i + 1);
+//            sum -= nums[i];
+//        }
+//
+//    }
+//    int findTargetSumWays(vector<int>& nums, int target) {
+//        int sum = 0;
+//        for (auto& e : nums)
+//            sum += e;
+//
+//        int sz = sum + target;
+//
+//        if (sz % 2 != 0)
+//            return 0;
+//
+//        sz /= 2;
+//
+//        fun(nums, sz);
+//        return result;
+//
+//
+//
+//    }
+//};
+//int main()
+//{
+//    vector<int> n = { 1,1,1,1,1 };
+//    Solution t;
+//    t.findTargetSumWays(n, 3);
+//}
+//
+
+//
+//class Solution {
+//public:
+//    int findMaxForm(vector<string>& strs, int m, int n) {
+//        vector<pair<int, int>> str;
+//        for (int i = 0; i < strs.size(); i++)
+//        {
+//            int a = 0, b = 0;
+//            for (auto& e : strs[i])
+//            {
+//                if (e == '0')
+//                    a++;
+//                else
+//                    b++;
+//            }
+//            str.push_back(make_pair(a, b));
+//        }
+//
+//        vector<vector<int>> cur;
+//        vector<int> tmp;
+//        tmp.resize(3, 0);
+//        cur.resize(m + 1, tmp);
+//        int result = 0;
+//        for (int i = 0; i < str.size(); i++)
+//        {
+//            for (int j = m; j >= 0; j--)
+//            {
+//                if (j - str[i].first >= 0 && j - str[i].second >= 0)
+//                {
+//                    if (cur[j - str[i].second][1] + str[i].second <= n && cur[j - str[i].first][0] + str[i].first >= cur[j][0])
+//                    {
+//                        cur[j][0] = cur[j - str[i].first][0] + str[i].first;
+//                        cur[j][1] = cur[j - str[i].first][1] + str[i].second;
+//                        cur[j][2] = cur[j - str[i].first][2] + 1;
+//                        result = max(result, cur[j][2]);
+//                    }
+//                }
+//            }
+//        }
+//        return result;
+//    }
+//};
+//
+//
+//int  main()
+//{
+//    vector<string> v = { "10","0001","111001","1","0" };
+//    Solution t;
+//    t.findMaxForm(v, 1, 1);
+//}
 
 
 
-class Solution {
-public:
-    int lastStoneWeightII(vector<int>& stones) {
-        int sum = 0;
-        int sz;
-        for (auto& e : stones)
-        {
-            sum += e;
-        }
 
-        sz = sum / 2;
+struct Person
+{
+    int _age;
+    string _name;
 
-
-        vector<int> cur;
-        cur.resize(sz + 1);
-
-        for (int i = 0; i < cur.size(); i++)
-        {
-            for (int j = cur.size() - 1; j >= 0; j--)
-            {
-                if (j - stones[i] >= 0)
-                    cur[j] = max(cur[j - stones[i]] + stones[i], cur[j]);
-            }
-        }
-
-
-        int m = INT_MAX;
-        int result;
-        for (auto& e : cur)
-        {
-            if (sz - e < m)
-            {
-                m = sz - e;
-                result = e;
-            }
-        }
-
-        return sum - result - result;
-
-
+    Person(int age=10,string name="tony")
+        :_age(age)
+        ,_name(name)
+    {
     }
+
+   
 };
+
+//void test1()
+//{
+//
+//
+//    //内置类型的变量
+//    int a1 = 1;
+//    int a1{ 1 };   //两种写法是等价的
+//    int b1 = 1 + 2;
+//    int b1{ 1 + 2 };
+//
+//
+//    //数组
+//    int arr1[]{ 1,2,3,4,5 };
+//    int arr2[5]{ 1,2,3,4,5 };
+//
+//
+//    //动态数组
+//    int* arr3 = new int[5]{ 1,2,3,4,5 };
+//
+//    //标准容器
+//    vector<int> v{ 1,2,3,4,5 };
+//    map<int, int> m{ {1,2},{2,2},{3,3},{4,4} };
+//
+//
+//}
+
+
+template<class T1,class T2>
+void fun(T1 t1,T2 t2)
+{
+    decltype(t1 * t2) ret;
+    cout << typeid(ret).name() << endl;
+}
+
+
 
 int main()
 {
-    vector<int> n = { 2,7,4,1,8,1 };
-    Solution t;
-    t.lastStoneWeightII(n);
-}
+    /*int* a = new int[10]{ 1,2,3,4,5,6,7,8,9,10 };
+    for (int i = 0; i < 10; i++)
+    {
+        cout << a[i] << endl;
+    }*/
+   /* int a = 1;
 
+    int& b = a;
+    int&& c = 1;*/
+
+
+
+    /*int a[] = { 1,2,3 };
+    int b[5] = { 1 };*/
+
+    /*vector<Person> s1 = { {10,"jack"},{20,"peter"} };
+    vector<Person> s2 { {10,"jack"},{20,"peter"} };*/
+
+
+    int a = 1;
+    double b = 1.0;
+    auto c;     //错误的定义
+    decltype(a * b) c;
+
+
+
+    auto c = a * b;
+    cout << typeid(a*b).name() << endl;
+
+    fun(a,b);
+}
