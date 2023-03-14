@@ -112,19 +112,19 @@ void test4()
 }
 
 
-string function(string& s)
+sht::string function(string& s)
 {
-	string tmp;
+	sht::string tmp;
 	//.........
 	return tmp;
 }
-int main()
-{
-	test4();
-	
-	std::string s1("123");
-	std::string s2("456");
-	std::string s3("789");
-
-	s1 + s2 = s3;
-}
+//int main()
+//{
+//	test4();
+//	
+//	std::string s1("123");
+//	std::string s2("456");
+//	std::string s3("789");
+//	sht::string s4 = function(s1);
+//	s1 + s2 = s3;
+//}

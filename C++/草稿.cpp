@@ -10487,3 +10487,28 @@ struct Person
 //}
 
 
+void fun(int& a)
+{
+    cout << "int& a" << endl;
+}
+
+void fun(const int& a)
+{
+    cout << "const int& a" << endl;
+}
+
+
+void fun(int&& a)
+{
+    cout << "const int&& a" << endl;
+}
+
+
+int main()
+{
+    int a = 1;
+    const int b = 2;
+    fun(a);
+    fun(b);
+    fun(1);
+}
