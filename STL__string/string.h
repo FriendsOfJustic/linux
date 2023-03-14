@@ -306,7 +306,30 @@ namespace sht
 		}
 
 
+		
 
+		string& operator+=(char p)
+		{
+			push_back(p);
+
+			return *this;
+		}
+
+		string& operator+=(const char* p)
+		{
+			append(p);
+			return *this;
+
+		}
+
+
+		string operator+(string& s)
+		{
+			sht::string tmp;
+			tmp.append(_str);
+			tmp.append(s.c_str());
+			return tmp;
+		}
 		// 返回c在string中第一次出现的位置
 
 		size_t find(char c, size_t pos = 0) const
@@ -392,6 +415,7 @@ namespace sht
 
 
 
+
 		// 删除pos位置上的元素，并返回该元素的下一个位置
 
 		string& erase(size_t pos, size_t len)
@@ -450,19 +474,6 @@ namespace sht
 		return io;
 	}
 
-	string& operator+=(string& s, char p)
-	{
-		s.push_back(p);
-
-		return s;
-	}
-
-	string& operator+=(string& s, const char* p)
-	{
-		s.append(p);
-		return s;
-
-	}
 
 }
 

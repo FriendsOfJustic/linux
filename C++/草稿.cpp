@@ -10318,47 +10318,172 @@ struct Person
 //
 //
 //}
+//
+//
+//template<class T1,class T2>
+//void fun(T1 t1,T2 t2)
+//{
+//    decltype(t1 * t2) ret;
+//    cout << typeid(ret).name() << endl;
+//}
+//
+//
+//
+//int main()
+//{
+//    /*int* a = new int[10]{ 1,2,3,4,5,6,7,8,9,10 };
+//    for (int i = 0; i < 10; i++)
+//    {
+//        cout << a[i] << endl;
+//    }*/
+//   /* int a = 1;
+//
+//    int& b = a;
+//    int&& c = 1;*/
+//
+//
+//
+//    /*int a[] = { 1,2,3 };
+//    int b[5] = { 1 };*/
+//
+//    /*vector<Person> s1 = { {10,"jack"},{20,"peter"} };
+//    vector<Person> s2 { {10,"jack"},{20,"peter"} };*/
+//
+//
+//    int a = 1;
+//    double b = 1.0;
+//    auto c;     //错误的定义
+//    decltype(a * b) c;
+//
+//
+//
+//    auto c = a * b;
+//    cout << typeid(a*b).name() << endl;
+//
+//    fun(a,b);
+//}
 
 
-template<class T1,class T2>
-void fun(T1 t1,T2 t2)
-{
-    decltype(t1 * t2) ret;
-    cout << typeid(ret).name() << endl;
-}
+
+//
+//
+//class Solution {
+//public:
+//    int coinChange(vector<int>& coins, int amount) {
+//        vector<int> cur;
+//        cur.resize(amount + 1, 0);
+//        if (amount == 0)
+//            return 0;
+//
+//        for (int i = 0; i < coins.size(); i++)
+//        {
+//            for (int j = 0; j < cur.size(); j++)
+//            {
+//                if (j - coins[i] >= 0)
+//                {
+//                    if (cur[j] == 0)
+//                    {
+//                        if (cur[j - coins[i]] != 0)
+//                            cur[j] = cur[j - coins[i]] + 1;
+//                        else
+//                        {
+//                            if (j % coins[i] == 0)
+//                                cur[j] = j / coins[i];
+//                        }
+//                    }
+//                    if (cur[j] != 0)
+//                    {
+//                        if (cur[j - coins[i]] != 0)
+//                            cur[j] = cur[j - coins[i]] + 1;
+//                        else
+//                        {
+//                            if (j % coins[i] == 0)
+//                                cur[j] = min(j / coins[i], cur[j]);
+//                        }
+//                    }
+//                }
+//            }
+//        }
+//
+//        return cur[cur.size() - 1] == 0 ? -1 : cur[cur.size() - 1];
+//    }
+//};
+
+//class Solution {
+//public:
+//    int change(int amount, vector<int>& coins) {
+//        vector<int> cur;
+//        cur.resize(amount + 1, 0);
+//        cur[0] = 1;
+//
+//        for (int i = 0; i < coins.size(); i++)
+//        {
+//            for (int j = 0; j < cur.size(); j++)
+//            {
+//                if (j - coins[i] >= 0)
+//                {
+//                    cur[j] += cur[j - coins[i]];
+//                }
+//            }
+//
+//            for (auto e : cur)
+//                cout << e << " ";
+//            cout << endl;
+//        }
+//
+//        return cur[cur.size() - 1];
+//    }
+//};
 
 
+//
+//class Solution {
+//public:
+//    int change(int amount, vector<int>& coins) {
+//        vector<int> cur;
+//        cur.resize(amount + 1, 0);
+//        cur[0] = 1;
+//
+//        for (int i = 0; i < cur.size(); i++)
+//        {
+//            for (int j = 0; j < coins.size(); j++)
+//            {
+//                if (i - coins[j] >= 0)
+//                {
+//                    cur[i] += cur[i - coins[j]];
+//                }
+//            }
+//
+//            for (auto e : cur)
+//                cout << e << " ";
+//            cout << endl;
+//        }
+//
+//        return cur[cur.size() - 1];
+//    }
+//};
+//
+//
+//
+//int main()
+//{
+//    vector<int> v = {1,2,5 };
+//    Solution t;
+//    cout<<t.change(5,v);
+//}
+//
+//
+//
+//int  main()
+//{
+//    vector<int> v{ 1,2,3,4,5,6 };
+//
+//    for (auto& e : v)
+//    {
+//        e++;
+//        cout << e << " ";
+//        //e++;
+//    }
+//}
 
-int main()
-{
-    /*int* a = new int[10]{ 1,2,3,4,5,6,7,8,9,10 };
-    for (int i = 0; i < 10; i++)
-    {
-        cout << a[i] << endl;
-    }*/
-   /* int a = 1;
 
-    int& b = a;
-    int&& c = 1;*/
-
-
-
-    /*int a[] = { 1,2,3 };
-    int b[5] = { 1 };*/
-
-    /*vector<Person> s1 = { {10,"jack"},{20,"peter"} };
-    vector<Person> s2 { {10,"jack"},{20,"peter"} };*/
-
-
-    int a = 1;
-    double b = 1.0;
-    auto c;     //错误的定义
-    decltype(a * b) c;
-
-
-
-    auto c = a * b;
-    cout << typeid(a*b).name() << endl;
-
-    fun(a,b);
-}
