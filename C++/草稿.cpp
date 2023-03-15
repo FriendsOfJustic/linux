@@ -10487,28 +10487,171 @@ struct Person
 //}
 
 
-void fun(int& a)
-{
-    cout << "int& a" << endl;
-}
+//void fun(int& a)
+//{
+//    cout << "int& a" << endl;
+//}
+//
+//void fun(const int& a)
+//{
+//    cout << "const int& a" << endl;
+//}
+//
+//
+//void fun(int&& a)
+//{
+//    cout << "const int&& a" << endl;
+//}
+//
+//
+//int main()
+//{
+//    int a = 1;
+//    const int b = 2;
+//    fun(a);
+//    fun(b);
+//    fun(1);
+//}
 
-void fun(const int& a)
-{
-    cout << "const int& a" << endl;
-}
+//class Solution {
+//public:
+//    int numSquares(int n) {
+//        vector<int> nums;
+//
+//
+//        for (int i = 1;; i++)
+//        {
+//            long long tmp = i * i;
+//            if (tmp == n)
+//                return 1;
+//            if (tmp < n)
+//            {
+//                nums.push_back(tmp);
+//            }
+//            else
+//                break;
+//
+//
+//        }
+//
+//        vector<int> cur;
+//
+//        cur.resize(n + 1, INT_MAX);
+//        cur[0] = 0;
+//        for (int i = 0; i < nums.size(); i++)
+//        {
+//            for (int j = nums[i]; j < cur.size(); j++)
+//            {
+//                if (cur[j - nums[i]] != INT_MAX)
+//                cur[j] = min(cur[j - nums[i]] + 1, cur[j]);
+//            }
+//        }
+//
+//        return cur[cur.size() - 1];
+//    }
+//};
+#include<time.h>
+//class Solution {
+//public:
+//
+//    bool wordBreak(string s, vector<string>& wordDict) {
+//
+//        vector<vector<string>> cur;
+//        vector<string> tmp;
+//        cur.resize(s.size() + 1, tmp);
+//        for (int i = 0; i < cur.size(); i++)    //背包 i
+//        {
+//            for (int j = 0; j < wordDict.size(); j++)   //物品  j
+//            {
+//                if (i - (int)wordDict[j].size() >= 0)
+//                {
+//                    if (cur[i - (int)wordDict[j].size()].size())
+//                    {
+//                        int flag = 1;
+//                        int z = 0;
+//                        for (int y = i - (int)wordDict[j].size(); y < i; y++)
+//                        {
+//                            if (s[y] != wordDict[j][z++])
+//                            {
+//                                flag = 0;
+//                                break;
+//                            }
+//                        }
+//                        if (flag)
+//                        {
+//                            for (int x = 0; x < cur[i - wordDict[j].size()].size(); x++)
+//                            {
+//
+//                                cur[i].push_back(cur[i - wordDict[j].size()][x] + wordDict[j]);
+//                            }
+//                        }
+//                    }
+//                    if (wordDict[j].size() == i)
+//                    {
+//                        int flag = 1;
+//                        for (int y = 0; y < i; y++)
+//                        {
+//                            if (s[y] != wordDict[j][y])
+//                            {
+//                                flag = 0;
+//                                break;
+//                            }
+//                        }
+//                        if (flag)
+//                            cur[i].push_back(wordDict[j]);
+//                    }
+//                }
+//            }
+//        }
+//        for (int x = 0; x < cur[cur.size() - 1].size(); x++)
+//        {
+//            if (s == cur[cur.size() - 1][x])
+//                return true;
+//
+//        }
+//        return false;
+//    }
+//};
+
+class Solution {
+public:
+    bool wordBreak(string s, vector<string>& wordDict) {
+        vector<bool> cur;
+        cur.resize(s.size() + 1, false);
+        cur[0] = true;
 
 
-void fun(int&& a)
-{
-    cout << "const int&& a" << endl;
-}
+
+        for (int i = 0; i < cur.size(); i++)
+        {
+            for (int j = 0; j < wordDict.size(); j++)
+            {
+                if (i - (int)wordDict[j].size() >= 0)
+                {
+                    string tmp = s.substr(i - wordDict[j].size(), wordDict[j].size());
+
+                    if (tmp == wordDict[j] && cur[i - wordDict[j].size()] == true)
+                        cur[i] = true;
+                }
+            }
+        }
+
+
+        return cur[cur.size() - 1];
+
+    }
+};
+
 
 
 int main()
 {
-    int a = 1;
-    const int b = 2;
-    fun(a);
-    fun(b);
-    fun(1);
+    time_t begin;
+    time(&begin);
+    vector<string> dic = { "cats","dog","sand","and","cat" };
+    Solution t;
+    cout<<t.wordBreak("catsandog", dic)<<endl;
+    time_t end;
+    time(&end);
+    cout << "用时" << end - begin << endl;
 }
