@@ -1,8 +1,8 @@
 #define _CRT_SECURE_NO_WARNINGS 1
 
-#include"string.h"
-#include<iostream>
-#include<vector>
+#include "string.h"
+#include <iostream>
+#include <vector>
 
 typedef sht::string String;
 using namespace std;
@@ -11,7 +11,7 @@ void foo(String x)
 {
 }
 
-void bar(const String& x)
+void bar(const String &x)
 {
 }
 
@@ -21,12 +21,9 @@ String baz()
 	return ret;
 }
 
-
-
-
 void test1()
 {
-	//String s0;
+	// String s0;
 	/*String s1("hello");
 	String s2(s0);
 	String s3 = s1;
@@ -48,17 +45,17 @@ void test1()
 sht::string fun()
 {
 	sht::string s1 = "1223344556";
-	//test1();
+	// test1();
 	sht::string a = "12sjfhskfhewlf";
 	return a;
 }
 
-//void test2()
+/* //void test2()
 //{
 //	sht::string s1("12345");
 //	sht::string s5(sht::string("11111111111111111"));
 //	sht::string s2(std::move(s1));
-//	
+//
 //	sht::string s3("1") ;
 //	//s3 =fun();
 //	sht::string s4("12222222222");
@@ -66,65 +63,61 @@ sht::string fun()
 //	sht::string s6("1444444444444");
 //
 //
-//}
-
-
+//} */
 
 void test3()
 {
 	sht::string s1("12345");
 	sht::string s2("1234234");
 	sht::string s3("1");
-	s1 + s2=s3;
-	//s1 + s2 = s3;
-
-
+	s1 + s2 = s3;
+	// s1 + s2 = s3;
 }
-
 
 int add(int x, int y)
 {
 	return x + y;
 }
 
-
 void test4()
 {
-	//×óÖµ ºÍ ÓÒÖµ
+	// ï¿½ï¿½Öµ ï¿½ï¿½ ï¿½ï¿½Öµ
 	int a1 = 1;
-	int* a2 = new int[10];
+	int *a2 = new int[10];
 	const int a3 = 1;
 	int a4 = a1 + a3;
 	int a5 = add(a1, a3);
 
+	// ï¿½ï¿½Öµï¿½ï¿½ï¿½ï¿½
+	int &&r1 = 10;
+	int &&r2 = a1 + a3;
+	int &&r3 = add(a1, a3);
 
-	//ÓÒÖµÒýÓÃ
-	int&& r1 = 10;
-	int&& r2 = a1 + a3;
-	int&& r3 = add(a1, a3); 
-
-
-	//×óÖµÒýÓÃ
-	int& l1 = a1;
-	const int& l2 = a3;
-	int*& l3 = a2;
-
+	// ï¿½ï¿½Öµï¿½ï¿½ï¿½ï¿½
+	int &l1 = a1;
+	const int &l2 = a3;
+	int *&l3 = a2;
 }
 
-
-sht::string function(string& s)
+sht::string function(string &s)
 {
 	sht::string tmp;
 	//.........
 	return tmp;
 }
-//int main()
+// int main()
 //{
 //	test4();
-//	
+//
 //	std::string s1("123");
 //	std::string s2("456");
 //	std::string s3("789");
 //	sht::string s4 = function(s1);
 //	s1 + s2 = s3;
-//}
+// }
+
+int main()
+{
+	sht::string s;
+	s = fun();
+}
