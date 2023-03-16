@@ -1,29 +1,29 @@
 #pragma once
 
-
 #define _CRT_SECURE_NO_WARNINGS 1
 #pragma once
-#include<iostream>
-#include<assert.h>
+#include <iostream>
+#include <assert.h>
+#include <cstring>
 
 namespace sht
 {
 
-
 	class string
 	{
-		friend std::istream& operator >> (std::istream& io, string& s);
-		friend std::ostream& operator << (std::ostream& i, string& s);
-		friend void swap(string& s1, string& s2);
+		friend std::istream &operator>>(std::istream &io, string &s);
+		friend std::ostream &operator<<(std::ostream &i, string &s);
+		friend void swap(string &s1, string &s2);
+
 	public:
-		typedef char* iterator;
-		typedef const char* const_iterator;
+		typedef char *iterator;
+		typedef const char *const_iterator;
 		iterator begin()
 		{
 			return this->_str;
 		}
 
-		const_iterator begin() const   //ÖØÔØ
+		const_iterator begin() const // ï¿½ï¿½ï¿½ï¿½
 		{
 			return this->_str;
 		}
@@ -38,8 +38,7 @@ namespace sht
 			return this->_str + _size;
 		}
 
-		
-		string(const char* p = "")
+		string(const char *p = "")
 		{
 			_size = strlen(p);
 			_capacity = _size == 0 ? 5 : _size * 2;
@@ -47,24 +46,23 @@ namespace sht
 			strcpy(_str, p);
 		}
 
-
-		string(const string& s)  //ÏÖ´úÐ´·¨
-			:_str(new char[strlen(s._str) + 1])
+		string(const string &s) // ï¿½Ö´ï¿½Ð´ï¿½ï¿½
+			: _str(new char[strlen(s._str) + 1])
 		{
 			_size = s._size;
 			_capacity = s._capacity;
 			strcpy(_str, s._str);
 		}
 
-		string(string&& s)  //ÓÒÖµÒýÓÃ
+		string(string &&s) // ï¿½ï¿½Öµï¿½ï¿½ï¿½ï¿½
 		{
-			
+
 			std::swap(_str, s._str);
-			std::swap(_size,s._size);
-			std::swap(_capacity,s._capacity);
+			std::swap(_size, s._size);
+			std::swap(_capacity, s._capacity);
 		}
 
-		string& operator=(string && s)
+		string &operator=(string &&s)
 		{
 			swap(*this, s);
 			
@@ -74,31 +72,28 @@ namespace sht
 			return *this;
 		}
 
-
-		string& operator=(string& s)
+		string &operator=(string &s)
 		{
 			string tmp(s);
 			swap(*this, tmp);
 			return *this;
 		}
-		//string& operator=(string s) //ÏÖ´úÐ´·¨
+		// string& operator=(string s) //ï¿½Ö´ï¿½Ð´ï¿½ï¿½
 		//{
-		//	//ÓÉÓÚsÔÚ´«²ÎµÄÊ±ºòµ÷ÓÃÁË¿½±´¹¹Ôì£¬ËùÒÔÕâÀïµÄsÊÇÒ»¸öÁÙÊ±±äÁ¿£¬³ýÁËº¯Êý×÷ÓÃÓò×Ô¶¯Ïú»Ù
+		//	//ï¿½ï¿½ï¿½ï¿½sï¿½Ú´ï¿½ï¿½Îµï¿½Ê±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ë¿ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ì£¬ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½sï¿½ï¿½Ò»ï¿½ï¿½ï¿½ï¿½Ê±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ëºï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ô¶ï¿½ï¿½ï¿½ï¿½ï¿½
 		//	_size = s._size;
 		//	_capacity = s._capacity;
 		//	std::swap(_str, s._str);
 		//	return *this;
-		//}
+		// }
 
-
-
-		char& operator[](int pos)
+		char &operator[](int pos)
 		{
 			assert(pos < _size);
 			return this->_str[pos];
 		}
 
-		char& operator[](int pos)const
+		char &operator[](int pos) const
 		{
 			assert(pos < _size);
 			return this->_str[pos];
@@ -106,8 +101,13 @@ namespace sht
 
 		~string()
 		{
+<<<<<<< HEAD
 			//if((int)_str != 0xcccccccc)
 			delete[]_str;
+=======
+			// if ((int)_str != 0xcccccccc)
+			delete[] _str;
+>>>>>>> 070cf21422ce98a59243620f52ffcf3e1812c281
 			_size = 0;
 			_capacity = 0;
 		}
@@ -118,12 +118,12 @@ namespace sht
 			{
 				_capacity = capacity;
 
-				char* temp = new char[_capacity + 1];
+				char *temp = new char[_capacity + 1];
 				for (int i = 0; i < _size; i++)
 				{
 					temp[i] = _str[i];
 				}
-				delete[]_str;
+				delete[] _str;
 				_str = temp;
 			}
 		}
@@ -149,9 +149,7 @@ namespace sht
 			}
 			_size = size;
 			_str[_size] = '0';
-
 		}
-
 
 		void push_back(char p)
 		{
@@ -162,13 +160,12 @@ namespace sht
 			_str[_size] = p;
 			_size++;
 			_str[_size] = '\0';
-
 		}
 
-		string& append(const string& str, size_t subpos, size_t sublen)  //subposÊÇ¿½±´µÄÎ»ÖÃ£¬sublenÊÇ¿½±´¶àÉÙ¸ö×Ö·û
+		string &append(const string &str, size_t subpos, size_t sublen) // subposï¿½Ç¿ï¿½ï¿½ï¿½ï¿½ï¿½Î»ï¿½Ã£ï¿½sublenï¿½Ç¿ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ù¸ï¿½ï¿½Ö·ï¿½
 		{
 			int len = sublen;
-			if (sublen + subpos - 1 > strlen(str._str)) //Èç¹ûsublen³¬³öÁËstrµÄ·¶Î§Ä¬ÈÏ¿½±´strºóËùÓÐ×Ö·û
+			if (sublen + subpos - 1 > strlen(str._str)) // ï¿½ï¿½ï¿½sublenï¿½ï¿½ï¿½ï¿½ï¿½ï¿½strï¿½Ä·ï¿½Î§Ä¬ï¿½Ï¿ï¿½ï¿½ï¿½strï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö·ï¿½
 			{
 				len = strlen(str._str) - subpos + 1;
 			}
@@ -185,12 +182,9 @@ namespace sht
 			_size += len;
 			_str[_size] = '\0';
 			return *this;
-
-
 		}
 
-
-		string& append(const char* p)
+		string &append(const char *p)
 		{
 			int len = strlen(p);
 			if (_size + len > _capacity)
@@ -207,12 +201,12 @@ namespace sht
 
 			return *this;
 		}
-		const char* c_str()
+		const char *c_str()
 		{
 			return _str;
 		}
 
-		bool operator<(const string& s)
+		bool operator<(const string &s)
 		{
 			int n1 = 0;
 			int n2 = 0;
@@ -231,7 +225,6 @@ namespace sht
 					else
 						return false;
 				}
-
 			}
 
 			if (n1 == _size && n2 != s._size)
@@ -246,7 +239,7 @@ namespace sht
 				return false;
 		}
 
-		bool operator<=(const string& s)
+		bool operator<=(const string &s)
 		{
 			if (*this < s)
 			{
@@ -256,19 +249,17 @@ namespace sht
 				return true;
 			else
 				return false;
-
 		}
 
-		bool operator>(const string& s)
+		bool operator>(const string &s)
 		{
 			if (*this <= s)
 				return false;
 			else
 				return true;
-
 		}
 
-		bool operator>=(const string& s)
+		bool operator>=(const string &s)
 		{
 			if (*this < s)
 				return false;
@@ -276,7 +267,7 @@ namespace sht
 				return true;
 		}
 
-		bool operator==(const string& s)
+		bool operator==(const string &s)
 		{
 			if (_size != s._size)
 				return false;
@@ -296,45 +287,37 @@ namespace sht
 				}
 			}
 			return true;
-
-
 		}
 
-		bool operator!=(const string& s)
+		bool operator!=(const string &s)
 		{
 			if (*this == s)
 				return false;
 			else
 				return true;
-
 		}
 
-
-		
-
-		string& operator+=(char p)
+		string &operator+=(char p)
 		{
 			push_back(p);
 
 			return *this;
 		}
 
-		string& operator+=(const char* p)
+		string &operator+=(const char *p)
 		{
 			append(p);
 			return *this;
-
 		}
 
-
-		string operator+(string& s)
+		string operator+(string &s)
 		{
 			sht::string tmp;
 			tmp.append(_str);
 			tmp.append(s.c_str());
 			return tmp;
 		}
-		// ·µ»ØcÔÚstringÖÐµÚÒ»´Î³öÏÖµÄÎ»ÖÃ
+		// ï¿½ï¿½ï¿½ï¿½cï¿½ï¿½stringï¿½Ðµï¿½Ò»ï¿½Î³ï¿½ï¿½Öµï¿½Î»ï¿½ï¿½
 
 		size_t find(char c, size_t pos = 0) const
 		{
@@ -346,9 +329,9 @@ namespace sht
 			return -1;
 		}
 
-		// ·µ»Ø×Ó´®sÔÚstringÖÐµÚÒ»´Î³öÏÖµÄÎ»ÖÃ
+		// ï¿½ï¿½ï¿½ï¿½ï¿½Ó´ï¿½sï¿½ï¿½stringï¿½Ðµï¿½Ò»ï¿½Î³ï¿½ï¿½Öµï¿½Î»ï¿½ï¿½
 
-		size_t find(const char* s, size_t pos = 0) const
+		size_t find(const char *s, size_t pos = 0) const
 		{
 			for (size_t i = pos; i < _size - strlen(s) + 1; i++)
 			{
@@ -363,7 +346,6 @@ namespace sht
 							ret = 0;
 							break;
 						}
-
 					}
 					if (ret)
 						return i;
@@ -371,12 +353,11 @@ namespace sht
 			}
 
 			return -1;
-
 		}
 
-		// ÔÚposÎ»ÖÃÉÏ²åÈë×Ö·ûc/×Ö·û´®str£¬²¢·µ»Ø¸Ã×Ö·ûµÄÎ»ÖÃ
+		// ï¿½ï¿½posÎ»ï¿½ï¿½ï¿½Ï²ï¿½ï¿½ï¿½ï¿½Ö·ï¿½c/ï¿½Ö·ï¿½ï¿½ï¿½strï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ø¸ï¿½ï¿½Ö·ï¿½ï¿½ï¿½Î»ï¿½ï¿½
 
-		string& insert(size_t pos, char c)
+		string &insert(size_t pos, char c)
 		{
 			if (pos > _size)
 				return *this;
@@ -384,17 +365,16 @@ namespace sht
 			{
 				this->resize(_size + 1);
 				int i;
-				for (i = _size - 1; i >= (int)pos; i--) //×¢Òâsize_tÎÞ·ûºÅµÄÎÊÌâ
+				for (i = _size - 1; i >= (int)pos; i--) // ×¢ï¿½ï¿½size_tï¿½Þ·ï¿½ï¿½Åµï¿½ï¿½ï¿½ï¿½ï¿½
 				{
 					_str[i + 1] = _str[i];
 				}
 				_str[pos] = c;
 				return *this;
 			}
-
 		}
 
-		string& insert(size_t pos, const char* str)
+		string &insert(size_t pos, const char *str)
 		{
 			int len = strlen(str);
 			if (pos > _size)
@@ -412,17 +392,13 @@ namespace sht
 					_str[pos + j] = str[j];
 				}
 
-
 				return *this;
 			}
 		}
 
+		// É¾ï¿½ï¿½posÎ»ï¿½ï¿½ï¿½Ïµï¿½Ôªï¿½Ø£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ø¸ï¿½Ôªï¿½Øµï¿½ï¿½ï¿½Ò»ï¿½ï¿½Î»ï¿½ï¿½
 
-
-
-		// É¾³ýposÎ»ÖÃÉÏµÄÔªËØ£¬²¢·µ»Ø¸ÃÔªËØµÄÏÂÒ»¸öÎ»ÖÃ
-
-		string& erase(size_t pos, size_t len)
+		string &erase(size_t pos, size_t len)
 		{
 			assert(pos >= 0 && pos <= _size - len);
 			_size -= len;
@@ -431,32 +407,21 @@ namespace sht
 				_str[i] = _str[i + len];
 			}
 			return *this;
-
 		}
 
-
 	private:
-		char* _str;
+		char *_str;
 		size_t _size;
 		size_t _capacity;
 	};
 
-
-
-
-
-
-
-
-
-
-	void swap(sht::string& s1, sht::string& s2)
+	void swap(sht::string &s1, sht::string &s2)
 	{
 		std::swap(s1._size, s2._size);
 		std::swap(s1._capacity, s2._capacity);
 		std::swap(s1._str, s2._str);
 	}
-	std::ostream& operator << (std::ostream& io, string& s)
+	std::ostream &operator<<(std::ostream &io, string &s)
 	{
 		for (int i = 0; i < s._size; i++)
 		{
@@ -465,7 +430,7 @@ namespace sht
 		return io;
 	}
 
-	std::istream& operator >> (std::istream& io, string& s)
+	std::istream &operator>>(std::istream &io, string &s)
 	{
 		char c = 'o';
 		while (c != '\n')
@@ -474,10 +439,7 @@ namespace sht
 			s.push_back(c);
 		}
 
-
 		return io;
 	}
 
-
 }
-
