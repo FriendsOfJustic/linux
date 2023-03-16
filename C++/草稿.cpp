@@ -10782,7 +10782,7 @@ void fun(const int&& a)
 template<class T>
 void forward(T&& t)
 {
-    //fun(t);
+    fun(forward<T>(t));
 }
 
 
@@ -10802,10 +10802,63 @@ int main()
 
 
 
-    string s1("i am student");
+    /*string s1("i am student");
     string s2("i am teacher");
 
     s2 = move(s1);
     cout << s1 << s1.size() << endl;
-    cout << s2 << s2.size()<<endl;
+    cout << s2 << s2.size()<<endl;*/
 }
+//
+//class Solution {
+//public:
+//    bool isIsomorphic(string s, string t) {
+//        unordered_map<char, char> m2;
+//        unordered_map<char, char> m1;
+//        if (s.size() != t.size())
+//            return false;
+//
+//
+//
+//        for (int i = 0; i < s.size(); i++)
+//        {
+//            if (s[i] != t[i])
+//            {
+//                auto it = m1.find(s[i]);
+//                auto is = m2.find(t[i]);
+//
+//                if (it == m1.end() && is == m2.end())
+//                {
+//                    if (it->second == t[i] && is->second == s[i])
+//                        ;
+//                    else
+//                        return false;
+//                }
+//                else if (it != m1.end() && is != m2.end())
+//                {
+//                    m1[s[i]] = t[i];
+//                    m2[t[i]] = s[i];
+//                }
+//                else
+//                {
+//                    return false;
+//                }
+//            }
+//            else
+//            {
+//                m1[s[i]] = t[i];
+//                m2[t[i]] = s[i];
+//            }
+//        }
+//        return true;
+//
+//
+//
+//    }
+//};
+//
+//int main()
+//{
+//    Solution t;
+//    t.isIsomorphic("abb", "egg");
+//}
