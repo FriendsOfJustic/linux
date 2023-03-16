@@ -67,6 +67,10 @@ namespace sht
 		string& operator=(string && s)
 		{
 			swap(*this, s);
+			
+			string tmp("");
+			s = tmp;
+
 			return *this;
 		}
 
@@ -102,7 +106,7 @@ namespace sht
 
 		~string()
 		{
-			if((int)_str != 0xcccccccc)
+			//if((int)_str != 0xcccccccc)
 			delete[]_str;
 			_size = 0;
 			_capacity = 0;
