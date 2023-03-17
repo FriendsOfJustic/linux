@@ -4,7 +4,7 @@
 #include <stdio.h>
 
 using namespace std;
-#define NUM 1
+#define NUM 10
 void *function(void *args)
 {
     char *buffer = (char *)args;
@@ -32,24 +32,20 @@ int main()
         cout << tid[i] << endl;
     }
 
-    sleep(5);
-    cout << "1" << endl;
-    void **p = nullptr;
-    pthread_join(tid[0], p);
-    if (*p != nullptr)
-        cout << (char *)*p << endl;
+    // sleep(5);
+    // cout << "1" << endl;
 
     // sleep(10);
-    /* for (int i = 0; i < NUM; i++)
+    for (int i = 0; i < NUM; i++)
     {
-        void **p = nullptr;
-        pthread_join(tid[i], p);
-        char *ret = (char *)*p;
+        void *p = nullptr;
+        pthread_join(tid[i], &p);
+        char *ret = (char *)p;
         if (ret == nullptr)
             cout << "nullptr" << endl;
         else
             cout << ret << endl;
         // cout << ret << endl;
         //  cout << (char *)*p << endl;
-    } */
+    }
 }
