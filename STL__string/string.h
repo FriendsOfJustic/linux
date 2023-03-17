@@ -65,6 +65,10 @@ namespace sht
 		string &operator=(string &&s)
 		{
 			swap(*this, s);
+			
+			string tmp("");
+			s = tmp;
+
 			return *this;
 		}
 
@@ -97,8 +101,13 @@ namespace sht
 
 		~string()
 		{
+<<<<<<< HEAD
+			//if((int)_str != 0xcccccccc)
+			delete[]_str;
+=======
 			// if ((int)_str != 0xcccccccc)
 			delete[] _str;
+>>>>>>> 070cf21422ce98a59243620f52ffcf3e1812c281
 			_size = 0;
 			_capacity = 0;
 		}

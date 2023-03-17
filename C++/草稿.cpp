@@ -10613,45 +10613,252 @@ struct Person
 //    }
 //};
 
-class Solution {
-public:
-    bool wordBreak(string s, vector<string>& wordDict) {
-        vector<bool> cur;
-        cur.resize(s.size() + 1, false);
-        cur[0] = true;
+//class Solution {
+//public:
+//    bool wordBreak(string s, vector<string>& wordDict) {
+//        vector<bool> cur;
+//        cur.resize(s.size() + 1, false);
+//        cur[0] = true;
+//
+//
+//
+//        for (int i = 0; i < cur.size(); i++)
+//        {
+//            for (int j = 0; j < wordDict.size(); j++)
+//            {
+//                if (i - (int)wordDict[j].size() >= 0)
+//                {
+//                    string tmp = s.substr(i - wordDict[j].size(), wordDict[j].size());
+//
+//                    if (tmp == wordDict[j] && cur[i - wordDict[j].size()] == true)
+//                        cur[i] = true;
+//                }
+//            }
+//        }
+//
+//
+//        return cur[cur.size() - 1];
+//
+//    }
+//};
+
+//
+//
+//int main()
+//{
+//    time_t begin;
+//    time(&begin);
+//    vector<string> dic = { "cats","dog","sand","and","cat" };
+//    Solution t;
+//    cout<<t.wordBreak("catsandog", dic)<<endl;
+//    time_t end;
+//    time(&end);
+//    cout << "用时" << end - begin << endl;
+//}
+
+//
+//class Solution {
+//public:
+//    int countSubarrays(vector<int>& nums, int k) {
+//        int i = 0;
+//        for (i = 0; i < nums.size(); i++)
+//            if (nums[i] == k)
+//                break;
+//        int sum = 1;
+//        vector<int> cur;
+//        cur.resize(nums.size(), 0);
+//        unordered_map<int, int> m;
+//        for (int j = i - 1; j >= 0; j--)
+//        {
+//            if (nums[j] < k)
+//                cur[j] = cur[j + 1] - 1;
+//            else
+//                cur[j] = cur[j + 1] + 1;
+//
+//            if (cur[j] == 1 || cur[j] == 0)
+//                sum++;
+//
+//            m[cur[j]]++;
+//        }
+//
+//        for (int j = i + 1; j < nums.size(); j++)
+//        {
+//            if (nums[j] > k)
+//                cur[j] = cur[j - 1] - 1;
+//            else
+//                cur[j] = cur[j - 1] + 1;
+//
+//            if (cur[j] == -1 || cur[j] == 0)
+//                sum++;
+//        }
+//
+//
+//        if (nums.size() % 2 == 0)
+//        {
+//            for (int j = i + 1; j < nums.size(); j++)
+//                cur[j]++;
+//        }
+//        
+//        
+//        for (int j = i + 1; j < nums.size(); j++)
+//        {
+//            auto ret = m.find(cur[j]);
+//            if (ret != m.end())
+//                sum += ret->second;
+//
+//        }
+//
+//
+//        return sum;
+//
+//
+//
+//    }
+//};
+//
+//
+//int main()
+//{
+//    vector<int> v = { 5,19,11,15,13,16,4,6,2,7,10,8,18,20,1,3,17,9,12,14 };
+//
+//    Solution t;
+//    t.countSubarrays(v, 6);
+//}
+
+
+//
+//
+//class A
+//{
+//
+//public:
+//    A(const char *a= "")
+//    {
+//        p = new char[strlen(a) + 1];
+//        strcpy(p, a);
+//    }
+//
+//
+//    A(const A& s)
+//    {
+//        cout<<"左值拷贝构造"
+//    }
+//
+//private:
+//    char* p = nullptr;
+//};
 
 
 
-        for (int i = 0; i < cur.size(); i++)
-        {
-            for (int j = 0; j < wordDict.size(); j++)
-            {
-                if (i - (int)wordDict[j].size() >= 0)
-                {
-                    string tmp = s.substr(i - wordDict[j].size(), wordDict[j].size());
-
-                    if (tmp == wordDict[j] && cur[i - wordDict[j].size()] == true)
-                        cur[i] = true;
-                }
-            }
-        }
 
 
-        return cur[cur.size() - 1];
 
-    }
-};
+
+void fun(int& a)
+{
+    cout << "int& a" << endl;
+
+}
+void fun(const int& a)
+{
+    cout << "const int& a" << endl;
+
+}
+
+void fun(int&& a)
+{
+    cout << "int&& a" << endl;
+}
+
+
+
+void fun(const int&& a)
+{
+    cout << "const int&& a" << endl;
+}
+
+
+
+template<class T>
+void forward(T&& t)
+{
+    fun(forward<T>(t));
+}
+
 
 
 
 int main()
 {
-    time_t begin;
-    time(&begin);
-    vector<string> dic = { "cats","dog","sand","and","cat" };
-    Solution t;
-    cout<<t.wordBreak("catsandog", dic)<<endl;
-    time_t end;
-    time(&end);
-    cout << "用时" << end - begin << endl;
+    int a = 1;
+    const int  b = 1;
+
+    forward(a);               //这里T 为int   实例化后的函数参数为：int & t
+    forward(move(a));          //这里T 为int   实例化后的函数参数为：int&& t
+
+
+    forward(b);                 //这里T 为const int   实例化后的函数参数为：int & t
+    forward(move(b));           //这里T 为const int   实例化后的函数参数为：int&& t
+
+
+
+    /*string s1("i am student");
+    string s2("i am teacher");
+
+    s2 = move(s1);
+    cout << s1 << s1.size() << endl;
+    cout << s2 << s2.size()<<endl;*/
 }
+//
+//class Solution {
+//public:
+//    bool isIsomorphic(string s, string t) {
+//        unordered_map<char, char> m2;
+//        unordered_map<char, char> m1;
+//        if (s.size() != t.size())
+//            return false;
+//
+//
+//
+//        for (int i = 0; i < s.size(); i++)
+//        {
+//            if (s[i] != t[i])
+//            {
+//                auto it = m1.find(s[i]);
+//                auto is = m2.find(t[i]);
+//
+//                if (it == m1.end() && is == m2.end())
+//                {
+//                    if (it->second == t[i] && is->second == s[i])
+//                        ;
+//                    else
+//                        return false;
+//                }
+//                else if (it != m1.end() && is != m2.end())
+//                {
+//                    m1[s[i]] = t[i];
+//                    m2[t[i]] = s[i];
+//                }
+//                else
+//                {
+//                    return false;
+//                }
+//            }
+//            else
+//            {
+//                m1[s[i]] = t[i];
+//                m2[t[i]] = s[i];
+//            }
+//        }
+//        return true;
+//
+//
+//
+//    }
+//};
+//
+//int main()
+//{
+//    Solution t;
+//    t.isIsomorphic("abb", "egg");
+//}
