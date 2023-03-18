@@ -10751,64 +10751,64 @@ struct Person
 
 
 
-
-
-
-void fun(int& a)
-{
-    cout << "int& a" << endl;
-
-}
-void fun(const int& a)
-{
-    cout << "const int& a" << endl;
-
-}
-
-void fun(int&& a)
-{
-    cout << "int&& a" << endl;
-}
-
-
-
-void fun(const int&& a)
-{
-    cout << "const int&& a" << endl;
-}
-
-
-
-template<class T>
-void forward(T&& t)
-{
-    fun(forward<T>(t));
-}
-
-
-
-
-int main()
-{
-    int a = 1;
-    const int  b = 1;
-
-    forward(a);               //这里T 为int   实例化后的函数参数为：int & t
-    forward(move(a));          //这里T 为int   实例化后的函数参数为：int&& t
-
-
-    forward(b);                 //这里T 为const int   实例化后的函数参数为：int & t
-    forward(move(b));           //这里T 为const int   实例化后的函数参数为：int&& t
-
-
-
-    /*string s1("i am student");
-    string s2("i am teacher");
-
-    s2 = move(s1);
-    cout << s1 << s1.size() << endl;
-    cout << s2 << s2.size()<<endl;*/
-}
+//
+//
+//
+//void fun(int& a)
+//{
+//    cout << "int& a" << endl;
+//
+//}
+//void fun(const int& a)
+//{
+//    cout << "const int& a" << endl;
+//
+//}
+//
+//void fun(int&& a)
+//{
+//    cout << "int&& a" << endl;
+//}
+//
+//
+//
+//void fun(const int&& a)
+//{
+//    cout << "const int&& a" << endl;
+//}
+//
+//
+//
+//template<class T>
+//void forward(T&& t)
+//{
+//    fun(forward<T>(t));
+//}
+//
+//
+//
+//
+//int main()
+//{
+//    int a = 1;
+//    const int  b = 1;
+//
+//    forward(a);               //这里T 为int   实例化后的函数参数为：int & t
+//    forward(move(a));          //这里T 为int   实例化后的函数参数为：int&& t
+//
+//
+//    forward(b);                 //这里T 为const int   实例化后的函数参数为：int & t
+//    forward(move(b));           //这里T 为const int   实例化后的函数参数为：int&& t
+//
+//
+//
+//    /*string s1("i am student");
+//    string s2("i am teacher");
+//
+//    s2 = move(s1);
+//    cout << s1 << s1.size() << endl;
+//    cout << s2 << s2.size()<<endl;*/
+//}
 //
 //class Solution {
 //public:
@@ -10861,4 +10861,125 @@ int main()
 //{
 //    Solution t;
 //    t.isIsomorphic("abb", "egg");
+//}
+
+//
+//class Solution {
+//public:
+//    vector<int> answerQueries(vector<int>& nums, vector<int>& queries) {
+//        vector<long long> cur;
+//        vector<int> result;
+//        cur.resize(nums.size() + 1, 0);
+//        for (int i = 0; i < nums.size(); i++)
+//        {
+//            cur[i + 1] = cur[i] + nums[i];
+//        }
+//        int sum = cur[cur.size() - 1];
+//
+//        for (auto& e : queries)
+//        {
+//            unordered_map<int, int> m1;
+//            int k = 0;
+//            for (int i = 0; i < cur.size(); i++)
+//            {
+//                m1[cur[i]] = i;
+//
+//                if (e + cur[i] - sum>=0)
+//                {
+//                    for (auto& it : m1)
+//                    {
+//                        if (it.first <= e + cur[i] - sum)
+//                        {
+//                            int next = nums.size() - (i - it.second);
+//                            k = max(k, next);
+//                        }
+//                    }
+//                }
+//            }
+//
+//            result.push_back(k);
+//        }
+//        return result;
+//    }
+//};
+//
+//
+//
+//int main()
+//{
+//    vector<int> v1 = { 331244,273144,118983,118252,305688,718089,665450 };
+//    vector<int> v2 = { 736411,184882,914641,37925,214915 };
+//    Solution t;
+//    t.answerQueries(v2, v1);
+//}
+
+
+//
+//
+//class Solution {
+//public:
+//    int longestCommonSubsequence(string text1, string text2) {
+//        vector<int> cur;
+//        cur.resize(text2.size(), 0);
+//        for (int i = 0; i < text1.size(); i++)
+//        {
+//
+//            for (int j = 0; j < text2.size(); j++)
+//            {
+//                if (text1[i] == text2[j])
+//                {
+//                    if (j > 0)
+//                    {
+//                        cur[j] = cur[j - 1] + 1;
+//                    }
+//                    else
+//                    {
+//                        cur[j] = 1;
+//                    }
+//                }
+//
+//                int k = cur[j] - 1;
+//                for (int x = j + 1; j < text2.size(); x++)
+//                {
+//                    if (cur[x] == k)
+//                        cur[x] = cur[j];
+//                }
+//            }
+//
+//            for (auto e : cur)
+//                cout << e << " ";
+//            cout << endl;
+//        }
+//
+//
+//        return cur[cur.size() - 1];
+//    }
+//};
+//
+//
+//int main()
+//{
+//    Solution t;
+//    t.longestCommonSubsequence("abcde", "ace");
+//}、
+
+
+//
+//shared_ptr<T>& operator=(const shared_ptr<T>& sp)
+//{
+//    if (this->ptr != sp.ptr)
+//    {
+//        this->count--;
+//        if (*(this->count) == 0)
+//        {
+//            delete this->ptr;
+//            delete this->count;
+//        }
+//        this->ptr = sp.ptr;
+//        this->count = sp.count;
+//        *(this->count)++;
+//        return *this;
+//    }
+//    else
+//        return *this;
 //}
