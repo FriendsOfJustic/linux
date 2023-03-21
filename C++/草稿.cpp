@@ -11038,24 +11038,138 @@ struct Person
 
 #include"Z:\乱七八糟\test\智能指针\unique_ptr.h"
 
+//
+//int main()
+//{
+//    TreeNode* t = new TreeNode(2);
+//    sht::unique_ptr<TreeNode> p1(t);
+//
+//    if (1)
+//    {
+//        
+//        sht::unique_ptr<TreeNode> p2 = p1;
+//        sht::unique_ptr<TreeNode> p3(p2);
+//
+//
+//        sht::unique_ptr<TreeNode> p4(new TreeNode(4));
+//        p3 = p4;
+//
+//    }
+//
+//
+//
+//}
 
-int main()
-{
-    TreeNode* t = new TreeNode(2);
-    sht::unique_ptr<TreeNode> p1(t);
-
-    if (1)
-    {
-        
-        sht::unique_ptr<TreeNode> p2 = p1;
-        sht::unique_ptr<TreeNode> p3(p2);
-
-
-        sht::unique_ptr<TreeNode> p4(new TreeNode(4));
-        p3 = p4;
-
-    }
 
 
 
-}
+//class Solution {
+//public:
+//    int numDistinct(string s, string t) {
+//        vector<vector<unsigned long long>> dp;
+//        vector<unsigned long long> tmp;
+//        tmp.resize(s.size(), 0);
+//        dp.resize(t.size(), tmp);
+//
+//
+//
+//        for (int i = 0; i < t.size(); i++)
+//        {
+//            for (int j = i; j < s.size(); j++)
+//            {
+//                if (t[i] == s[j])
+//                {
+//                    unsigned long long a = 1, b = 0;
+//                    if (i > 0)
+//                    {
+//                        a = dp[i - 1][j - 1];
+//
+//                    }
+//
+//                    if (j > 0)
+//                        b = dp[i][j - 1];
+//
+//                    dp[i][j] = a + b;
+//                }
+//                else
+//                {
+//                    if (j > 0)
+//                        dp[i][j] = dp[i][j - 1];
+//                    else
+//                        dp[i][j] = 0;
+//                }
+//            }
+//
+//            //for (auto e : dp[i])
+//            //    cout << e << " ";
+//
+//            //cout << endl;
+//        }
+//
+//
+//        return dp[t.size() - 1][s.size() - 1];
+//
+//    }
+//};
+//
+//
+//
+//int main()
+//{
+//    Solution t;
+//    cout<<t.numDistinct("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaab",
+//        "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
+//}
+
+//class Solution {
+//public:
+//    int minDistance(string word1, string word2) {
+//        vector<vector<int>> dp;
+//        vector<int> tmp;
+//        tmp.resize(word2.size() + 1, 0);
+//        dp.resize(word1.size() + 1, tmp);
+//        for (int i = 0; i <= word2.size(); i++)
+//            dp[0][i] = i;
+//        for (int i = 0; i <= word1.size(); i++)
+//            dp[i][0] = i;
+//
+//
+//        for (int i = 1; i <= word1.size(); i++)
+//        {
+//            for (int j = 1; j <= word2.size(); j++)
+//            {
+//                if (word1[i - 1] == word2[j - 1])
+//                {
+//                    dp[i][j] = dp[i - 1][j - 1];
+//                }
+//                else
+//                {
+//                    dp[i][j] = min(dp[i - 1][j], dp[i][j - 1]) + 1;
+//                }
+//            }
+//        }
+//        for (int i = 0; i <= word1.size(); i++)
+//        {
+//            for (int j = 0; j <= word2.size(); j++)
+//            {
+//                cout << dp[i][j] << " ";
+//            }
+//            cout << endl;
+//        }
+//
+//
+//        return dp[word1.size()][word2.size() - 1];
+//
+//    }
+//};
+//
+//
+//
+//int main()
+//{
+//    Solution t;
+//    t.minDistance("sea", "eat");
+//}
+
+
+
