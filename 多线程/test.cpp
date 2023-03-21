@@ -2,7 +2,8 @@
 #include <iostream>
 #include <unistd.h>
 #include <stdio.h>
-
+#include "Thread.hpp"
+#include <memory>
 using namespace std;
 #define NUM 10
 void *function(void *args)
@@ -21,9 +22,15 @@ void *function(void *args)
     return (void *)ret;
 }
 
+void *getTicket(void *args)
+{
+    cout << "fuck you" << endl;
+    cout << (const char *)args << endl;
+}
+
 int main()
 {
-    pthread_t *tid = new pthread_t[NUM];
+    /* pthread_t *tid = new pthread_t[NUM];
     for (int i = 0; i < NUM; i++)
     {
         char *buffer = new char[20];
@@ -47,5 +54,7 @@ int main()
             cout << ret << endl;
         // cout << ret << endl;
         //  cout << (char *)*p << endl;
-    }
+    } */
+
+    // sht::Thread *p1 = new sht::Thread(getTicket, nullptr);
 }
