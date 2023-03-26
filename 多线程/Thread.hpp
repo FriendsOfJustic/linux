@@ -23,6 +23,7 @@ namespace sht
             struct pack *a = new pack;
             a->args = args_;
             a->p = this;
+            // cout<<func_.target_type().name();
             int ret = pthread_create(&tid_, nullptr, run, (void *)a);
             char buffer[1024];
             snprintf(buffer, sizeof buffer, "Thread 编号：%d", number_);

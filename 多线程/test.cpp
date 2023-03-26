@@ -28,8 +28,35 @@ void *getTicket(void *args)
     cout << (const char *)args << endl;
 }
 
+void *fun(void *args)
+{
+    while (1)
+    {
+        cout << "son Thread LWP:" << pthread_self() << "is running"
+             << "pid" << getpid() << endl;
+
+        sleep(1);
+    }
+
+    return nullptr;
+}
+
 int main()
 {
+    pthread_t tid;
+    pthread_create(&tid, nullptr, fun, (void *)nullptr);
+
+    int num = 100;
+    while (num--)
+    {
+        cout << "main Thread LWP:" << pthread_self() << "is running"
+             << "pid" << getpid() << endl;
+
+        sleep(1);
+    }
+
+    pthread_exit(nullptr);
+
     /* pthread_t *tid = new pthread_t[NUM];
     for (int i = 0; i < NUM; i++)
     {
