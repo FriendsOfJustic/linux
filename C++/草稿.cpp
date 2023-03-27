@@ -11171,5 +11171,905 @@ struct Person
 //    t.minDistance("sea", "eat");
 //}
 
+//
+//struct comp
+//{
+//    bool operator()(int a, int b)
+//    {
+//        return a > b;
+//    }
+//};
+//
+//int main()
+//{
+//    vector<int> s{ 1,2,4,3,13,51,6,5 };
+//    sort(s.begin(), s.end(),comp());
+//    for (auto e : s)
+//        cout << e << " ";
+//}
 
 
+//
+//struct fruit
+//{
+//    string name;
+//    double price;
+//};
+//
+//struct comp
+//{
+//    bool operator()(fruit a, fruit b)
+//    {
+//        return a.price > b.price;
+//    }
+//};
+//
+//int main()
+//{
+//    vector<fruit> s{ {"苹果",10.00},{"香蕉",15.00},{"橘子",20.00} };
+//    sort(s.begin(), s.end(), comp());
+//}
+
+
+//
+//class Solution {
+//public:
+//    struct cmp
+//    {
+//        bool operator ()(pair<int, int>& a, pair<int, int>& b)
+//        {
+//            if (a.first != b.first)
+//                return a.first < b.first;
+//            else
+//                return a.second < b.second;
+//        }
+//    };
+//    int bestTeamScore(vector<int>& scores, vector<int>& ages) {
+//        vector<pair<int, int>> n;
+//        for (int i = 0; i < scores.size(); i++)
+//        {
+//            n.push_back(make_pair(ages[i], scores[i]));
+//        }
+//
+//        sort(n.begin(), n.end(), cmp());
+//
+//        vector<vector<int>> dp;
+//        vector<int> tmp;
+//        tmp.resize(4, 0);
+//        dp.resize(scores.size(), tmp);
+//
+//
+//        dp[0][0] = n[0].second;
+//        dp[0][2] = n[0].second;
+//        dp[0][1] = 0;
+//        dp[0][3] = 0;
+//        for (int i = 1; i < scores.size(); i++)
+//        {
+//            int a = 0, b = 0;
+//            if (n[i].second >= dp[i - 1][2])   //只一个的得分比上一个大 可选
+//            {
+//                a = dp[i - 1][0] + n[i].second;
+//            }
+//
+//            if (n[i].second >= dp[i - 1][3])  //不可选
+//            {
+//                b = dp[i - 1][1]+n[i].second;
+//            }
+//
+//
+//            dp[i][0] = max(a, b);
+//            dp[i][2] = n[i].second;
+//
+//            if (dp[i - 1][0] > dp[i - 1][1])
+//            {
+//                dp[i][1] = dp[i - 1][0];
+//                dp[i][3] = dp[i - 1][2];
+//            }
+//            else
+//            {
+//                dp[i][1] = dp[i - 1][1];
+//                dp[i][3] = dp[i - 1][3];
+//            }
+//
+//        }
+//        return max(dp[scores.size() - 1][0], dp[scores.size() - 1][1]);
+//    }
+//};
+//
+//
+//
+//int main()
+//{
+//    Solution t;
+//    vector<int> scores{ 4,5,6,5 };
+//    vector<int> ages{ 2,1,2,1 };
+//    t.bestTeamScore(scores, ages);
+//}
+
+
+
+//class Solution {
+//public:
+//    int longestPalindromeSubseq(string s) {
+//        vector<vector<bool>> dp;
+//        vector<bool> tmp;
+//        tmp.resize(s.size(), false);
+//        dp.resize(s.size(), tmp);
+//        int number = 0;
+//        for (int i = s.size() - 1; i >= 0; i--)
+//        {
+//            for (int j = i; j < s.size(); j++)
+//            {
+//                if (s[i] == s[j])
+//                {
+//                    if (j - i == 0)
+//                    {
+//                        dp[i][j] = true;
+//                        number = max(number, 1);
+//                    }
+//                    else if (j - i == 1)
+//                    {
+//                        dp[i][j] = true;
+//                        number = max(number, 2);
+//                    }
+//                    else
+//                    {
+//                        dp[i][j] = dp[i + 1][j - 1];
+//                        int mid = 0;
+//                        if (dp[i][j] == false)
+//                        {
+//                            for (int m = i + 1; m < s.size(); m++)
+//                            {
+//                                for (int n = j - 1; n >= 0; n--)
+//                                {
+//                                    if (dp[m][n] == true)
+//                                    {
+//                                        mid = max(mid, n - m + 1);
+//                                    }
+//                                }
+//                            }
+//                            number = max(number, mid + 2);
+//                        }
+//                        else
+//                        {
+//                            number = max(number, j - i + 1);
+//                        }
+//                    }
+//                }
+//            }
+//
+//        }
+//        return number;
+//    }
+//};
+
+//
+//int main()
+//{
+//    Solution t;
+//    cout<<t.longestPalindromeSubseq("cbbd");
+//}
+
+//
+//
+//class Solution {
+//public:
+//    int findContentChildren(vector<int>& g,  vector<int>& s) {
+//        sort(g.begin(), g.end());
+//        sort(s.begin(), s.end());
+//
+//        int a = 0;
+//        int b = 0;
+//        while (a < g.size() && b < s.size())
+//        {
+//            if (g[a] <= s[b])
+//            {
+//                a++;
+//                b++;
+//            }
+//            else
+//            {
+//                int sum = s[b];
+//                b++;
+//                while (sum < g[a] && b < s.size())
+//                {
+//                    sum += s[b];
+//                    b++;
+//                }
+//                if (sum >= g[a])
+//                    a++;
+//                else
+//                    a--;
+//            }
+//        }
+//
+//        return a ;
+//    }
+//};
+//
+//int main()
+//{
+//    Solution t;
+//    vector<int> g { 1, 2,  3};
+//    vector<int> s { 1, 1 };
+//
+//    t.findContentChildren(g, s);
+//}
+
+
+
+//int val = 10;
+//struct smp
+//{
+//    bool operator ()(int a, int b)
+//    {
+//        return a > b;
+//    }
+//};
+//#include<functional>
+//
+//
+//bool fun(int a, int b)
+//{
+//    return a > b;
+//}
+//
+//
+//bool fun()
+//
+//
+//
+//
+//
+//
+//
+//
+//int main()
+//{
+//    //vector<int> g{ 1, 2,  3 };
+//    //sort(g.begin(), g.end(), smp());
+//    //static int val = 20;
+//    //int c = 10;
+//    //if (true)
+//    //{
+//    //    int a = 1;
+//    //    int b = 0;
+//    //    //auto it = [val, &a, &b]()mutable {c = 20; cout << &a << endl; };
+//    //    it();
+//    //    cout << a;
+//    //}
+//
+//    //return 0;
+//
+//
+//
+//    
+//}
+
+
+
+//template<class F, class T>
+//T useF(F f, T x)
+//{
+//    static int count = 0;
+//    cout << "count:" << ++count << endl;
+//    cout << "count:" << &count << endl;
+//    return f(x);
+//}
+//double f(double i)
+//{
+//    return i / 2;
+//}
+//struct Functor
+//{
+//    double operator()(double d)
+//    {
+//        return d / 3;
+//    }
+//};
+//int main()
+//{
+//   
+//    // 函数名
+//    cout << useF(f, 11.11) << endl;
+//    // 函数对象
+//    cout << useF(Functor(), 11.11) << endl;
+//    // lamber表达式
+//    cout << useF([](double d)->double { return d / 4; }, 11.11) << endl;
+//    return 0;
+//}
+
+
+
+//#include <functional>
+//template<class F, class T>
+//T useF(F f, T x)
+//{
+//    static int count = 0;
+//    cout << "count:" << ++count << endl;
+//    cout << "count:" << &count << endl;
+//    return f(x);
+//}
+//
+//double f(double i)
+//{
+//    return i / 2;
+//}
+//
+//struct Functor
+//{
+//    double operator()(double d)
+//    {
+//        return d / 3;
+//    }
+//};
+//
+//
+//
+//struct operate
+//{
+//    public:
+//
+//    double add(double &x, double& y)
+//    {
+//        return x + y;
+//    }
+//
+//
+//    static double add_static(double& x, double& y)
+//    {
+//        return x + y;
+//    }
+//
+//};
+//
+//int main()
+//{
+//    // 函数名
+//    std::function<double(double)> func1 = f;
+//    cout << useF(func1, 11.11) << endl;
+//    // 函数对象
+//    std::function<double(double)> func2 = Functor();
+//    cout << useF(func2, 11.11) << endl;
+//    // lamber表达式
+//    std::function<double(double)> func3 = [](double d)->double { return d / 4; };
+//    cout << useF(func3, 11.11) << endl;
+//
+//    double a = 1;
+//    double b = 2;
+//    //类的非静态成员函数 ——在圆括号中除了参数列表还需传入类名   同时还需注意赋值的函数指针要带上类名和&
+//    function<double(operate,double&, double&)> func4 = &operate::add;
+//    //注意调用该包装器的时候需要把类对象传进去，目的是this指针不能显示传递，只能传入对象来调用函数
+//    func4(operate(), a, b);
+//
+//
+//    //类的静态成员 
+//    function<double(double&, double&)> func5 = operate::add_static;
+//    func5(a, b);
+//    return 0;
+//}
+
+
+
+// 使用举例
+#include <functional>
+//int SubFunc(int a, int b)
+//{
+//    return a - b;
+//}
+//
+//
+//int Plus(int a, int b)
+//{
+//    return a + b;
+//}
+//class Sub
+//{
+//public:
+//    int sub(int a, int b)
+//    {
+//        return a - b;
+//    }
+//};
+//int main()
+//{
+//    ////表示绑定函数plus 参数分别由调用 func1 的第一，二个参数指定
+//    //std::function<int(int, int)> func1 = std::bind(Plus, placeholders::_1,placeholders::_2);
+//    ////auto func1 = std::bind(Plus, placeholders::_1, placeholders::_2);
+//    ////func2的类型为 function<void(int, int, int)> 与func1类型一样
+//    ////表示绑定函数 plus 的第一，二为： 1， 2
+//    //std::function<int(int, int)> func2 = std::bind(Plus, 1, 2);
+//    ////cout << func1(1, 2) << endl;
+//    //cout << func2() << endl;
+//    ////cout << func2() << endl;
+//    //Sub s;
+//    //// 绑定成员函数
+//    //std::function<int(int, int)> func3 = std::bind(&Sub::sub, s,
+//    //    placeholders::_1, placeholders::_2);
+//    //// 参数调换顺序
+//       
+//  /*  std::function<int(int, int)> func4 = std::bind(&Sub::sub, s,
+//        placeholders::_2, placeholders::_1);
+//    cout << func3(1, 2) << endl;
+//    cout << func4(1, 2) << endl;
+//    return 0;*/
+//
+//    std::function<int(Sub,int, int)> func3 = &Sub::sub;
+//    cout<<func3(Sub(), 1, 2);
+//
+//    std::function<int(int, int)> func4 = std::bind(&Sub::sub, Sub(), placeholders::_1, placeholders::_2);
+//    cout<<func4(2,1);
+//
+//
+//    std::function<int(int, int)> func2 = std::bind(SubFunc, placeholders::_2, placeholders::_1);
+//    cout<<func2(1, 2);
+//
+//}
+
+//class Solution {
+//public:
+//    vector<int> postorderTraversal(TreeNode* root) {
+//        stack<TreeNode*> st;
+//        vector<int> result;
+//        TreeNode* cur = root;
+//        TreeNode* prev = nullptr;
+//        st.push(root);
+//        cur = cur->left;
+//        while (!st.empty())
+//        {
+//            while (cur)
+//            {
+//                st.push(cur);
+//                cur = cur->left;
+//            }
+//
+//            if (st.top()->right == nullptr)
+//            {
+//                prev = nullptr;
+//                while (st.top()->right == prev)
+//                {
+//                    result.push_back(st.top()->val);
+//                    prev = st.top();
+//                    st.pop();
+//                }
+//                //prev=nullptr;
+//            }
+//            else
+//                cur = st.top()->right;
+//        }
+//        return result;
+//    }
+//};
+//
+//
+//int main()
+//{
+//   /* Solution t;
+//    TreeNode* p1 = new TreeNode(1);
+//    TreeNode* p2 = new TreeNode(2);
+//    TreeNode* p3 = new TreeNode(3);
+//    p1->right = p2;
+//    p2->left = p3;
+//    t.postorderTraversal(p1);*/
+//
+//    vector<int> v{ 1,2,3,45,6 };
+//    vector<int> tmp(v.begin() + 1, v.begin() + 3);
+//}
+
+//
+//
+//class Solution {
+//public:
+//    int wiggleMaxLength(vector<int>& nums) {
+//        if (nums.size() <= 1)
+//            return nums.size();
+//
+//        int result = 1;
+//        int presub = 0;
+//        int nextsub = nums[0] - nums[1];
+//        for (int i = 0; i < nums.size() - 1; i++)
+//        {
+//            if ((presub >= 0 && nextsub < 0) || (presub <= 0 && nextsub > 0))
+//            {
+//                result++;
+//            }
+//            presub = nextsub;
+//            if(i+2<nums.size())
+//            nextsub = nums[i+1] - nums[i + 2];
+//        }
+//        return result;
+//    }
+//};
+//
+//
+//int main()
+//{
+//    vector<int> tmp{ 1,17,5,10,13,15,10,5,16,8 };
+//
+//    Solution t;
+//    t.wiggleMaxLength(tmp);
+//}
+
+
+//
+//
+//class Solution {
+//public:
+//    void fun(TreeNode* root, vector<TreeNode*>& v)
+//    {
+//        if (root == nullptr)
+//        {
+//            return;
+//        }
+//        fun(root->left, v);
+//        v.push_back(root);
+//        fun(root->right, v);
+//    }
+//
+//    TreeNode* buildTree(vector<TreeNode*>& v, int begin, int end)
+//    {
+//
+//        if (begin > end)   // 结束标志
+//        {
+//            return nullptr;
+//        }
+//
+//        int mid = (begin + end) / 2;
+//        cout << v[mid]->val << endl;
+//        v[mid]->right = buildTree(v, mid + 1, end);
+//        v[mid]->left = buildTree(v, begin, mid - 1);
+//        cout << v[mid]->val << endl;
+//        return v[mid];
+//    }
+//    TreeNode* balanceBST(TreeNode* root) {
+//        vector<TreeNode*> v;
+//        fun(root, v);
+//        auto it = buildTree(v, 0, v.size() - 1);
+//        return nullptr;
+//    }
+//};
+//
+//
+//int main()
+//{
+//    TreeNode* p1 = new TreeNode(1);
+//    TreeNode* p2 = new TreeNode(2);
+//    TreeNode* p3 = new TreeNode(3);
+//    TreeNode* p4 = new TreeNode(4);
+//    p1->right = p2;
+//    p2->right = p3;
+//    p3->right = p4;
+//    Solution t;
+//    t.balanceBST(p1);
+//}
+
+
+
+//#include <iostream>
+//#include <vector>
+//#include<set>
+//using namespace std;
+//vector<int> find(int n) {
+//    set<int> s;
+//    for (int i = 2; i < n / 2 + 1; i++) {
+//        if (n % i == 0) {
+//            s.insert(i);
+//            s.insert(n / i);
+//        }
+//    }
+//    vector<int> result;
+//    for (auto& e : s)
+//        result.push_back(e);
+//    return result;
+//}
+//int main() {
+//    int m, n;
+//
+//    while (cin >> m >> n) {
+//        vector<int> nums;
+//        nums.resize(n - m + 1, 0);
+//        vector<int> tmp = find(m);
+//        for (auto& e : tmp)
+//            nums[e] = 1;
+//        for (int i = 1; i < nums.size(); i++) {
+//            if (nums[i] != 0) {
+//                vector<int> tmp = find(i+m);
+//                for (auto& e : tmp) {
+//                    if (i + e < nums.size())
+//                    {
+//                        if (nums[i + e] == 0)
+//                            nums[i + e] = nums[i] + 1;
+//                        else
+//                            nums[i + e] = min(nums[i + e], nums[i] + 1);
+//                   }
+//                }
+//            }
+//        }
+//
+//        if (nums[nums.size() - 1] == 0)
+//            cout << -1;
+//        else
+//            cout << nums[nums.size() - 1];
+//    }
+//}
+
+//#include <iostream>
+//using namespace std;
+//
+//int main() {
+//    string s;
+//    while (getline(cin,s))
+//    {
+//        string num1;
+//        string num2;
+//        string num3;
+//        string num4;
+//        for (int i = 0; i < s.size(); i++)
+//        {
+//            if (s[i] == '/')
+//            {
+//                if (s[i + 1] == 's')
+//                {
+//                    num1.append("/s");
+//                    i += 1;
+//                    continue;
+//                }
+//            }
+//            else if (s[i] == 'c')
+//            {
+//                string tmp(s.begin() + i, s.begin() + i + 3);
+//                if (tmp == "c:\\")
+//                {
+//                    num2 += "c:\\\\";
+//                    i += 4;
+//                    continue;
+//                }
+//            }
+//            else if (s[i] == 'd')
+//            {
+//                string tmp(s.begin() + i, s.begin() + i + 5);
+//                if (tmp == "d:\\\\e")
+//                {
+//                    num3 += "d:\\\\e";
+//                    i += 4;
+//                    continue;
+//                }
+//            }
+//
+//            num4.push_back(s[i]);
+//
+//        }
+//
+//        int sum = 0;
+//        if (num1.size())
+//            sum++;
+//        if (num2.size())
+//            sum++;
+//        if (num3.size())
+//            sum++;
+//        if (num4.size())
+//            sum++;
+//
+//        cout << sum << endl;
+//        cout << num4 << endl;
+//        cout << num1 << endl;
+//        cout << num2 << endl;
+//        cout << num3 << endl;
+//
+//    }
+//}
+//// 64 位输出请用 printf("%lld")
+
+
+//
+//int main()
+//{
+//    string* s = new string[10];
+//
+//    delete []s;
+//}
+
+//struct student_info
+//{
+//    string name;
+//    string student_id;
+//    string come_from;
+//    string class_name1;
+//    string class_name2;
+//    string class_name3;
+//    string average;
+//};
+//
+//int main()
+//{
+//    FILE *p=fopen("stu_info2.txt", "r");
+//    char*buffer[1024];
+//    fread(buffer, sizeof buffer, sizeof(char), p);
+//    
+//    whie
+//    
+//}
+//
+//class Solution {
+//public:
+//    int countSubstrings(string s, string t) {
+//        int result = 0;
+//        for (int i = 0; i < s.size(); i++)
+//        {
+//            for (int j = i; j < s.size(); j++)
+//            {
+//                int begin = 0;
+//                int end = j - i;
+//                int flag = 0;
+//                for (int k = 0; k < j - i + 1; k++)
+//                {
+//                    if (s[i + k] != t[k + begin])
+//                        flag++;
+//                }
+//                begin++;
+//                end++;
+//                while (end < t.size())
+//                {
+//
+//                    if(t[begin])
+//                }
+//            }
+//        }
+//        return result;
+//    }
+//};
+//
+//
+//int main()
+//{
+//    Solution t;
+//    cout<<t.countSubstrings("ab", "bb");
+//}
+
+
+//
+//
+//class Solution {
+//public:
+//    int largestSumAfterKNegations(vector<int>& nums, int k) {
+//        sort(nums.begin(), nums.end());
+//
+//        for (auto& e : nums)
+//        {
+//            if (e < 0)
+//            {
+//                e = -e;
+//                k--;
+//            }
+//
+//            if (k == 0)
+//                break;
+//        }
+//
+//        if (k)
+//        {
+//            sort(nums.begin(), nums.end());
+//            if (nums[0] == 0)
+//                return 0;
+//
+//
+//            int i = 0;
+//            while (k > 0)
+//            {
+//                nums[i] = -nums[i];
+//                k--;
+//                i++;
+//            }
+//        }
+//        int result = 0;
+//        for (auto e : nums)
+//        {
+//            result += e;
+//        }
+//        return result;
+//
+//        return result;
+//    }
+//};
+//
+//
+//int main()
+//{
+//    Solution t;
+//    vector<int> v{ 3, -1, 0, 2 };
+//    t.largestSumAfterKNegations(v, 3);
+//}
+
+
+//class Solution {
+//public:
+//    int canCompleteCircuit(vector<int>& gas, vector<int>& cost) {
+//        int sz = gas.size();
+//        for (int i = 0; i < sz; i++)
+//        {
+//            if (gas[i] < cost[i])
+//                continue;
+//
+//            int j = i;
+//            int oil = 0;
+//            int flag = 1;
+//
+//
+//
+//            do
+//            {
+//                if (j == sz)
+//                {
+//                    j = 0;
+//                    if (j == i)
+//                        break;
+//                }
+//
+//                oil = oil + gas[j] - cost[j];
+//
+//                if (oil < 0)
+//                {
+//                    flag = 0;
+//                    break;
+//                }
+//                j++;
+//
+//            } while (j!=i);
+//
+//            if (flag)
+//                return i;
+//        }
+//        return -1;
+//    }
+//};
+//
+//
+//
+//int main()
+//{
+//    Solution t;
+//    vector<int> gas{ 2,3,4 };
+//    vector<int> cost{ 3,4,3 };
+//    t.canCompleteCircuit(gas, cost);
+//}
+
+
+
+//
+//#include"Z:\乱七八糟\test\单例模式\singleton.h"
+//#include<thread>
+//
+//
+//
+//int main()
+//{
+//    sht::singleton* p = sht::singleton::getsingleton();
+//    (p->m)["string"] = 1;
+//    (p->m)["ss"] = 2;
+//    (p->m)["fff"] = 3;
+//
+//}
+
+//
+//int main()
+//{
+//    size_t a = 0;
+//
+//    int b = a;
+//
+//    cout << --b;
+//}
+
+
+
+
+int main()
+{
+    const char* p1= "hello world";
+    const char* p2 = "hello world";
+
+
+    printf("0x%x\n", p1);
+    printf("0x%x\n",p2);
+
+}
