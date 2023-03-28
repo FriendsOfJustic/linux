@@ -35,7 +35,7 @@ void *fun(void *args)
         cout << "son Thread LWP:" << pthread_self() << "is running"
              << "pid" << getpid() << endl;
 
-        sleep(1);
+        sleep(2);
     }
 
     return nullptr;
@@ -46,13 +46,13 @@ int main()
     pthread_t tid;
     pthread_create(&tid, nullptr, fun, (void *)nullptr);
 
-    int num = 100;
+    int num = 5;
     while (num--)
     {
         cout << "main Thread LWP:" << pthread_self() << "is running"
              << "pid" << getpid() << endl;
 
-        sleep(1);
+        sleep(2);
     }
 
     pthread_exit(nullptr);
