@@ -63,7 +63,7 @@ public:
     }
 
 private:
-    queue<T> _q;
+    std::queue<T> _q;
     pthread_cond_t _p_cond;
     pthread_cond_t _c_cond;
     pthread_mutex_t _mutex;

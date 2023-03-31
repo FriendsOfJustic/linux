@@ -1,7 +1,7 @@
 
-test:test.cpp
+test:test.cpp 
 	g++ -o $@ $^  -lpthread
 
 .PHONY:clean
 clean:
-	rm -rf test
+	rm -rf test log.txt
