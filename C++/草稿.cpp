@@ -12061,15 +12061,148 @@ struct Person
 //}
 
 
+//
+//
+//int main()
+//{
+//    const char* p1= "hello world";
+//    const char* p2 = "hello world";
+//
+//
+//    printf("0x%x\n", p1);
+//    printf("0x%x\n",p2);
+//
+//}
+
+
+//
+//class Solution {
+//public:
+//    int countVowelStrings(int n) {
+//        vector<int> dp;
+//        dp.resize(5);
+//        for (int i = 0; i < n; i++)
+//        {
+//            dp[i] = i + 1;
+//        }
+//        for (int i = 1; i < n; i++)
+//        {
+//            for (int j = 1; j < 5; j++)
+//            {
+//                dp[j] = dp[j] + dp[j - 1];
+//            }
+//        }
+//
+//        return dp[4];
+//    }
+//};
+//
+//
+//int main()
+//{
+//    Solution t;
+//    t.countVowelStrings(2);
+//}
+
+
+
+//5
+//class Solution {
+//public:
+//    //0 3 6 9
+//    int arithmeticTriplets(vector<int>& nums, int diff) {
+//        int result = 0;
+//        for (int i = 0; i < nums.size(); i++)
+//        {
+//            unordered_set<int> s;
+//            for (int j = i + 1; j < nums.size(); j++)
+//            {
+//                if (nums[j] - nums[i] != diff)
+//                    continue;
+//
+//                int tmp = nums[j] - nums[i];
+//                if (tmp % 2 == 0)
+//                {
+//                    auto it = s.find(tmp / 2);
+//                    if (it != s.end() && *it == diff)
+//                        result++;
+//                }
+//                s.insert(tmp);
+//            }
+//        }
+//        return result;
+//    }
+//};
+//
+//int main()
+//{
+//    vector<int> s{ 4,5,6,7,8,9 };
+//    Solution t;
+//    t.arithmeticTriplets(s,2);
+//}
+//
+
+
+//
+//
+//
+//int main()
+//{
+//    int lock = 1;
+//    if (lock == 1)
+//    {
+//        lock--;
+//        //开始访问临界资源
+//
+//        //.....
+//
+//
+//        //结束访问
+//        lock++;
+//    }
+//}
+
+
+class Solution {
+public:
+    int maxCoins(vector<int>& nums) {
+        vector<vector<int>> dp;
+
+        vector<int> tmp;
+
+        tmp.resize(nums.size() + 2, 0);
+        dp.resize(nums.size() + 2, tmp);
+
+
+        for (int i = dp.size() - 1; i >= 0; i--)   //i,j
+        {
+            for (int j = i; j < dp.size(); j++)
+            {
+                int max_dp = 0;
+                for (int k = i + 1; k < j; k++)
+                {
+                    int cur_dp = 0;
+                    int left = 1, right = 1;
+                    if (i != 0)
+                        left = nums[i-1];
+
+                    if (j != dp.size() - 1)
+                        right = nums[j-1];
+
+                    cur_dp = nums[k-1] * left * right + dp[i][k] + dp[k][j];
+                    max_dp = max(max_dp, cur_dp);
+                }
+                dp[i][j] = max_dp;
+            }
+        }
+        return dp[0][dp.size() - 1];
+    }
+};
 
 
 int main()
 {
-    const char* p1= "hello world";
-    const char* p2 = "hello world";
-
-
-    printf("0x%x\n", p1);
-    printf("0x%x\n",p2);
-
+    vector<int> tmp{ 3,1,5,8 };
+    Solution t;
+    cout<<t.maxCoins(tmp);
 }
