@@ -4,6 +4,7 @@ import com.rsgisai.util.gis.util.geoserver.exception.style.StyleNotFoundExceptio
 import com.rsgisai.util.gis.util.http.HttpGet;
 import com.rsgisai.util.gis.util.http.HttpPut;
 import com.rsgisai.util.gis.util.http.HttpUtil;
+import org.springframework.beans.factory.annotation.Value;
 
 import java.io.ByteArrayInputStream;
 import java.io.FileNotFoundException;
@@ -15,7 +16,10 @@ import java.nio.charset.StandardCharsets;
 import java.util.Base64;
 
 public class GeoserverRestManager {
+    @Value("${geoserverURL.IP}")
     String hostname;
+
+    @Value("${geoserverURL.PORT}")
     int port;
     String username;
     String password;
@@ -46,8 +50,8 @@ public class GeoserverRestManager {
     //删除指定工作区的指定图层
     public Boolean DeleteDataStores(String workspace, String layerName) throws IOException {
         // geohazard-geoserver  改成路径
-        String urlString = String.format("http://www.rsgisai.com:8080/geoserver/rest/workspaces/%s/coveragestores/%s?recurse=true",
-                workspace, layerName);
+        String urlString = String.format("http://%s:%d/geoserver/rest/workspaces/%s/coveragestores/%s?recurse=true",
+                hostname, port,workspace, layerName);
         String authString = username + ":" + password;
         String authStringEnc = Base64.getEncoder().encodeToString(authString.getBytes());
         URL url=new URL(urlString);
@@ -76,7 +80,7 @@ public class GeoserverRestManager {
             throw new StyleNotFoundException(workspace, styleName);
 
         // get origin layer descriptor
-        String urlString = String.format("http://www.rsgisai.com:8080/geoserver/rest/layers/%s", layerName);
+        String urlString = String.format("http://%s:%d/geoserver/rest/layers/%s",  hostname, port,layerName);
         HttpGet httpGet = HttpUtil.get()
                 .urlString(urlString)
                 .username(username)
@@ -113,7 +117,9 @@ public class GeoserverRestManager {
 
     public String getStyleInfo(String workspace, String styleName) throws IOException {
         String urlString =
-                String.format("http://www.rsgisai.com:8080/geoserver/rest/workspaces/%s/styles/%s",
+                String.format("http://%s:%d/geoserver/rest/workspaces/%s/styles/%s",
+                        hostname,
+                        port,
                         workspace,
                         styleName);
         HttpGet httpGet = HttpUtil.get()

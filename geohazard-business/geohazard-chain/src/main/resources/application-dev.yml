@@ -34,3 +34,7 @@ geoserver:
   hostname: www.rsgisai.com
   port: 8080
 
+
+geoserverURL:
+  IP: www.rsgisai.com
+  PORT: 8080
