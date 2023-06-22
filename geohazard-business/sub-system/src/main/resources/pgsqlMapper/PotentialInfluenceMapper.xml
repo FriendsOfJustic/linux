@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.rsgisai.geohazard.subsystem.dao.pgsql.PotentialInfluenceDao">
+    <select id="select" resultType="com.rsgisai.geohazard.system.common.entity.PotentialInfluence">
+
+
+        select *
+        from potential_influence
+        <where>
+            <if test="id != null and id != ''">
+                AND id = #{id}
+            </if>
+            <if test="workingAreaId != null">
+                AND working_area_id = #{workingAreaId}
+            </if>
+            <if test="year != null">
+                AND year = #{year}
+            </if>
+            <if test="category != null and category != ''">
+                AND category = #{category}
+            </if>
+        </where>
+    </select>
+</mapper>
+

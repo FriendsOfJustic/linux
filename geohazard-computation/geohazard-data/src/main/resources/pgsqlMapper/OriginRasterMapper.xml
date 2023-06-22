@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.rsgisai.geohazard.data.dao.pgsql.OriginRasterDao">
+
+    <select id="select" resultType="com.rsgisai.geohazard.system.common.OriginRaster">
+        select
+        id,
+        working_area_id as workingAreaId,
+        feature,
+        create_by,
+        modify_by,
+        create_time,
+        modify_time
+        from public.origin_raster
+        <where>
+            <if test="id !=null ">
+                AND id = #{id}
+            </if>
+            <if test="workingAreaId != null ">
+                AND working_area_id = #{workingAreaId}
+            </if>
+            <if test="feature != null and feature != '' ">
+                AND feature = #{feature}
+            </if>
+        </where>
+    </select>
+    <select id="fetchRasterTiff" resultType="com.rsgisai.geohazard.system.common.entity.RasterRecord">
+        select ST_AsTIFF(rast) as tiff
+        from public.origin_raster
+        where working_area_id = #{workingAreaId}
+          and feature = #{feature}
+    </select>
+
+    <insert id="upload" useGeneratedKeys="true" keyProperty="id">
+        insert into public.origin_raster(working_area_id,
+                                         year,
+                                         feature,
+                                         rast,
+                                         create_by,
+                                         modify_by)
+        values (#{workingAreaId},
+                #{year},
+                #{feature},
+                #{wkbHex}::raster,
+                #{userId},
+                #{userId}
+               );
+    </insert>
+</mapper>

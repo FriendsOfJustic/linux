@@ -1,0 +1,4 @@
+
+###
+GET http://localhost:20234/risk-level/raster?feature=aspect_reclassify&workingAreaId=2&numberClasses=5&format=geotiff
+

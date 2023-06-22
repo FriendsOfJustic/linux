@@ -1,0 +1,3 @@
+```shell
+mvn package -DskipTests
+```

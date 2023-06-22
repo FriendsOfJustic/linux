@@ -1,0 +1,74 @@
+server:
+  port: 20223
+
+spring:
+  application:
+    name: gateway
+
+  cloud:
+    gateway: # 网关配置
+      discovery:
+        locator:
+          lower-case-service-id: true # 因为 Eureka 里面的服务默认自动大写
+      routes:
+        # Python 机器学习与GIS
+        - id: geohazard-gis
+          uri: http://localhost:20237
+          predicates:
+            - Path=/geohazard-gis/**
+
+        #灾害链子系统
+        - id: geohazard-chain
+          uri: http://geohazard-chain:20231
+          predicates:
+            - Path=/geohazard-chain/**
+
+        # 统计学影响范围
+        - id: py-influence-scope-statistic
+          uri: http://localhost:20236
+          predicates:
+            - Path=/py-influence-scope-statistic/**
+        # 地灾计算模块
+        - id: geospatial-computation
+          uri: lb://geospatial-computation
+          predicates:
+            - Path=/geospatial-computation/**
+        # 地灾数据管理模块
+        - id: geohazard-data
+          uri: lb://geohazard-data
+          predicates:
+            - Path=/geohazard-data/**
+        # 子系统
+        - id: sub-system
+          uri: lb://sub-system
+          predicates:
+            - Path=/sub-system/**
+        # 基于统计学的地灾隐患影响范围分析子系统
+        - id: influence-scope-statistic
+          uri: lb://influence-scope-statistic
+          predicates:
+            - Path=/influence-scope-statistic/**
+        # 地质灾害隐患风险等级评估子系统
+        - id: risk-level
+          uri: lb://risk-level
+          predicates:
+            - Path=/risk-level/**
+        # 用户角色权限管理模块
+        - id: auth-service
+          uri: lb://auth-service
+          predicates:
+            - Path=/auth-service/**
+      global-cors:
+        # 跨域配置
+        corsConfigurations:
+          '[/**]':
+            allowedOrigins: "*"
+            allowedHeaders: "*"
+            allowedMethods: "*"
+eureka:
+  client:
+    serviceURL:
+      defaultZone: http://localhost:20222/eureka/
+  instance:
+    hostname: localhost
+

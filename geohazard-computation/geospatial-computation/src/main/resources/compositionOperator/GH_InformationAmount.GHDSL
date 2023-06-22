@@ -1,0 +1,6 @@
+Parameters: Integer  reclassifyRaster, Integer numberClasses String targetPoints
+
+points = DZ_OriginPoints(targetPoints)
+information_amount = DZ_InformationAmount(reclassifyRaster, points, numberClasses)
+
+Output: information_amount

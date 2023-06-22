@@ -1,0 +1,36 @@
+spring:
+  application:
+    name: geohazard-chain
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    username: geohazard
+    password: cumtb_2023_rerssil
+    url:  jdbc:postgresql://122.112.250.145:15432/geohazard?currentSchema=public
+
+
+eureka:
+  client:
+    serviceURL:
+      defaultZone: http://localhost:20222/eureka/
+  instance:
+    hostname: localhost
+
+server:
+  port: 20231
+  servlet:
+    context-path: /geohazard-chain
+
+
+
+mybatis-plus:
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+  mapper-locations: classpath:mapper/*Mapper.xml
+  type-aliases-package: com.example.sys.entity
+
+geoserver:
+  username: admin
+  password: geoserver
+  hostname: www.rsgisai.com
+  port: 8080
+

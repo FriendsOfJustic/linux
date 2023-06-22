@@ -1,0 +1,12 @@
+
+###
+POST http://localhost:20234/risk-level/calculateTotalXxl
+Content-Type: application/x-www-form-urlencoded
+
+workingAreaId=2&numberClasses=5
+
+###
+POST http://localhost:20234/risk-level/calculateTotalXxl
+Content-Type: application/x-www-form-urlencoded
+
+workingAreaId=2&numberClasses=5

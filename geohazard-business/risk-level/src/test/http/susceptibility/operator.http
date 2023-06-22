@@ -1,0 +1,20 @@
+### Get GHDSL
+GET http://localhost:20234/risk-level/susceptibility/operator
+
+
+### operate
+POST http://localhost:20234/risk-level/susceptibility/operator
+Content-Type: application/json
+
+{
+  "workingAreaId": 1,
+  "userId": 1,
+  "arguments": {
+    "demNumberClasses": 5,
+    "slopeNumberClasses": 6,
+    "aspectNumberClasses": 5,
+    "engineeringGeologicalRockGroupNumberClasses": 5,
+    "faultStructureNumberClasses": 5,
+    "outNumberClasses": 4
+  }
+}

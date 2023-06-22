@@ -1,0 +1,38 @@
+spring:
+  application:
+    name: geospatial-computation
+  datasource:
+    mysql:
+      driver-class-name: com.mysql.cj.jdbc.Driver
+      url: jdbc:mysql://localhost:3306/geohazard?useSSL=false&useUnicode=true&useUnicode=true&characterEncoding=UTF-8&serverTimezone=GMT%2B8
+      username: root
+      password: Mining2021@zhq
+    pgsql:
+      url: jdbc:postgresql://geohazard-postgis:5432/geohazard?currentSchema=public
+      username: postgres
+      password: geohazard
+      driver-class-name: org.postgresql.Driver
+    hikari:
+      max-lifetime: 6000000 # 6000 s 100 minute
+server:
+  port: 20241
+  servlet:
+    context-path: /geospatial-computation
+
+mybatis:
+  mapper-locations: classpath:mysqlMapper/*Mapper.xml,classpath:pgsqlMapper/*Mapper.xml
+
+eureka:
+  client:
+    serviceURL:
+      defaultZone: http://geohazard-eureka:20222/eureka/
+  instance:
+    hostname: geohazard-geospatial-computation # same as container name
+
+logging:
+  level:
+    com:
+      rsgisai:
+        geohazard:
+          computation:
+            geospatial: DEBUG

@@ -1,0 +1,27 @@
+Parameters: Integer  demNumberClasses,Integer  slopeNumberClasses, Integer  aspectNumberClasses, Integer  engineeringGeologicalRockGroupNumberClasses, Integer  faultStructureNumberClasses
+-- 输入数据准备
+dem = DZ_OriginRaster("dem")
+engineering_geological_rock_group = DZ_OriginRaster("engineering_geological_rock_group")
+fault_structure = DZ_OriginRaster("fault_structure")
+geohazard = DZ_OriginPoints("geohazard_history")
+-- 坡度、坡向计算
+slope = DZ_Slope(dem)
+aspect = DZ_Aspect(dem)
+-- DEM、坡度、坡向重分类
+dem_reclassify = DZ_EqualIntervalReclassify(dem, demNumberClasses)
+slope_reclassify = DZ_EqualIntervalReclassify(slope, slopeNumberClasses)
+aspect_reclassify = DZ_AspectReclassify(aspect, aspectNumberClasses)
+engineering_geological_rock_group_reclassify = DZ_EqualIntervalReclassify(engineering_geological_rock_group, engineeringGeologicalRockGroupNumberClasses)
+fault_structure_reclassify = DZ_EqualIntervalReclassify(fault_structure, faultStructureNumberClasses)
+-- 计算信息量
+dem_information_amount = DZ_InformationAmount(dem_reclassify, geohazard, demNumberClasses)
+slope_information_amount = DZ_InformationAmount(slope_reclassify, geohazard, aspectNumberClasses)
+aspect_information_amount = DZ_InformationAmount(aspect_reclassify, geohazard, aspectNumberClasses)
+engineering_geological_rock_group_information_amount = DZ_InformationAmount(engineering_geological_rock_group_reclassify, geohazard, engineeringGeologicalRockGroupNumberClasses)
+fault_structure_information_amount = DZ_InformationAmount(fault_structure_reclassify, geohazard, faultStructureNumberClasses)
+-- 信息量求和
+sum_information_amount = DZ_RasterSum5(dem_information_amount, slope_information_amount, aspect_information_amount, engineering_geological_rock_group_information_amount, fault_structure_information_amount)
+-- 计算易发性
+susceptibility = DZ_EqualIntervalReclassify(sum_information_amount, 4)
+-- 保存并发布为Geoserver图层
+Save: susceptibility

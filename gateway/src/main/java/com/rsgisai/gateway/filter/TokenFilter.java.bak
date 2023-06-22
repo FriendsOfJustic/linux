@@ -1,0 +1,69 @@
+package com.rsgisai.gateway.filter;
+
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.rsgisai.gateway.service.TokenService;
+import com.rsgisai.geohazard.system.common.R;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cloud.gateway.filter.GatewayFilterChain;
+import org.springframework.cloud.gateway.filter.GlobalFilter;
+import org.springframework.core.io.buffer.DataBuffer;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.server.PathContainer;
+import org.springframework.http.server.RequestPath;
+import org.springframework.http.server.reactive.ServerHttpRequest;
+import org.springframework.http.server.reactive.ServerHttpResponse;
+import org.springframework.stereotype.Component;
+import org.springframework.web.server.ServerWebExchange;
+import reactor.core.publisher.Mono;
+
+import java.awt.image.DataBufferByte;
+import java.net.URI;
+import java.util.List;
+
+@Component
+public class TokenFilter implements GlobalFilter {
+
+    private final String AUTHORIZE_TOKEN = "token";
+
+    private final TokenService tokenService;
+
+    public TokenFilter(
+            TokenService tokenService,
+            ObjectMapper objectMapper) {
+        this.tokenService = tokenService;
+        this.objectMapper = objectMapper;
+    }
+
+    private final ObjectMapper objectMapper;
+
+    @Override
+    public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
+        ServerHttpRequest request = exchange.getRequest();
+        RequestPath path = request.getPath();
+        if (path.toString().startsWith("/auth-service")) {
+            return chain.filter(exchange);
+        }
+
+        HttpHeaders headers = request.getHeaders();
+        String token = headers.getFirst(AUTHORIZE_TOKEN);
+        boolean validate = tokenService.validate(token);
+        if (!validate) {
+            ServerHttpResponse response = exchange.getResponse();
+            response.getHeaders().setContentType(MediaType.APPLICATION_JSON);
+            response.setStatusCode(HttpStatus.UNAUTHORIZED);
+            R<Object> r = R.status(HttpStatus.UNAUTHORIZED).message("Token Invalid");
+            try {
+                byte[] bytes = objectMapper.writeValueAsBytes(r);
+                DataBuffer dataBuffer = response.bufferFactory().wrap(bytes);
+                return response.writeWith(Mono.just(dataBuffer));
+            } catch (JsonProcessingException e) {
+                throw new RuntimeException(e);
+            }
+        }
+
+        return chain.filter(exchange);
+    }
+}

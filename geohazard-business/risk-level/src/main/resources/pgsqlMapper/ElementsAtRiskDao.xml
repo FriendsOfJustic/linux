@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.rsgisai.geohazard.level.dao.pgsql.ElementsAtRiskDao">
+    <select id="select" resultType="com.rsgisai.geohazard.level.entity.ElementsAtRisk">
+        select
+            id,
+            gridcode,
+            class_name as className,
+            area,
+            working_area_id as workingAreaId,
+            type,
+            year,
+            name,
+            ST_AsGeoJSON(geom) as geom,
+            is_at_risk as isAtRisk
+        from geohazard.public.elements_at_risk
+        <where>
+            <if test="id!=null">
+                id=#{id}
+            </if>
+            <if test="workingAreaId!=null">
+                and working_area_id=#{workingAreaId}
+            </if>
+            <if test="year!=null">
+                and year=#{year}
+            </if>
+            <if test="name!=null">
+                and name=#{name}
+            </if>
+            <if test="isAtRisk!=null">
+                and is_at_risk=#{isAtRisk}
+            </if>
+        </where>
+    </select>
+
+
+</mapper>

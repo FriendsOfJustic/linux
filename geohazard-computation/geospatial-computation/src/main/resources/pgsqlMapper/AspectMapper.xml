@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.rsgisai.geohazard.computation.geospatial.dao.pgsql.AspectDao">
+
+    <insert id="calculate" useGeneratedKeys="true" keyProperty="id">
+        insert into public.intermediate_raster(feature,
+                                               working_area_id,
+                                               create_by,
+                                               modify_by,
+                                               create_time,
+                                               modify_time,
+                                               rast)
+        select 'aspect',
+               #{workingAreaId},
+               #{userId},
+               #{userId},
+               current_timestamp,
+               current_timestamp,
+               ST_Aspect(
+                       rast := rast,
+                       nband := 1,
+                       pixeltype := '32BF',
+                       units := 'DEGREES',
+                       interpolate_nodata := FALSE
+                   )
+        from public.origin_raster
+        where feature = 'dem'
+          and working_area_id = #{workingAreaId};
+    </insert>
+</mapper>

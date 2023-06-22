@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.rsgisai.geohazard.level.dao.pgsql.elements_at_risk.ElementsAtRiskFineDao">
+    <update id="updatePersonnelPropertyLoss">
+        update landslide_potential
+        set personnel_loss = #{personnelLoss},
+            property_loss  = #{propertyLoss},
+            hazard_level   = #{hazardLevel}
+        where no = #{no}
+    </update>
+
+    <select id="selectByLandslidePotentialInfluence"
+            resultType="com.rsgisai.geohazard.level.entity.elements_at_risk.ElementsAtRiskFine">
+        select earf.id,
+               earf.name,
+               earf.level,
+               earf.area
+        from elements_at_risk_fine earf,
+             landslide_potential_influence lpi
+        where lpi.no = #{potentialInfluenceNo}
+          and st_intersects(lpi.geom, earf.geom);
+    </select>
+    <select id="selectAll" resultType="com.rsgisai.geohazard.level.entity.elements_at_risk.ElementsAtRiskFine">
+        select earf.id,
+               earf.name,
+               earf.level,
+               earf.area
+        from elements_at_risk_fine earf;
+    </select>
+
+</mapper>

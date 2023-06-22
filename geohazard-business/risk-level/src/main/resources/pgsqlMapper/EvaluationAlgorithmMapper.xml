@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.rsgisai.geohazard.level.dao.pgsql.EvaluationAlgorithmDao">
+    <insert id="calculateTotalInformationAmount">
+        delete
+        from susceptibility.information_amount_all
+        where working_area_id = #{workingAreaId}
+          and dem_number_classes = #{demNumberClasses}
+          and slope_number_classes = #{slopeNumberClasses}
+          and aspect_number_classes = #{aspectNumberClasses}
+          and curvature_number_classes = #{curvatureNumberClasses}
+        ;
+        insert into susceptibility.information_amount_all
+        (
+         working_area_id,
+         dem_number_classes,
+         slope_number_classes,
+         aspect_number_classes,
+         curvature_number_classes,
+         create_time, modify_time, rast)
+
+        select #{workingAreaId},
+               #{demNumberClasses},
+               #{slopeNumberClasses},
+               #{aspectNumberClasses},
+               #{curvatureNumberClasses},
+               current_timestamp,
+               current_timestamp,
+               ST_MapAlgebra(
+                       ST_MapAlgebra(dx.rast, sx.rast, '[rast1]+[rast2]', '32BF'),
+                       ST_MapAlgebra(ax.rast, cx.rast, '[rast1]+[rast2]', '32BF'),
+                       '[rast1]+[rast2]', '32BF'
+                   ) as rast
+        from susceptibility.dem_xxl dx
+                 inner join susceptibility.slope_xxl sx on dx.working_area_id = sx.working_area_id
+                 inner join susceptibility.aspect_xxl ax on dx.working_area_id = ax.working_area_id
+                 inner join susceptibility.curvature_xxl cx on dx.working_area_id = cx.working_area_id
+        where dx.working_area_id = #{workingAreaId}
+          and sx.working_area_id = #{workingAreaId}
+          and ax.working_area_id = #{workingAreaId}
+          and cx.working_area_id = #{workingAreaId}
+
+          and dx.number_classes = #{demNumberClasses}
+          and sx.number_classes = #{slopeNumberClasses}
+          and ax.number_classes = #{aspectNumberClasses}
+          and cx.number_classes = #{curvatureNumberClasses}
+    </insert>
+    <insert id="calculateEvaluationReclassify">
+        delete
+        from susceptibility.evaluation
+        where working_area_id = #{workingAreaId}
+          and dem_number_classes = #{demNumberClasses}
+          and slope_number_classes = #{slopeNumberClasses}
+          and aspect_number_classes = #{aspectNumberClasses}
+          and curvature_number_classes = #{curvatureNumberClasses}
+          and out_number_classes = #{outNumberClasses}
+        ;
+        insert into susceptibility.evaluation
+        (working_area_id,
+         dem_number_classes,
+         slope_number_classes,
+         aspect_number_classes,
+         curvature_number_classes,
+         out_number_classes,
+         create_time, modify_time, rast)
+        select #{workingAreaId},
+               #{demNumberClasses},
+               #{slopeNumberClasses},
+               #{aspectNumberClasses},
+               #{curvatureNumberClasses},
+               #{outNumberClasses},
+               current_timestamp,
+               current_timestamp,
+               ST_Reclass(rast, 1,
+                          #{reclassifyExpression},
+                          '8BUI',
+                          0) -- 0 表示 nodata
+        from susceptibility.information_amount_all
+        where working_area_id = #{workingAreaId}
+          and dem_number_classes = #{demNumberClasses}
+          and slope_number_classes = #{slopeNumberClasses}
+          and aspect_number_classes = #{aspectNumberClasses}
+          and curvature_number_classes = #{curvatureNumberClasses}
+        ;
+    </insert>
+    <select id="getStats" resultType="com.rsgisai.geohazard.level.entity.RasterStats">
+        select (ST_SummaryStats(rast)).*
+        from susceptibility.information_amount_all
+        where working_area_id = #{workingAreaId}
+          and dem_number_classes = #{demNumberClasses}
+          and slope_number_classes = #{slopeNumberClasses}
+          and aspect_number_classes = #{aspectNumberClasses}
+          and curvature_number_classes = #{curvatureNumberClasses}
+        ;
+    </select>
+    <select id="select" resultType="com.rsgisai.geohazard.level.entity.EvaluationRasterRecord">
+        select id,
+        working_area_id as workingAreaId,
+        dem_number_classes as demNumberClasses,
+        slope_number_classes as slopeNumberClasses,
+        aspect_number_classes as aspectNumberClasses,
+        curvature_number_classes as curvatureNumberClasses,
+        out_number_classes as outNumberClasses,
+        create_time as createTime,
+        modify_time as modifyTime
+        from susceptibility.evaluation
+        <where>
+            <if test="workingAreaId != null">
+                and working_area_id = #{workingAreaId}
+            </if>
+            <if test="demNumberClasses != null">
+                and dem_number_classes = #{demNumberClasses}
+            </if>
+            <if test="slopeNumberClasses != null">
+                and slope_number_classes = #{slopeNumberClasses}
+            </if>
+            <if test="aspectNumberClasses != null">
+                and aspect_number_classes = #{aspectNumberClasses}
+            </if>
+            <if test="curvatureNumberClasses != null">
+                and curvature_number_classes = #{curvatureNumberClasses}
+            </if>
+            <if test="outNumberClasses != null">
+                and out_number_classes = #{outNumberClasses}
+            </if>
+        </where>
+        ;
+    </select>
+    <select id="fetchRaster" resultType="com.rsgisai.geohazard.system.common.entity.RasterRecord">
+        select id,
+               working_area_id as workingAreaId,
+               ST_AsTIFF(rast) as rast
+        from susceptibility.evaluation
+        where working_area_id = #{workingAreaId}
+
+          and out_number_classes = #{outNumberClasses}
+
+          and dem_number_classes = #{demNumberClasses}
+          and slope_number_classes = #{slopeNumberClasses}
+          and aspect_number_classes = #{aspectNumberClasses}
+          and curvature_number_classes = #{curvatureNumberClasses}
+    </select>
+</mapper>

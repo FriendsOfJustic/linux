@@ -1,0 +1,51 @@
+spring:
+  application:
+    name: geohazard-data
+  servlet:
+    multipart:
+      max-file-size: 500MB
+      max-request-size: 500MB
+  datasource:
+    mysql:
+      driver-class-name: com.mysql.cj.jdbc.Driver
+      url: jdbc:mysql://122.112.250.145:13306/geohazard?useSSL=false&useUnicode=true&useUnicode=true&characterEncoding=UTF-8&serverTimezone=GMT%2B8
+      username: root
+      password: Mining2021@zhq
+    pgsql:
+      url: jdbc:postgresql://122.112.250.145:15432/geohazard?currentSchema=public
+      username: geohazard
+      password: cumtb_2023_rerssil
+      driver-class-name: org.postgresql.Driver
+    hikari:
+      max-lifetime: 6000000 # 6000 s 100 minute
+
+geoserver:
+  username: admin
+  password: geoserver
+  hostname: www.rsgisai.com
+  port: 8080
+
+server:
+  port: 20242
+  servlet:
+    context-path: /geohazard-data
+
+
+eureka:
+  client:
+    serviceURL:
+      defaultZone: http://localhost:20222/eureka/
+  instance:
+    hostname: localhost
+
+logging:
+  level:
+    com:
+      rsgisai:
+        geohazard:
+          - data: DEBUG
+          - data:
+              dao:
+                pgsql:
+                  OriginRasterDao: OFF
+

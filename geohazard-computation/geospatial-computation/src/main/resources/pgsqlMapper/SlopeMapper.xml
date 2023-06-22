@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.rsgisai.geohazard.computation.geospatial.dao.pgsql.SlopeDao">
+
+    <insert id="calculate" useGeneratedKeys="true" keyProperty="id">
+        insert into public.intermediate_raster(feature,
+                                               working_area_id,
+                                               create_by,
+                                               modify_by,
+                                               create_time,
+                                               modify_time,
+                                               rast)
+        select 'slope',
+               #{workingAreaId},
+               #{userId},
+               #{userId},
+               current_timestamp,
+               current_timestamp,
+               -- 调用 PostGIS 的 ST_Slope 函数用于坡度计算
+               ST_Slope(
+                       rast := rast,
+                       nband := 1,
+                       pixeltype := '32BF',
+                       units := 'DEGREES',
+                   -- "for Meters:LatLon use scale=111120"; reference: https://postgis.net/docs/RT_ST_Slope.html
+                       scale := 111120,
+                       interpolate_nodata := FALSE
+                   )
+        from public.origin_raster
+             -- 选择原始栅格数据表中指定研究区的 DEM 数据
+        where feature = 'dem'
+          and working_area_id = #{workingAreaId};
+    </insert>
+</mapper>

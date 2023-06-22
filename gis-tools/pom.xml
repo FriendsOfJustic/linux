@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>com.rsgisai</groupId>
+        <artifactId>geohazard-risk-server</artifactId>
+        <version>0.0.1-SNAPSHOT</version>
+    </parent>
+
+    <artifactId>gis-tools</artifactId>
+
+    <properties>
+        <maven.compiler.source>8</maven.compiler.source>
+        <maven.compiler.target>8</maven.compiler.target>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <geotools.version>27.0</geotools.version>
+    </properties>
+    <dependencies>
+
+        <!-- https://mvnrepository.com/artifact/net.postgis/postgis-jdbc -->
+        <dependency>
+            <groupId>net.postgis</groupId>
+            <artifactId>postgis-jdbc</artifactId>
+            <version>2021.1.0</version>
+        </dependency>
+        <dependency>
+            <groupId>org.geotools</groupId>
+            <artifactId>gt-epsg-hsql</artifactId>
+            <version>${geotools.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.geotools</groupId>
+            <artifactId>gt-main</artifactId>
+            <version>${geotools.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.geotools</groupId>
+            <artifactId>gt-shapefile</artifactId>
+            <version>${geotools.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.geotools</groupId>
+            <artifactId>gt-geojson</artifactId>
+            <version>${geotools.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.geotools</groupId>
+            <artifactId>gt-geotiff</artifactId>
+            <version>${geotools.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.geotools</groupId>
+<!--            for parse SLD xml-->
+            <artifactId>gt-xml</artifactId>
+            <version>${geotools.version}</version>
+        </dependency>
+        <dependency>
+            <!--            需要独立的 repository 可以在 github 上的 readme 看到-->
+            <!--            不行就手动下载-->
+            <!--            手动下载地址 http://maven.geo-solutions.it , 注意，在 mvnrepository 上面目前下载失效 -->
+            <groupId>it.geosolutions</groupId>
+            <artifactId>geoserver-manager</artifactId>
+            <version>1.7.0</version>
+        </dependency>
+
+        <!-- https://mvnrepository.com/artifact/org.apache.xmlgraphics/xmlgraphics-commons -->
+        <dependency>
+            <groupId>org.apache.xmlgraphics</groupId>
+            <artifactId>xmlgraphics-commons</artifactId>
+            <version>2.7</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-api</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.rsgisai</groupId>
+            <artifactId>system-common</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+            <scope>compile</scope>
+        </dependency>
+    </dependencies>
+    <repositories>
+        <repository>
+            <id>GeoSolutions</id>
+            <url>http://maven.geo-solutions.it/</url>
+        </repository>
+        <!-- geotools -->
+        <repository>
+            <id>osgeo</id>
+            <url>https://repo.osgeo.org/repository/release</url>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+        </repository>
+        <repository>
+            <id>osgeo-snapshots</id>
+            <url>https://repo.osgeo.org/repository/snapshot</url>
+            <releases>
+                <enabled>false</enabled>
+            </releases>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+        </repository>
+        <repository>
+            <id>conjars.org</id>
+            <url>http://conjars.org/repo</url>
+        </repository>
+        <repository>
+            <id>osgeo-snapshot</id>
+            <name>OSGeo Snapshot Repository</name>
+            <url>https://repo.osgeo.org/repository/snapshot/</url>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+            <releases>
+                <enabled>false</enabled>
+            </releases>
+        </repository>
+    </repositories>
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.8.1</version>
+                <configuration>
+                    <source>1.8</source>
+                    <target>1.8</target>
+                    <encoding>UTF-8</encoding>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <configuration>
+                    <!--                    因为这个模块没有main，所以使用这个配置，否则打包报错 Unable to find main class-->
+                    <!--                    参考 https://blog.csdn.net/ZY_201803/article/details/105743712#:~:text=%E9%A1%B9%E7%9B%AE%E7%9B%AE%E5%BD%95%E5%A6%82%E4%B8%8B%20%E5%BD%93%E5%AF%B9%E6%95%B4%E4%B8%AA%E9%A1%B9%E7%9B%AE%E8%BF%9B%E8%A1%8C%E6%89%93%E5%8C%85%E6%97%B6service_base%E6%A8%A1%E5%9D%97%E5%87%BA%E7%8E%B0%20unable%20to%20find,main%20class%2C%E8%BF%99%E6%98%AF%E5%9B%A0%E4%B8%BA%E6%95%B4%E4%B8%AAcommon%E6%A8%A1%E5%9D%97%E4%B8%8B%E9%83%BD%E6%98%AF%E9%A1%B9%E7%9B%AE%E7%9A%84%E5%9F%BA%E7%A1%80%E7%BB%84%E4%BB%B6%EF%BC%8C%E4%B8%8D%E9%9C%80%E8%A6%81%E5%8D%95%E7%8B%AC%E5%90%AF%E5%8A%A8%EF%BC%8C%E6%89%80%E4%BB%A5%E5%87%A0%E4%B8%AA%E5%AD%90model%E4%B8%AD%E9%83%BD%E6%B2%A1%E6%9C%89%E9%85%8D%E7%BD%AE%20main%20%E4%B8%BB%E7%B1%BB%EF%BC%8C%E4%BD%86%E6%98%AFspring%20boot%20maven%E5%9C%A8%E6%89%93%E5%8C%85%E6%97%B6%E5%8F%88%E9%9C%80%E8%A6%81%E4%B8%BB%E5%85%A5%E5%8F%A3%E7%B1%BB%E3%80%82-->
+                    <layout>NONE</layout>
+                    <!--                    跳过这个插件，因为SpringBoot插件会生成BOOT-INF，造成这个模块jar无法被其他包使用，所以需要跳过这个地方-->
+                    <skip>true</skip>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+</project>

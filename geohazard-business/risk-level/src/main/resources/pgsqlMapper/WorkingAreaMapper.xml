@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.rsgisai.geohazard.level.dao.pgsql.WorkingAreaDao">
+
+    <select id="select" resultType="com.rsgisai.geohazard.entity.WorkingArea">
+        SELECT id, name
+        FROM geohazard.public.working_area;
+    </select>
+
+
+</mapper>

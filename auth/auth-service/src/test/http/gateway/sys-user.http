@@ -1,0 +1,9 @@
+###
+GET http://localhost:20223/auth-service/sys-user
+
+###
+POST http://localhost:8080/auth-service/sys-user
+Content-Type: application/x-www-form-urlencoded
+
+username=root&password=123456
+

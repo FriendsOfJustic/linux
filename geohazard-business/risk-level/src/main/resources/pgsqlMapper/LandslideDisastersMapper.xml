@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.rsgisai.geohazard.level.dao.pgsql.LandslideDisastersDao">
+
+    <select id="insertRisk" resultType="com.rsgisai.geohazard.system.common.entity.GeohazardRisk">
+
+        insert into geohazard_risk (working_area_id,year,rast)
+        values (#{workingAreaId}, #{year},
+                (select st_mapalgebra(t1.rast,
+                                      t2.rast,
+                                      '( [rast2.val] + ([rast1.val]*10) )')
+                 FROM geohazard_probability t1,
+                      geohazard_vulnerability t2
+                 WHERE t1.working_area_id = #{workingAreaId}
+                   and t1.year = #{year}
+                   and t2.working_area_id = #{workingAreaId}
+                   and t2.year = #{year}));
+
+        UPDATE geohazard_risk
+        SET rast = ST_Reclass(rast, 1,
+                              '11-12:1, 21:1 ,' ||
+                              '31:2, 22-23:2,13-14:2,' ||
+                              '24:3, 32-33:3, 41-42:3,' ||
+                              '34:4, 43-44:4',
+                              '4BUI', 0)
+        WHERE  working_area_id = #{workingAreaId}
+                   and year = #{year};
+
+    </select>
+
+    <select id="selectValues1" resultType="com.rsgisai.geohazard.system.common.entity.GeohazardRisk">
+        SELECT *
+        FROM (SELECT (ST_PixelAsPoints(rast, 1)).*
+              FROM geohazard_risk
+              WHERE working_area_id = #{workingAreaId} and year = #{year}) foo;
+    </select>
+
+    <select id="selectRast" resultType="com.rsgisai.geohazard.system.common.entity.GeohazardRisk">
+        select rast from geohazard_risk WHERE working_area_id = #{workingAreaId} and year = #{year};
+    </select>
+
+</mapper>

@@ -1,0 +1,9 @@
+### get CSRF
+GET http://localhost:20223/login/csrf
+
+
+### login
+POST http://localhost:20223/login
+Content-Type: application/x-www-form-urlencoded
+
+username=Richard&password=password&_csrf=789d370b-6392-4a47-b0e2-d5c79fd495fc

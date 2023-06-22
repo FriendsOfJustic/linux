@@ -1,0 +1,13 @@
+Parameters: Integer earthquakeWeight, Integer susceptibilityWeight
+-- 输入数据准备
+earthquake = DZ_OriginRaster("earthquake")
+susceptibility = DZ_ResultRaster("susceptibility")
+
+susceptibility_normalized = DZ_NormalizeClassified(susceptibility)
+
+-- 根据危险性评价加权线性评价模型计算危险性
+earthquake_index = DZ_RasterWeightSum2(earthquake, earthquakeWeight, susceptibility_normalized, susceptibilityWeight)
+-- 计算危险性（固定分为 4 类）
+probability = DZ_EqualIntervalReclassify(earthquake_index, 4)
+-- 保存结果
+Save: probability

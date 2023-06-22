@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.rsgisai.geohazard.level.dao.pgsql.SlopeAlgorithmDao">
+
+    <insert id="generate">
+        insert into susceptibility.slope(working_area_id, create_time, modify_time, rast)
+        select #{workingAreaId},
+               current_timestamp,
+               current_timestamp,
+               ST_Slope(rast := rast,
+                        nband := 1,
+                        pixeltype := '32BF',
+                        units := 'DEGREES',
+                   -- for Meters:LatLon use scale=111120; reference: https://postgis.net/docs/RT_ST_Slope.html
+                        scale := 111120,
+                        interpolate_nodata := FALSE
+                   )
+        from public.dem;
+    </insert>
+    <update id="updateLevelCount">
+        -- delete
+        delete
+        from susceptibility.information_amount_level_count
+        where working_area_id = #{workingAreaId}
+          and number_classes = #{numberClasses}
+          and feature = 'slope';
+        -- insert
+        insert into susceptibility.information_amount_level_count(working_area_id,
+                                                                  number_classes,
+                                                                  feature,
+                                                                  level, level_count)
+        select #{workingAreaId},
+               #{numberClasses},
+               'slope',
+               pixel_count_table.level as level,
+               pixel_count_table.count as level_count
+        from
+            -- level_count begin
+            (SELECT (ST_ValueCount(rast)).value as level, (ST_ValueCount(rast)).count-- value, count
+             FROM susceptibility.slope_reclassify -- {raster}
+             where working_area_id = #{workingAreaId}
+               and number_classes = #{numberClasses}) pixel_count_table
+        where level != 0
+        order by level;
+    </update>
+    <update id="updateJoinCount">
+        -- delete
+        delete
+        from susceptibility.information_amount_join_count
+        where working_area_id = #{workingAreaId}
+          and number_classes = #{numberClasses}
+          and feature = 'slope';
+        -- insert
+        insert into susceptibility.information_amount_join_count(working_area_id, number_classes, feature,
+                                                                 level, join_count)
+
+        select #{workingAreaId}        as working_area_id,
+               #{numberClasses}        as number_classes,
+               'slope'::susceptibility.feature_enum as feature, level as level,
+               COALESCE(join_count, 0) as join_count -- 0 if joint_count is null
+        from (
+                 SELECT count(earthquake.id)                   as join_count,
+                        ST_Value(raster.rast, earthquake.geom) as level
+                 FROM public.earthquake,
+                      susceptibility.slope_reclassify raster -- {raster}
+                 WHERE working_area_id = #{workingAreaId}
+                   and number_classes = #{numberClasses}
+                   and ST_Intersects(earthquake.geom, raster.rast)
+                   and ST_Value(raster.rast, earthquake.geom) is not null
+                 group by level) spacial_join_table
+        where level != 0
+        order by level;
+    </update>
+    <insert id="xxlMapping">
+        delete
+        from susceptibility.slope_xxl
+        where working_area_id = #{workingAreaId}
+          and number_classes = #{numberClasses};
+        insert into susceptibility.slope_xxl(working_area_id, create_time, modify_time, rast, number_classes)
+        select #{workingAreaId},
+               current_timestamp,
+               current_timestamp,
+               ST_Reclass(
+                       rast,
+                       1, -- 波段号
+                       #{xxlMappingExpression},
+                       '32BF',
+                        7654321),
+               #{numberClasses}
+        from susceptibility.slope_reclassify
+        where working_area_id = #{workingAreaId}
+          and number_classes = #{numberClasses};
+    </insert>
+    <select id="checkGenerated" resultType="java.lang.Integer">
+        select count(rast)
+        from susceptibility.aspect
+        where working_area_id = #{workingAreaId};
+    </select>
+
+    <select id="checkUpToDate" resultType="java.lang.Boolean">
+        select count(aspect.id) != 0 -- True if up to date
+        from susceptibility.slope slope
+                 inner join public.dem dem
+                            on aspect.working_area_id = dem.working_area_id
+        where slope.modify_time >= dem.modify_time
+    </select>
+
+    <select id="getStats" resultType="com.rsgisai.geohazard.level.entity.RasterStats">
+        select (ST_SummaryStats(rast)).* from susceptibility.slope
+        <where>
+            <if test="id != null">
+                and id = #{id}
+            </if>
+            <if test="workingAreaId != null">
+                and working_area_id = #{workingAreaId}
+            </if>
+        </where>;
+    </select>
+    <select id="getXxlMapping" resultType="com.rsgisai.geohazard.level.entity.Xxl">
+        select level,
+               join_count,
+               level_count,
+               case
+                   when join_count > 0 then
+                       LN(
+                                   (join_count / (
+                                       select sum(join_count)
+                                       from susceptibility.information_amount_join_count
+                                       where working_area_id = #{workingAreaId}
+                                         and number_classes = #{numberClasses}
+                                         and feature = 'slope'
+                                   ))
+                                   /
+                                   (level_count / (select sum(level_count)
+                                                   from susceptibility.information_amount_level_count
+                                                   where working_area_id = #{workingAreaId}
+                                                     and number_classes = #{numberClasses}
+                                                     and feature = 'slope'
+                                   ))
+                           )
+                   else 0 end as XXL
+        from (select lc.level, lc.level_count, COALESCE(jc.join_count, 0) as join_count
+              from (select *
+                    from susceptibility.information_amount_level_count
+                    where working_area_id = #{workingAreaId}
+                      and number_classes = #{numberClasses}
+                      and feature = 'slope'
+                   ) as lc
+                       left join
+                   (select *
+                    from susceptibility.information_amount_join_count
+                    where working_area_id = #{workingAreaId}
+                      and number_classes = #{numberClasses}
+                      and feature = 'slope'
+                   ) as jc
+                   on lc.level = jc.level) as info
+        order by level;
+    </select>
+    <select id="xxlExist" resultType="java.lang.Boolean">
+        select count(*) != 0
+        from susceptibility.slope_xxl
+        where working_area_id = #{workingAreaId}
+          and number_classes = #{numberClasses};
+    </select>
+    <select id="reclassifyExist" resultType="java.lang.Boolean">
+        select count(*) != 0
+        from susceptibility.slope_reclassify
+        where working_area_id = #{workingAreaId}
+          and number_classes = #{numberClasses};
+    </select>
+
+    <insert id="reclassify">
+        delete from susceptibility.slope_reclassify
+        where working_area_id = #{workingAreaId}
+          and number_classes = #{numberClasses};
+        insert into susceptibility.slope_reclassify(working_area_id, create_time, modify_time, rast, number_classes)
+        select #{workingAreaId},
+               current_timestamp,
+               current_timestamp,
+               ST_Reclass(
+                       rast,
+                       1,
+                       #{reclassifyExpression},
+                       '8BUI',
+                        0),
+               #{numberClasses}
+        from susceptibility.slope
+        where working_area_id = #{workingAreaId};
+    </insert>
+
+
+
+
+</mapper>

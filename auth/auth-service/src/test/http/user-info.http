@@ -1,0 +1,9 @@
+### Login and get Token
+POST http://localhost:20221/auth-service/login
+Content-Type: application/x-www-form-urlencoded
+
+username=Richard&password=123456
+
+### Get UserInfo
+GET http://localhost:20221/auth-service/user-info
+token: eyJhbGciOiJSUzI1NiJ9.eyJleHAiOjE2NzM0OTE2MjgsInVzZXJuYW1lIjoiUmljaGFyZCIsImF1dGhvcml0aWVzIjpbeyJhdXRob3JpdHkiOiJST0xFX0FETUlOIn0seyJhdXRob3JpdHkiOiJST0xFX0RFViJ9XX0.VZzebmt3cVsTnNBTkN8UrLHpnclB2qF-_QkHalWG9B9LzxqBVBPL2Hew5tahkV1r05Nr7wZ8jzYIc8VoR_-t9zwLgw1_ChInpLBQ_UFKwa2gZ57_ATsj6Klzk7fv0gxWtym2K3kOacdX7yIEetm88pEmTy6uDumwG-jVa5eOB-_d8QvO2l6uLdTTFc68BI70lBN0BHlOvbzmIBPacmB0PucIlaVGcBbBMd3_6WQo8JmBRChhUEVy0BrRVp6z2l3m84r3IVrNnQ0E3OC8s08QtY-t03yrqjp4mZyXUuVkrBM3PZRfxuYZ0CftexrNUh64s6hth9EMbOCzG5a4IUrRyg

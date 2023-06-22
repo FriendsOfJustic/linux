@@ -1,0 +1,10 @@
+### Get Coverages
+GET http://www.rsgisai.com:8080/geoserver/rest/workspaces/kq_vegetation/coveragestores/Antant_19910801_xlht/coverages
+Accept: application/json
+
+### Get Coverages
+PUT http://www.rsgisai.com:8080/geoserver/rest/workspaces/geohazard/coveragestores/dem2/file.geotiff
+Content-Type: image/tiff
+
+< ./dem.2.tif
+

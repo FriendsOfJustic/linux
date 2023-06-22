@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.rsgisai.geohazard.computation.geospatial.dao.pgsql.RasterAlgebraDao">
+
+    <insert id="rasterSum" useGeneratedKeys="true" keyProperty="id">
+        insert into public.intermediate_raster
+        (working_area_id,
+         feature,
+         rast,
+         algorithm,
+         algorithm_args,
+         create_by,
+         modify_by)
+        select #{workingAreaId},
+               'sum',
+               ST_MapAlgebra(
+                       a.rast,
+                       b.rast,
+                       '[rast1]+[rast2]', '32BF'),
+               'sum',
+               null,
+               #{userId},
+               #{userId}
+        from public.intermediate_raster a,
+             public.intermediate_raster b
+        where a.id = #{inputRasterId}
+          and b.id = #{inputRasterId2}
+    </insert>
+    <insert id="mapAlgebraDouble">
+        insert into public.intermediate_raster (working_area_id,
+                                                feature,
+                                                rast,
+                                                algorithm,
+                                                algorithm_args,
+                                                create_by,
+                                                modify_by)
+        select #{workingAreaId},
+               #{feature},
+               ST_MapAlgebra(a.rast,
+                             ST_Resample(
+                                     ST_Transform(b.rast, ST_SRID(a.rast)),
+                                     a.rast),
+                             #{mapAlgebraExpression},
+                             '32BF'),
+               #{algorithm},
+               #{mapAlgebraExpression},
+               #{userId},
+               #{userId}
+        from public.intermediate_raster a,
+             public.intermediate_raster b
+        where a.id = #{inputRasterId}
+          and b.id = #{inputRasterId2}
+    </insert>
+</mapper>

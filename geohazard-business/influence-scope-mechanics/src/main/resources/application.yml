@@ -1,0 +1,6 @@
+spring:
+  application:
+    name: influence-scope-mechanics
+
+server:
+  port: 20232

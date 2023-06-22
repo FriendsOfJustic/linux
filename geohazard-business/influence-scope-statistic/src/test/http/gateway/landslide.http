@@ -1,0 +1,6 @@
+
+###
+GET http://localhost:20233/landslide
+
+###
+GET http://localhost:20223/influence-scope-statistic/landslide/1

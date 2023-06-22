@@ -1,0 +1,17 @@
+### Evaluation 2 4 9 9 9 9
+POST http://localhost:20234/risk-level/calculateEvaluation
+Content-Type: application/x-www-form-urlencoded
+
+workingAreaId=2&outNumberClasses=4&demNumberClasses=9&slopeNumberClasses=9&aspectNumberClasses=9&curvatureNumberClasses=9
+
+### Evaluation 2 4 9 9 9 9
+POST http://localhost:20234/risk-level/calculateEvaluation
+Content-Type: application/x-www-form-urlencoded
+
+workingAreaId=2&outNumberClasses=4&demNumberClasses=9&slopeNumberClasses=9&aspectNumberClasses=9&curvatureNumberClasses=9
+
+### Evaluation 2 4 9 9 9 9
+POST http://localhost:20234/risk-level/calculateEvaluation
+Content-Type: application/x-www-form-urlencoded
+
+workingAreaId=2&outNumberClasses=4&demNumberClasses=8&slopeNumberClasses=8&aspectNumberClasses=8&curvatureNumberClasses=8

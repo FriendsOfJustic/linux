@@ -1,0 +1,24 @@
+### DEM 重分类
+POST http://localhost:20234/risk-level/reclassify
+Content-Type: application/x-www-form-urlencoded
+
+workingAreaId=2&feature=dem&numberClasses=10
+
+### SLOPE 重分类
+POST http://localhost:20234/risk-level/reclassify
+Content-Type: application/x-www-form-urlencoded
+
+workingAreaId=2&feature=slope&numberClasses=5
+
+
+###  测试 aspect 重分类
+POST http://localhost:20234/risk-level/reclassify
+Content-Type: application/x-www-form-urlencoded
+
+workingAreaId=2&feature=aspect&numberClasses=9
+
+###  curvature-reclass
+POST http://localhost:20234/risk-level/reclassify
+Content-Type: application/x-www-form-urlencoded
+
+workingAreaId=2&feature=curvature&numberClasses=5

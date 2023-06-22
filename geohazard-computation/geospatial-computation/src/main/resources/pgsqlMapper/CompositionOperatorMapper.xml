@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.rsgisai.geohazard.computation.geospatial.dao.pgsql.CompositionOperatorDao">
+    <insert id="insert">
+        insert into public.composition_operator("name", dsl, create_by, modify_by)
+        values (#{name}, #{dsl}, #{userId}, #{userId})
+    </insert>
+    <update id="update">
+        update public.composition_operator
+        set dsl         = #{dsl},
+            modify_by   = #{userId},
+            modify_time = current_timestamp
+        where "name" = #{name};
+    </update>
+
+    <select id="exist" resultType="java.lang.Boolean">
+        select count(*) > 0 as exist
+        from public.composition_operator
+        where name = #{name}
+    </select>
+    <select id="selectOne"
+            resultType="com.rsgisai.geohazard.system.common.CompositionOperator">
+        select *
+        from public.composition_operator
+        where "name" = #{name}
+        limit 1;
+    </select>
+    <select id="selectByName" resultType="com.rsgisai.geohazard.system.common.CompositionOperator">
+        select *
+        from public.composition_operator
+        where "name" = #{name}
+        limit 1;
+    </select>
+</mapper>

@@ -1,0 +1,12 @@
+###
+GET http://localhost:20242/geohazard-data/origin-raster
+
+
+### 发布  东川区西北 的 DEM 数据
+POST http://localhost:20242/geohazard-data/origin-raster/publish
+Content-Type: application/json
+
+{
+  "feature": "dem",
+  "workingAreaId": 11
+}

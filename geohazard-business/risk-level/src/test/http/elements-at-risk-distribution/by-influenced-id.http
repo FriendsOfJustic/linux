@@ -1,0 +1,12 @@
+### 获取图层名称
+GET http://localhost:20234/risk-level/fbtj/yssjLayerName?workingAreaId=1
+
+
+
+
+
+### 计算指定隐患点影响范围（通过ID）内的承灾体（clipped）
+POST http://localhost:20234/risk-level/elements-at-risk-statistic/influenced-elements-at-risk-clip/calculate
+Content-Type: application/x-www-form-urlencoded
+
+potential_id=滑坡157

@@ -1,0 +1,6 @@
+### Evaluation 2 4 9 9 9 9
+GET http://localhost:20234/risk-level/susceptibility/layer-name?workingAreaId=2
+
+
+###
+GET http://localhost:20234/risk-level/susceptibility/layerName?workingAreaId=1

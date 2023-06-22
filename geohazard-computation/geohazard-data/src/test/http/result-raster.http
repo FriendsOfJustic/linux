@@ -1,0 +1,44 @@
+###
+GET http://localhost:20242/geohazard-data/origin-raster
+
+
+### 发布  东川区西北 的 DEM 数据
+POST http://localhost:20242/geohazard-data/result-raster/publish
+Content-Type: application/json
+
+{
+  "feature": "dem",
+  "workingAreaId": 11
+}
+
+### 发布  东川区西北 的 DEM 数据
+POST http://localhost:20242/geohazard-data/result-raster/publish
+Content-Type: application/json
+
+{
+  "workingAreaId": 11,
+  "userId": 1,
+  "name": "GH_Susceptibility",
+  "feature": "susceptibility",
+  "args": {
+    "demNumberClasses": 3,
+    "slopeNumberClasses": 4,
+    "aspectNumberClasses": 5,
+    "outNumberClasses": 4
+  }
+}
+
+###
+POST http://localhost:20242/geohazard-data/result-raster/publish
+Content-Type: application/json
+
+{
+  "workingAreaId": 11,
+  "userId": 1,
+  "name": "GH_Probability",
+  "feature": "probability",
+  "arguments": {
+    "precipitationWeight": 7000,
+    "susceptibilityWeight": 3000
+  }
+}

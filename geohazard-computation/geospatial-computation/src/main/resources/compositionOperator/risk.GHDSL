@@ -1,0 +1,11 @@
+Parameters: Integer numberClasses
+-- 输入数据准备
+hazard = DZ_ResultRaster("hazard")
+vulnerability = DZ_ResultRaster("vulnerability")
+-- 风险度计算
+risk_index = DZ_RasterMultiply(hazard, vulnerability)
+-- 风险等级评估
+risk = DZ_EqualIntervalReclassify(risk_index, numberClasses)
+-- 保存结果
+DZ_SaveRaster(risk, "risk", "GH_Risk", numberClasses)
+Output: None

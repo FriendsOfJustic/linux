@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.rsgisai.geohazard.computation.geospatial.dao.pgsql.InformationAmountDao">
+    <delete id="clearJoinCount">
+        -- delete
+        delete
+        from susceptibility.information_amount_join_count
+        where working_area_id = #{workingAreaId}
+          and number_classes = #{numberClasses}
+          and feature = #{feature};
+    </delete>
+
+    <insert id="calculateJoinCount">
+        -- insert
+        insert into susceptibility
+            .information_amount_join_count(working_area_id,
+                                           number_classes,
+                                           feature,
+                                           level,
+                                           join_count,
+                                           create_by,
+                                           modify_by)
+        select #{workingAreaId},
+               #{numberClasses},
+               #{feature},
+               ST_Value(r.rast, p.point) as value,
+               count(*)                  as join_count,
+               #{userId},
+               #{userId}
+        from (select *
+              from public.intermediate_raster
+              where id = #{inputRasterId}) r,
+             (select (ST_Dump(points)).geom as point
+              from public.intermediate_points
+              where id = #{inputPointsId}) p
+        where ST_Value(r.rast, p.point) is not null
+        group by value;
+    </insert>
+
+    <delete id="clearLevelCount">
+        -- delete
+        delete
+        from susceptibility.information_amount_level_count
+        where working_area_id = #{workingAreaId}
+          and number_classes = #{numberClasses}
+          and feature = #{feature};
+    </delete>
+
+    <insert id="calculateLevelCount">
+        insert into susceptibility
+            .information_amount_level_count(working_area_id,
+                                            number_classes,
+                                            feature,
+                                            level,
+                                            level_count,
+                                            create_by,
+                                            modify_by)
+        select #{workingAreaId},
+               #{numberClasses},
+               #{feature},
+               pixel_count_table.level as level,
+               pixel_count_table.count as level_count,
+               #{userId},
+               #{userId}
+        from (SELECT (ST_ValueCount(rast)).value as level,
+             (ST_ValueCount(rast)).count as count-- value, count
+              FROM public.intermediate_raster
+              where id = #{inputRasterId}) pixel_count_table
+        where level != 0
+        order by level;
+    </insert>
+
+    <select id="getInformationAmountMapping"
+            resultType="com.rsgisai.geohazard.computation.geospatial.entity.InformationAmount">
+        select level,
+               join_count,
+               level_count,
+               case
+                   when join_count > 0 then
+                       LN(
+                                   (join_count / (
+                                       select sum(join_count)
+                                       from susceptibility.information_amount_join_count
+                                       where working_area_id = #{workingAreaId}
+                                         and number_classes = #{numberClasses}
+                                         and feature = #{feature}
+                                   ))
+                                   /
+                                   (level_count / (select sum(level_count)
+                                                   from susceptibility.information_amount_level_count
+                                                   where working_area_id = #{workingAreaId}
+                                                     and number_classes = #{numberClasses}
+                                                     and feature = #{feature}
+                                   ))
+                           )
+                   else 0 end as informationAmount
+        from (select lc.level, lc.level_count, COALESCE(jc.join_count, 0) as join_count
+              from (select *
+                    from susceptibility.information_amount_level_count
+                    where working_area_id = #{workingAreaId}
+                      and number_classes = #{numberClasses}
+                      and feature = #{feature}
+                   ) as lc
+                       left join
+                   (select *
+                    from susceptibility.information_amount_join_count
+                    where working_area_id = #{workingAreaId}
+                      and number_classes = #{numberClasses}
+                      and feature = #{feature}
+                   ) as jc
+                   on lc.level = jc.level) as info
+        order by level;
+    </select>
+
+    <insert id="populateInformationAmount" useGeneratedKeys="true" keyProperty="id">
+        insert into public.intermediate_raster(working_area_id,
+                                               feature,
+                                               rast,
+                                               algorithm,
+                                               algorithm_args,
+                                               create_by,
+                                               modify_by)
+        select #{workingAreaId},
+               #{feature},
+               ST_Reclass(
+                       rast, 1, -- 波段号
+                       #{reclassifyExpression},
+                       '32BF', 7654321),
+               'DZ_InformationAmount',
+               #{numberClasses},
+               #{userId},
+               #{userId}
+        from public.intermediate_raster
+        where id = #{inputRasterId};
+    </insert>
+</mapper>

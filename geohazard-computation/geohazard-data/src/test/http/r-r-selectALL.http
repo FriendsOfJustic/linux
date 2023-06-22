@@ -1,0 +1,1 @@
+GET http://localhost:20242/geohazard-data/result-raster/selectAll

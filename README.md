@@ -1,39 +1,20 @@
-# geohazard-risk-server
-
-#### 介绍
-{**以下是 Gitee 平台说明，您可以替换此简介**
-Gitee 是 OSCHINA 推出的基于 Git 的代码托管平台（同时支持 SVN）。专为开发者提供稳定、高效、安全的云端软件开发协作平台
-无论是个人、团队、或是企业，都能够用 Gitee 实现代码托管、项目管理、协作开发。企业项目请看 [https://gitee.com/enterprises](https://gitee.com/enterprises)}
-
-#### 软件架构
-软件架构说明
-
-
-#### 安装教程
-
-1.  xxxx
-2.  xxxx
-3.  xxxx
-
-#### 使用说明
-
-1.  xxxx
-2.  xxxx
-3.  xxxx
-
-#### 参与贡献
-
-1.  Fork 本仓库
-2.  新建 Feat_xxx 分支
-3.  提交代码
-4.  新建 Pull Request
+# 工程简介
+本项目是 地质灾害隐患风险遥感评估分系统 的服务端项目，各模块描述如下：
+1. auth: 认证授权模块
+2. eureka-server: 微服务注册中心  port：20222
+3. gateway: API网关                port：20223    
+4. geohazard-business: 四个业务模块
+      - geohazard-chain    port:20231
+      - influence-scope-mechanics   port:20232
+      - influence-scope-statistic      port : 20233
+      - risk-level     port:20234
+      - sub-system 20235
+5. geohazard-computation: 地质灾害计算服务模块  
+   5.1 geohazard-data: 地质灾害数据管理模块  port :20242
+   5.2 geospatial-computation: 地质灾害地理算法执行模块   port :20241
+6. gis-tools: 一些处理地理数据的工具
+7. system-common: 各模块公用的实体类等
 
 
-#### 特技
+# 延伸阅读
 
-1.  使用 Readme\_XXX.md 来支持不同的语言，例如 Readme\_en.md, Readme\_zh.md
-2.  Gitee 官方博客 [blog.gitee.com](https://blog.gitee.com)
-3.  你可以 [https://gitee.com/explore](https://gitee.com/explore) 这个地址来了解 Gitee 上的优秀开源项目
-4.  [GVP](https://gitee.com/gvp) 全称是 Gitee 最有价值开源项目，是综合评定出的优秀开源项目
-5.  Gitee 官方提供的使用手册 [https://gitee.com/help](https://gitee.com/help)
-6.  Gitee 封面人物是一档用来展示 Gitee 会员风采的栏目 [https://gitee.com/gitee-stars/](https://gitee.com/gitee-stars/)
