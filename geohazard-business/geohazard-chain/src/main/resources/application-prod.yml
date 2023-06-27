@@ -21,10 +21,11 @@ server:
   servlet:
     context-path: /geohazard-chain
 
-mybatis:
-  mapper-locations: classpath:mysqlMapper/*Mapper.xml,classpath:pgsqlMapper/*Mapper.xml,
+mybatis-plus:
   configuration:
-    map-underscore-to-camel-case: true
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+  mapper-locations: classpath:mapper/*Mapper.xml
+
 eureka:
   client:
     serviceURL:
