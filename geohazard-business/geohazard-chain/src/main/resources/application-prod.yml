@@ -2,31 +2,20 @@ spring:
   application:
     name: geohazard-chain
   datasource:
-    mysql:
-      driver-class-name: com.mysql.cj.jdbc.Driver
-      url: jdbc:mysql://geohazard-mysql:3306/geohazard?useSSL=false&useUnicode=true&useUnicode=true&characterEncoding=UTF-8&serverTimezone=GMT%2B8
-      username: root
-      password: Mining2021@zhq
-    pgsql:
-      #      注意：这里 currentSchema 必须设置为 public ，不然没有办法使用空间函数 "ST_*"
-      url: jdbc:postgresql://geohazard-postgis:5432/geohazard?currentSchema=public
-      username: postgres
-      password: geohazard
-      driver-class-name: org.postgresql.Driver
-    hikari:
-      max-lifetime: 6000000 # 6000 s 100 minute
+    url: jdbc:postgresql://geohazard-postgis:5432/geohazard?currentSchema=public
+    username: postgres
+    password: geohazard
+    driver-class-name: org.postgresql.Driver
 
 server:
   port: 20231
   servlet:
     context-path: /geohazard-chain
 
-mybatis-plus:
+mybatis:
+  mapper-locations: classpath:mysqlMapper/*Mapper.xml,classpath:pgsqlMapper/*Mapper.xml,
   configuration:
-    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
-  mapper-locations: classpath:mapper/*Mapper.xml
-  type-aliases-package: com.example.sys.entity
-
+    map-underscore-to-camel-case: true
 eureka:
   client:
     serviceURL:
