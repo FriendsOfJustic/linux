@@ -42,6 +42,14 @@ geoserver:
   port: 8080
 
 
+geoserverURL:
+  IP: www.rsgisai.com
+  PORT: 8080
+
+
+
+Module4:
+  PATH: /home/code_space/py_test_demo/DEM51.tif
 
 logging:
   level:

@@ -17,9 +17,9 @@ public class FloodInfluenceAreaController {
     @Autowired
     FloodInfluenceAreaService floodInfluenceAreaService;
 
-    //输入参数 坐标x、y 高程h
+    //输入参数 坐标x、y 高程h@RequestParam("x") Double x,@RequestParam("y") Double y,@RequestParam("H") Double h
     @GetMapping("algorithm")
-    public R<String> functon(@RequestParam("x") Double x,@RequestParam("y") Double y,@RequestParam("H") Double h) throws IOException {
+    public R<String> functon() throws IOException {
         floodInfluenceAreaService.AlgorithmCall(1200,900,1700,new BigInteger("624882232324500"));
         return R.ok("hello");
     }
