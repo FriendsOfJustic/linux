@@ -1,7 +1,7 @@
 package com.example.sys.service;
 
 import com.example.sys.entity.Dongchuanlandslide;
-import com.baomidou.mybatisplus.extension.service.IService;
+
 import com.example.sys.transfer.BlockRiver;
 import com.example.sys.vo.DongchuanSlideResponse;
 

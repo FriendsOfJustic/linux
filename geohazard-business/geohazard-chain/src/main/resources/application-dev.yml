@@ -19,12 +19,15 @@ server:
   port: 20231
   servlet:
     context-path: /geohazard-chain
+  netty:
+    connection-timeout: 600000000000000000
 
 
 
 mybatis:
   mapper-locations: classpath:mapper/*Mapper.xml
-  type-aliases-package: com.example.sys.entity
+  configuration:
+    map-underscore-to-camel-case: true
 
 geoserver:
   username: admin

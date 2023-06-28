@@ -1,7 +1,7 @@
 package com.example.sys.entity;
 
 
-import com.baomidou.mybatisplus.annotation.TableField;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -11,16 +11,15 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class ResultTif {
 
-    @TableField(value = "tif")
-    private byte[] tif;
+    private byte[] tiff;
 
 
     public byte[] getTif() {
-        return tif;
+        return tiff;
     }
 
     public void setTif(byte[] tif) {
-        this.tif = tif;
+        this.tiff = tif;
     }
 }
 

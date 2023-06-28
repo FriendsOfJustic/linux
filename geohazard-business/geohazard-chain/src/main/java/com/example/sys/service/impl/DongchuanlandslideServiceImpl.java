@@ -4,7 +4,7 @@ import com.example.sys.entity.Dongchuanlandslide;
 import com.example.sys.geoserver.GeoserverRestManager;
 import com.example.sys.mapper.DongchuanlandslideMapper;
 import com.example.sys.service.IDongchuanlandslideService;
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+
 import com.example.sys.transfer.BlockRiver;
 import com.example.sys.vo.DongchuanSlideResponse;
 import com.rsgisai.geohazard.system.common.config.GeohazardConfig;

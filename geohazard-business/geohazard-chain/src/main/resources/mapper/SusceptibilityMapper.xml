@@ -4,7 +4,6 @@
 
 
     <delete id="deleteAll">
-        drop table if exists myrast;
         drop table  if exists   chain_sus_reclass ;
     </delete>
 
