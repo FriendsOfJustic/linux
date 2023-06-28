@@ -41,7 +41,7 @@ insert into geohazard_chain_midrast(name ,rast ) values  ('watervolume_result' ,
     </select>
 
     <select id="getResult" resultType="com.example.sys.entity.ResultTif">
-        select st_astiff(rast)  as tif from geohazard_chain_midrast where name ='watervolume_result';
+        select st_astiff(rast)  as tiff from geohazard_chain_midrast where name ='watervolume_result';
     </select>
 
 
