@@ -15,7 +15,7 @@ import java.math.BigDecimal;
 import java.math.BigInteger;
 
 @Service
-public class WaterVolumServiceImpl extends ServiceImpl<WaterVolumMapper, WaterVolume> implements IWaterVolumeService {
+public class WaterVolumServiceImpl implements IWaterVolumeService {
 
     @Autowired
     private WaterVolumMapper waterVolumMapper;

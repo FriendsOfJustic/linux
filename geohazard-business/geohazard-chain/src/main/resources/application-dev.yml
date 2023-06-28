@@ -22,9 +22,7 @@ server:
 
 
 
-mybatis-plus:
-  configuration:
-    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+mybatis:
   mapper-locations: classpath:mapper/*Mapper.xml
   type-aliases-package: com.example.sys.entity
 

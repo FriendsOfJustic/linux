@@ -2,10 +2,13 @@ spring:
   application:
     name: geohazard-chain
   datasource:
+    #      注意：这里 currentSchema 必须设置为 public ，不然没有办法使用空间函数 "ST_*"
     url: jdbc:postgresql://geohazard-postgis:5432/geohazard?currentSchema=public
     username: postgres
     password: geohazard
     driver-class-name: org.postgresql.Driver
+    hikari:
+      max-lifetime: 6000000 # 6000 s 100 minute
 
 server:
   port: 20231
@@ -13,7 +16,7 @@ server:
     context-path: /geohazard-chain
 
 mybatis:
-  mapper-locations: classpath:mysqlMapper/*Mapper.xml,classpath:pgsqlMapper/*Mapper.xml,
+  mapper-locations: classpath:mapper/*Mapper.xml
   configuration:
     map-underscore-to-camel-case: true
 eureka:

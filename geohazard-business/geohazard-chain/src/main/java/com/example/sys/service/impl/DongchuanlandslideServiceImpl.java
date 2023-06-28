@@ -29,7 +29,7 @@ import java.util.List;
  * @since 2023-04-17
  */
 @Service
-public class DongchuanlandslideServiceImpl extends ServiceImpl<DongchuanlandslideMapper, Dongchuanlandslide> implements IDongchuanlandslideService {
+public class DongchuanlandslideServiceImpl  implements IDongchuanlandslideService {
 
 
     @Autowired

@@ -1,2 +1,2 @@
-GET http://122.112.250.145:20223/geohazard-chain/sys3/watervolume?waterlevel=9000
+GET http://localhost:20231/geohazard-chain/sys3/watervolume?waterlevel=9000
 

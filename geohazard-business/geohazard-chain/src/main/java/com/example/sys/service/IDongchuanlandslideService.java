@@ -16,7 +16,7 @@ import java.util.List;
  * @author sht
  * @since 2023-04-17
  */
-public interface IDongchuanlandslideService extends IService<Dongchuanlandslide> {
+public interface IDongchuanlandslideService {
 
 
     //public DongchuanSlideResponse BlockRiverAlgorithm(String number, Double waterWidth, Double waterDepth, Double l1);
