@@ -13,7 +13,7 @@ server:
     context-path: /geohazard-chain
 
 mybatis:
-  mapper-locations: classpath:mysqlMapper/*Mapper.xml,classpath:pgsqlMapper/*Mapper.xml,
+  mapper-locations: classpath:mapper/*Mapper.xml
   configuration:
     map-underscore-to-camel-case: true
 eureka:
