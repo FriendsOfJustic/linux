@@ -14,6 +14,7 @@
    5.2 geospatial-computation: 地质灾害地理算法执行模块   port :20241
 6. gis-tools: 一些处理地理数据的工具
 7. system-common: 各模块公用的实体类等
+8. geohazard-main: 分发消息         port: 20888  
 
 
 # 延伸阅读
