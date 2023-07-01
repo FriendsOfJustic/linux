@@ -44,4 +44,4 @@ cd ${script_dir}/geohazard-business/geohazard-chain
 docker build --tag geohazard-chain .
 docker stop geohazard-chain
 docker rm geohazard-chain
-docker run --name geohazard-chain --detach --network=geohazard --publish 20231:20231 geohazard-chain
+docker run --name geohazard-chain --detach --network=geohazard  --add-host=myhost:122.112.250.145 --publish 20231:20231 geohazard-chain
