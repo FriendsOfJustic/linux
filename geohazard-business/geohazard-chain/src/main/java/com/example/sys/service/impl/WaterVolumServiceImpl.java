@@ -1,6 +1,6 @@
 package com.example.sys.service.impl;
 
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+
 import com.example.sys.entity.WaterVolume;
 import com.example.sys.geoserver.GeoserverRestManager;
 import com.example.sys.mapper.WaterVolumMapper;
@@ -15,7 +15,7 @@ import java.math.BigDecimal;
 import java.math.BigInteger;
 
 @Service
-public class WaterVolumServiceImpl extends ServiceImpl<WaterVolumMapper, WaterVolume> implements IWaterVolumeService {
+public class WaterVolumServiceImpl implements IWaterVolumeService {
 
     @Autowired
     private WaterVolumMapper waterVolumMapper;

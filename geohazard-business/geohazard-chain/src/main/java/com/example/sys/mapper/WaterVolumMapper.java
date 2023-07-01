@@ -1,6 +1,4 @@
 package com.example.sys.mapper;
-
-import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.example.sys.entity.ResultTif;
 import com.example.sys.entity.WaterVolume;
 import org.apache.ibatis.annotations.Mapper;
@@ -10,7 +8,7 @@ import java.math.BigDecimal;
 import java.math.BigInteger;
 
 @Mapper
-public interface WaterVolumMapper extends BaseMapper<WaterVolume> {
+public interface WaterVolumMapper  {
 
     ResultTif getResult();
     void OutPut();

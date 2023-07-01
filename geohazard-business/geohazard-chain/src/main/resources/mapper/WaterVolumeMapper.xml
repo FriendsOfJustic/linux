@@ -21,27 +21,6 @@
 
 
     <select id="OutPut" >
---         delete from geohazard_chain_midrast where name ='watervolume';
---         delete  from  geohazard_chain_midrast where  name='watervolume_result';
---
---         drop table if exists  watervolum;
---         create temp table  watervolum as
---         select st_reclass(rast,1,'[686-4282]:1','8BUI',0) as rast
---         from (select st_setsrid(rast ,4326) as rast from geohazard_chain_raster where name ='chain_dongchuan_dem') as dem;
---         insert into geohazard_chain_midrast(name ,rast ) values  ('watervolume' ,(select rast from watervolum));
---
---
---         drop table if exists temp1;
---         create temp table  temp1 as
---         select st_setvalue(rast,geom,2) as rast
---         from watervolume_shp ,(select rast as rast
---                                from geohazard_chain_midrast where name ='watervolume') as temp;
---
---         insert into geohazard_chain_midrast(name ,rast ) values  ('watervolume_result' ,(select st_setsrid(rast,4490) as rast from  temp1));
---         select st_astiff(rast)  as tif from geohazard_chain_midrast where name ='watervolume_result';
-
-
-
 delete from geohazard_chain_midrast where name ='watervolume';
 delete  from  geohazard_chain_midrast where  name='watervolume_result';
 
@@ -62,7 +41,7 @@ insert into geohazard_chain_midrast(name ,rast ) values  ('watervolume_result' ,
     </select>
 
     <select id="getResult" resultType="com.example.sys.entity.ResultTif">
-        select st_astiff(rast)  as tif from geohazard_chain_midrast where name ='watervolume_result';
+        select st_astiff(rast)  as tiff from geohazard_chain_midrast where name ='watervolume_result';
     </select>
 
 

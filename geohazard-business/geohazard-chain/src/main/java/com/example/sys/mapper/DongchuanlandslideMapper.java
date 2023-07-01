@@ -1,7 +1,7 @@
 package com.example.sys.mapper;
 
 import com.example.sys.entity.Dongchuanlandslide;
-import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+
 import com.example.sys.entity.ResultTif;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -18,7 +18,7 @@ import java.util.List;
  */
 
 @Mapper
-public interface DongchuanlandslideMapper extends BaseMapper<Dongchuanlandslide> {
+public interface DongchuanlandslideMapper  {
     Dongchuanlandslide selectBynumber(@Param("number")String number);
 
 

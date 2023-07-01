@@ -18,7 +18,9 @@ import java.io.IOException;
 
 /**
  * @author tfh, created at 2023-02-14 10:35 AM
+ * 算法
  */
+
 @RestController
 public class AlgorithmController {
     @Autowired

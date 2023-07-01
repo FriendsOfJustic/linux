@@ -4,7 +4,6 @@
 
 
     <delete id="deleteAll">
-        drop table if exists myrast;
         drop table  if exists   chain_sus_reclass ;
     </delete>
 
@@ -185,7 +184,7 @@
 
 
     <select id="selectResultImage" resultType="com.example.sys.entity.ResultTif">
-        select st_astiff(rast) as tif
+        select st_astiff(rast) as tiff
         from chain_sus_reclass
         where  id =#{id};
     </select>

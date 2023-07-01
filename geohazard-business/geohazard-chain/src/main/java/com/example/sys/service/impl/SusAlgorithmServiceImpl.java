@@ -40,7 +40,7 @@ public class SusAlgorithmServiceImpl implements SusAlgorithmService {
         susAlgorithmMapper.deleteAll();
 
         //插入中间结果 myrast
-        susAlgorithmMapper.insertMidResult();
+        //susAlgorithmMapper.insertMidResult();
 
 
         //判断myrast表中数据的正确性
@@ -174,6 +174,8 @@ public class SusAlgorithmServiceImpl implements SusAlgorithmService {
         //得到结果
         susAlgorithmMapper.selectResultTif();
 
+
+        geoserverManager.DeleteDataStores("geohazard","pieceOfshit");
         System.out.println("开始上传图层");
         byte[]  rast=susAlgorithmMapper.selectResultImage(15).getTif();
 
