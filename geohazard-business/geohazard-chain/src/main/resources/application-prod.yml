@@ -4,7 +4,7 @@ spring:
   datasource:
     #      注意：这里 currentSchema 必须设置为 public ，不然没有办法使用空间函数 "ST_*"
     url: jdbc:postgresql://myhost:15432/geohazard?currentSchema=public
-    username: postgres
+    username: geohazard
     password: cumtb_2023_rerssil
     driver-class-name: org.postgresql.Driver
     hikari:
