@@ -23,6 +23,7 @@
         <module>system-common</module>
         <module>geohazard-computation</module>
         <module>math-tools</module>
+        <module>GeohazardMain</module>
     </modules>
 
     <properties>

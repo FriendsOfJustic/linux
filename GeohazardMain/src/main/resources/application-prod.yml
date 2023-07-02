@@ -1,0 +1,25 @@
+eureka:
+  client:
+    serviceURL:
+      defaultZone: http://geohazard-eureka:20222/eureka/
+  instance:
+    hostname: geohazardMain
+
+
+
+spring:
+  application:
+    name: geohazard-chain
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    username: geohazard
+    password: cumtb_2023_rerssil
+    url:  jdbc:postgresql://122.112.250.145:15432/geohazard?currentSchema=public
+
+
+
+
+server:
+  port: 20888
+  servlet:
+    context-path: /geohazardmain

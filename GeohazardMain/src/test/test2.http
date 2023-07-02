@@ -1,0 +1,11 @@
+
+POST http://localhost:20888/geohazardmain/main/TaskSatrt
+Content-Type: application/json
+
+{
+  "WhichSys": "geohazard-chain",
+  "TaskID": "ccccccccccccccccccc",
+  "Content": 100203
+}
+
+
