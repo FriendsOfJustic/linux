@@ -28,10 +28,8 @@ public class MainBusinessController {
 
     public Map<String,String> RunningTask=new HashMap<String,String>();
 
-    //private ReentrantLock GeohazardChainLock = new ReentrantLock();
+    private ReentrantLock GeohazardChainLock = new ReentrantLock();
 
-    @Autowired
-    GeohazardChainLock geohazardChainLock;
 
     @Autowired
     GeohazardChainClient geohazardChainClient;
@@ -59,13 +57,17 @@ public class MainBusinessController {
 
                 //执行灾害链的整合逻辑
                 try {
-                   geohazardChainLock.lock.lock();
+                    GeohazardChainLock.lock();
                    System.out.println("我拿到锁了！！！！");
                     geohazardChainService.PollingLogic();
-                    geohazardChainLock.lock.unlock();
+                    GeohazardChainLock.unlock();
                 } catch (IOException e) {
+                    //抛出异常之后必须把锁交出来，否则会造成死锁
+                    GeohazardChainLock.unlock();
                     throw new RuntimeException(e);
                 } catch (PSQLException e) {
+                    //抛出异常之后必须把锁交出来，否则会造成死锁
+                    GeohazardChainLock.unlock();
                     throw new RuntimeException(e);
                 }
             }
@@ -81,8 +83,6 @@ public class MainBusinessController {
     @PostMapping("/TaskSatrt")
     public R<String> MainController(@RequestBody MessageFromRerssilFront msg) throws PSQLException, IOException {
         System.out.println(msg.toString());
-
-        //不是并发执行的需要建立一个队列等待 -TODO
 
         System.out.println("现有任务如下");
         // 使用foreach循环遍历

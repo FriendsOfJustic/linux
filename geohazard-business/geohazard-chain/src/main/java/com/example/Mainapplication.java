@@ -6,8 +6,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
 @MapperScan("com.example.sys.mapper")
-public class GeohazardChainapplication {
+public class Mainapplication {
     public static void main(String[] args) {
-        SpringApplication.run(GeohazardChainapplication.class,args);
+        SpringApplication.run(Mainapplication.class,args);
     }
 }
