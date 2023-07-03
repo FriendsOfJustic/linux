@@ -20,6 +20,7 @@ public class MessageFromRerssilFront {
     private Object Content;       //前端传过来的参数
 
 
+
     @Override
     public String toString() {
         return "MessageFromRerssilFront{" +
