@@ -62,7 +62,7 @@ public class DongchuanlandslideController {
 //        test_para.add(new BlockRiver("53011301018R",1274.5243,4.5322,41.0,1.1296,29.866,2.965));
 //        test_para.add(new BlockRiver("53011301071R",473.0,3.58,46.0,1.8985,37.3696,0.856233));
         iDongchuanlandslideService.BlockRiverAlgorithm(para);
-        return R.ok("BlockRiverRiskPoint");
+        return R.ok("blockriverriskpoint");
     }
 
 
