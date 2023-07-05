@@ -1,0 +1,25 @@
+spring:
+  application:
+    name: eureka-server
+
+server:
+  port: 20222
+
+eureka:
+  client:
+    fetch-registry: false
+    register-with-eureka: false # Eureka 单实例模式运行，不向自己注册自己
+    service-url:
+      defaultZone: http://geohazard-eureka:20222/eureka/
+  server:
+    enable-self-preservation: false
+    #  instance:
+    #    hostname: localhost
+
+
+    #eureka:
+    #  server:
+    # 默认true，用于生产环境网络不稳定的情形防止误杀；开发环境中使用false，及时注销无法连接的微服务
+#    enable-self-preservation: false
+#  instance:
+#    hostname: localhost
