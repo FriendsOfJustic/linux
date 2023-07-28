@@ -5,17 +5,12 @@
 #include "Connection.hpp"
 #include <unordered_map>
 
-const int DEFAULT_PORT = 8080;
+
 namespace sht
 {
     class TcpServer
     {
     public:
-        TcpServer(uint16_t port)
-        {
-            Sock(port);
-            Listen();
-        }
         void Sock(uint16_t port)
         {
             fd_ = socket(AF_INET, SOCK_STREAM, 0);
@@ -37,9 +32,8 @@ namespace sht
             }
         }
 
-        int Accept(std::unordered_map<int, sht::Connection *> &m)
+        int Accept(sht::Connection * conn)
         {
-            sht::Connection *conn = new sht::Connection();
             sockaddr_in client_addr;
             int client_addr_len;
             int fd = accept(fd_, (struct sockaddr *)&client_addr, (socklen_t *)&client_addr_len);
@@ -59,10 +53,10 @@ namespace sht
             }
             else if (fd > 0)
             {
+                 log_(INFO, "receive a connect "+std::to_string(fd));
                 conn->client_addr_ = client_addr;
                 conn->client_addr_len_ = client_addr_len;
                 conn->fd_ = fd;
-                m[fd] = conn;
                 return fd;
             }
         }
@@ -83,8 +77,13 @@ namespace sht
             return fd_;
         }
 
+        ~TcpServer(){
+            
+            close(fd_);
+        }
+
     private:
-        static int fd_; // 文件描述符
-        static LogMessage log_;
+        int fd_=0; // 文件描述符
+        LogMessage log_;
     };
 } // namespace sht

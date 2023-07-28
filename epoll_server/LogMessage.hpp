@@ -3,6 +3,9 @@
 #include<string>
 #include<ctime>
 
+
+#ifndef LOG_EPOLLLOG
+#define LOG_EPOLLLOG
 namespace sht
 {
     #ifndef STATUS
@@ -47,7 +50,8 @@ namespace sht
             }
             time_t t;
             time(&t);
-            std::string _time(ctime(t));
+            std::string _time(ctime(&t));
+            _time[_time.size()-1]='\0';
             std::string response="["+_time+"]  "+_status+"["+pid+"]  "+_msg;
             response.push_back('\n');
             write(fd,response.c_str(),response.size()+1);
@@ -55,3 +59,5 @@ namespace sht
         }
     };
 } // namespace sht
+
+#endif
