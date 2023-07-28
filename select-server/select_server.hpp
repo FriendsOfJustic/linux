@@ -49,15 +49,14 @@ namespace sht{
             char *buffer=new char[4096];
             int sz=read(fd,buffer,sizeof buffer -1);
             if(sz>0){
-                _log(INFO,"read size:"+std::to_string(sz));
+                //_log(INFO,"read size:"+std::to_string(sz));
                 buffer[sz]=0;
-                _log(INFO,"client#: "+std::string(buffer));
+                _log(INFO,"client#: "+std::string(buffer)+"-----"+std::to_string(sz));
             }else if(sz==0){
                 //客户端断开连接
                 auto it=std::find(read_fd_array.begin(),read_fd_array.end(),fd);
                 read_fd_array.erase(it);
                 close(fd);
-
             }else{
                 _log(ERROR,strerror(errno));
                 std::abort();
@@ -93,7 +92,7 @@ namespace sht{
             while(true){
                 timeval time_break{1,0};
                 FDreset(read_fd_set);
-                _log(INFO,"寻找连接,最大fd为:"+std::to_string(max_readarray_fd));
+                //_log(INFO,"寻找连接,最大fd为:"+std::to_string(max_readarray_fd));
                 int ret=select(max_readarray_fd+1,&read_fd_set,nullptr,nullptr,&time_break);   //非阻塞不等待
                 if(ret>0){
                     if(FD_ISSET(sockfd,&read_fd_set)){
