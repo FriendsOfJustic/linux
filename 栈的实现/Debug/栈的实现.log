@@ -1,0 +1,3 @@
+﻿  test.c
+C:\Users\石海涛\source\repos\栈的实现\test.c(3,13): warning C4081: 应输入“newline”；找到“;”
+  栈的实现.vcxproj -> C:\Users\石海涛\source\repos\栈的实现\Debug\栈的实现.exe

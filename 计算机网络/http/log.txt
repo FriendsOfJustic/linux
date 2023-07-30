@@ -1,0 +1,2 @@
+
+ERRO_RTYPE:FATAL:   ERROR_DETAILbind fail

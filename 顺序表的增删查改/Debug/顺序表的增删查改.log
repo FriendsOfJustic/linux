@@ -1,0 +1,5 @@
+﻿  Seqlist.c
+C:\Users\石海涛\source\repos\顺序表的增删查改\Seqlist.c(116,40): warning C4028: 形参 2 与声明不同
+C:\Users\石海涛\source\repos\顺序表的增删查改\Seqlist.c(119,10): warning C4018: “>”: 有符号/无符号不匹配
+C:\Users\石海涛\source\repos\顺序表的增删查改\Seqlist.c(123,25): warning C4018: “>=”: 有符号/无符号不匹配
+  顺序表的增删查改.vcxproj -> C:\Users\石海涛\source\repos\顺序表的增删查改\Debug\顺序表的增删查改.exe

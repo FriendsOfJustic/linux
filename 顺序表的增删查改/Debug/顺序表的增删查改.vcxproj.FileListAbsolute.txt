@@ -1,0 +1,2 @@
+C:\Users\石海涛\source\repos\顺序表的增删查改\Debug\顺序表的增删查改.exe
+C:\Users\石海涛\source\repos\顺序表的增删查改\Debug\顺序表的增删查改.pdb
