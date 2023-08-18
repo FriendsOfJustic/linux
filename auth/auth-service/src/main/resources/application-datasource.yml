@@ -1,6 +1,0 @@
-spring:
-  datasource:
-    driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://122.112.250.145:13306/geohazard?useSSL=false&useUnicode=true&useUnicode=true&characterEncoding=UTF-8&serverTimezone=GMT%2B8
-    username: geohazard
-    password: Geohazard_2023_ressil

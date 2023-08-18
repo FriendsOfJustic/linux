@@ -1,8 +1,0 @@
-###
-GET http://localhost:20233/{{servlet-context}}/landslide
-
-###
-GET http://localhost:{{port}}/{{servlet-context}}/landslide/1
-
-###
-GET http://localhost:{{port}}/{{servlet-context}}/landslide/correlation

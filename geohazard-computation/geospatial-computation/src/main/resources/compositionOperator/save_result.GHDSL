@@ -1,3 +1,0 @@
-Parameters: Integer  raster
-DZ_SaveRaster(raster, "susceptibility", "GH_Susceptibility", raster, "ok", 2)
-Output: None

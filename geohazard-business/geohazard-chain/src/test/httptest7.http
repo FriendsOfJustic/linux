@@ -1,9 +1,0 @@
-POST http://localhost:20231/sys/Algorithm
-Content-Type: application/json
-
-{
-  "number": "53011301118R",
-  "with": 60.00,
-  "depth": 100.00,
-  "l1": 160.00
-}

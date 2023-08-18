@@ -1,5 +1,0 @@
-geoserver:
-  username: admin
-  password: geoserver
-  hostname: www.rsgisai.com
-  port: 8080

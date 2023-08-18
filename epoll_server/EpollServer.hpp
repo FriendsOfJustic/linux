@@ -8,6 +8,8 @@
 #include <functional>
 #include <string.h>
 #include <err.h>
+#include"httpHeader.hpp"
+
 const int EPOLL_EVENT_SZ = 10;
 const int TIME_COUT = 1000;
 const int DEFAULT_PORT = 8080;
@@ -20,6 +22,39 @@ namespace sht
     public:
         explicit epoll_server(int num, uint16_t port = DEFAULT_PORT) : num_(num), server(new sht::TcpServer()), _port(port)
         {
+        }
+
+
+        void BusinessHandler(Connection& con){
+
+
+            sht::HttpRequest req(con.GetRecvbufferString());
+           //如果没有读出一个完整的报文，就不进行处理
+           if(req.Prase()==false)
+           return ;
+
+           //走到这里异一定读出了一个完整的报文
+           log_(INFO,"读出一个完整报文，请求的URL是"+req.url);
+            HttpResponse resp;
+
+           if(req.url.find(".html")!=std::string::npos){
+            HtmlRequest(req,resp);
+
+           }else if(req.url.find(".png")!=std::string::npos){
+             PngRequest(req,resp);
+           }else{
+                log_(ERROR,"不支持的文件类型");
+           }
+           con.sendbuffer=vector<char>(resp.generator().begin(),resp.generator().end());
+           con.SenderHandler();
+
+           if(con.sendbuffer.size()==0){
+            //如果发送缓冲区为空，就不再监听写事件
+               ModifyConnection(con.fd_,true,false);
+           }else{
+                //如果发送缓冲区不为空，就监听写事件
+                ModifyConnection(con.fd_,true,true);
+           }
         }
 
         void Create()
@@ -37,6 +72,20 @@ namespace sht
             log_(DEBUG, "socket fd: " + std::to_string(server->FD()));
         }
 
+        //对epoll事件读写模式进行修改
+        void ModifyConnection(int fd,bool isread,bool iswrite){
+            epoll_event newevent;
+            newevent.data.fd = fd;
+            newevent.events = EPOLLET;
+            if(isread)
+            newevent.events|=EPOLLIN;
+            if(iswrite)
+            newevent.events|=EPOLLOUT;
+            if (epoll_ctl(epoll_fd_, EPOLL_CTL_MOD, fd, &newevent) != 0)
+            {
+                log_(ERROR, "epoll 事件修改失败");
+            }
+        }
         void DeleteConnection(epoll_event& del_event,int fd)
         {
              connections_mapper_.erase(fd);
@@ -64,6 +113,7 @@ namespace sht
                     {
                         log_(ERROR, "epoll 事件添加失败");
                     }
+                    log_(ERROR, "epoll 事件添加成功");
                 }
                 else
                 {
@@ -83,7 +133,7 @@ namespace sht
                 if (cur_event.events & EPOLLHUP || cur_event.events & EPOLLERR)
                 {
                     // 将错误交给用户处理
-                    cur_event.events = EPOLLIN;
+                    cur_event.events = EPOLLIN | EPOLLET;
                 }
 
                 if (cur_event.events & EPOLLIN)
@@ -100,12 +150,16 @@ namespace sht
                          if(ret==1){
                             DeleteConnection(cur_event,cur_event.data.fd);
                          }else{
-                            log_(INFO,"client # "+connections_mapper_[cur_event.data.fd]->recvbuffer);
+                            log_(INFO,"client # "+connections_mapper_[cur_event.data.fd]->GetRecvbufferString());
                          }
+                         BusinessHandler(*connections_mapper_[cur_event.data.fd]);
+
                     }
                 }
                 else if (cur_event.events & EPOLLOUT)
                 {
+                    log_(INFO, "send ready!");
+                    connections_mapper_[cur_event.data.fd]->SenderHandler();
                 }
             }
         }

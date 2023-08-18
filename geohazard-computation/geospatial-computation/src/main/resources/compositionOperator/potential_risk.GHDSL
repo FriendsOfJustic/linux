@@ -1,9 +1,0 @@
-Parameters: None
--- 输入数据准备
-risk = DZ_ResultRaster("risk")
-geohazard_potential = DZ_ResultRaster("geohazard_potential")
--- 地质灾害隐患风险等级评估
-potential_risk = DZ_Clip(risk, geohazard_potential)
--- 保存结果
-DZ_SaveRaster(potential_risk, "potential_risk", "GH_PotentialRisk")
-Output: None
